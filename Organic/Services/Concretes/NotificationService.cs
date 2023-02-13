@@ -1,4 +1,4 @@
-﻿//using Organic.Areas.Admin.Hubs;
+﻿////using Organic.Areas.Admin.Hubs;
 //using Organic.Contracts.Alert;
 //using Organic.Contracts.Identity;
 //using Organic.Database;
@@ -10,16 +10,16 @@
 //{
 //    public class NotificationService : INotificationService
 //    {
-//        private readonly IHubContext<AlertHub> _hubContext;
+//        //private readonly IHubContext<AlertHub> _hubContext;
 //        private readonly IUserService _userService;
 //        private readonly DataContext _dataContext;
 
 //        public NotificationService(
-//            IHubContext<AlertHub> hubContext,
+//            //IHubContext<AlertHub> hubContext,
 //            IUserService userService,
 //            DataContext dataContext)
 //        {
-//            _hubContext = hubContext;
+//            //_hubContext = hubContext;
 //            _userService = userService;
 //            _dataContext = dataContext;
 //        }
@@ -33,9 +33,9 @@
 //            {
 //                await _hubContext.Clients
 //                    .Group(user.Id.ToString())
-//                    .SendAsync("Notify", new 
-//                    { 
-//                        Title = AlertMessages.ORDER_CREATED_TITLE_TO_MODERATOR, 
+//                    .SendAsync("Notify", new
+//                    {
+//                        Title = AlertMessages.ORDER_CREATED_TITLE_TO_MODERATOR,
 //                        Content = AlertMessages.ORDER_CREATED_CONTENT_TO_MODERATOR
 //                                    .Replace("{first_name}", _userService.CurrentUser.FirstName)
 //                                    .Replace("{last_name}", _userService.CurrentUser.LastName)
