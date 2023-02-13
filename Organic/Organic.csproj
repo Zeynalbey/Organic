@@ -1,0 +1,54 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\client\assets\bootstrap-5.0.2\bootstrap-5.0.2\.github\CODEOWNERS" />
+    <None Include="wwwroot\client\assets\bootstrap-5.0.2\bootstrap-5.0.2\.github\CONTRIBUTING.md" />
+    <None Include="wwwroot\client\assets\bootstrap-5.0.2\bootstrap-5.0.2\.github\dependabot.yml" />
+    <None Include="wwwroot\client\assets\bootstrap-5.0.2\bootstrap-5.0.2\.github\ISSUE_TEMPLATE\bug_report.md" />
+    <None Include="wwwroot\client\assets\bootstrap-5.0.2\bootstrap-5.0.2\.github\ISSUE_TEMPLATE\config.yml" />
+    <None Include="wwwroot\client\assets\bootstrap-5.0.2\bootstrap-5.0.2\.github\ISSUE_TEMPLATE\feature_request.md" />
+    <None Include="wwwroot\client\assets\bootstrap-5.0.2\bootstrap-5.0.2\.github\release-drafter.yml" />
+    <None Include="wwwroot\client\assets\bootstrap-5.0.2\bootstrap-5.0.2\.github\SUPPORT.md" />
+    <None Include="wwwroot\client\assets\bootstrap-5.0.2\bootstrap-5.0.2\.github\workflows\browserstack.yml" />
+    <None Include="wwwroot\client\assets\bootstrap-5.0.2\bootstrap-5.0.2\.github\workflows\bundlewatch.yml" />
+    <None Include="wwwroot\client\assets\bootstrap-5.0.2\bootstrap-5.0.2\.github\workflows\codeql.yml" />
+    <None Include="wwwroot\client\assets\bootstrap-5.0.2\bootstrap-5.0.2\.github\workflows\css.yml" />
+    <None Include="wwwroot\client\assets\bootstrap-5.0.2\bootstrap-5.0.2\.github\workflows\docs.yml" />
+    <None Include="wwwroot\client\assets\bootstrap-5.0.2\bootstrap-5.0.2\.github\workflows\js.yml" />
+    <None Include="wwwroot\client\assets\bootstrap-5.0.2\bootstrap-5.0.2\.github\workflows\lint.yml" />
+    <None Include="wwwroot\client\assets\bootstrap-5.0.2\bootstrap-5.0.2\.github\workflows\node-sass.yml" />
+    <None Include="wwwroot\client\assets\bootstrap-5.0.2\bootstrap-5.0.2\.github\workflows\release-notes.yml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Areas\" />
+    <Folder Include="Database\Models\" />
+    <Folder Include="Services\Abstracts\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AspNetCore.IServiceCollection.AddIUrlHelper" Version="1.1.0" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
+    <PackageReference Include="FluentValidation.AspNetCore" Version="11.2.2" />
+    <PackageReference Include="MailKit" Version="3.5.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="7.0.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="MimeKit" Version="3.5.0" />
+  </ItemGroup>
+
+</Project>
