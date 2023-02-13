@@ -8,8 +8,14 @@ namespace Organic.Areas.Admin.Controllers
     [Authorize(Roles = "admin")]
     public class DashboardController : Controller
     {
-        [HttpGet(Name = "admin-dashboard-index")]
+        [HttpGet("Index",Name = "admin-dashboard-index")]
         public IActionResult Index()
+        {
+            return View();
+        }
+
+        [HttpGet("Table",Name = "admin-dashboard-table")]
+        public IActionResult Table()
         {
             return View();
         }

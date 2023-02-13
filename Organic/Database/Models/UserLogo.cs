@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Organic.Database.Models
 {
-    public class UserLogo : BaseEntity<int>
+    public class UserLogo : BaseEntity<Guid>
     {
         //[ForeignKey("User")]
         public string? ImageName { get; set; }
