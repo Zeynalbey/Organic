@@ -17,6 +17,8 @@ namespace Organic.Database
         public DbSet<User> Users { get; set; }
         public DbSet<UserActivation> UserActivations { get; set; }
 
+        public DbSet<Role> Roles { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly<Program>();

@@ -67,6 +67,12 @@ namespace Organic.Services.Concretes
             return $"{CurrentUser.FirstName} {CurrentUser.LastName}";
         }
 
+        public string GetCurrentUserRollName()
+        {
+            var _currentUserRole = _dataContext.Roles.First(u => u.Id == CurrentUser.RoleId);
+            return _currentUserRole.Name!;
+        }
+
         public async Task<bool> CheckPasswordAsync(string? email, string? password)
         {
             return await _dataContext.Users.AnyAsync(u => u.Email == email && u.Password == password);

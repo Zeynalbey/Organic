@@ -10,6 +10,7 @@ namespace Organic.Services.Abstracts
 
         Task<bool> CheckPasswordAsync(string? email, string? password);
         string GetCurrentUserFullName();
+        string GetCurrentUserRollName();
         Task SignInAsync(Guid id, string? role = null);
         Task SignInAsync(string? email, string? password, string? role = null);
         //Task CreateAsync(RegisterViewModel model);
