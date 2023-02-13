@@ -50,7 +50,7 @@ namespace Organic.Services.Concretes
                 if (idClaim is null)
                     throw new IdentityCookieException("Identity cookie not found");
 
-                _currentUser = _dataContext.Users.First(u => u.Id == int.Parse(CustomClaimNames.ID));
+                _currentUser = _dataContext.Users.First(u => u.Id == Guid.Parse(idClaim.Value));
 
                 return _currentUser;
             }
@@ -72,7 +72,7 @@ namespace Organic.Services.Concretes
             return await _dataContext.Users.AnyAsync(u => u.Email == email && u.Password == password);
         }
 
-        public async Task SignInAsync(int id, string? role = null)
+        public async Task SignInAsync(Guid id, string? role = null)
         {
             var claims = new List<Claim>
             {

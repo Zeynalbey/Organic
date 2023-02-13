@@ -12,8 +12,8 @@ using Organic.Database;
 namespace Organic.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230213074828_Users_UserActivations_Roles")]
-    partial class UsersUserActivationsRoles
+    [Migration("20230213122107_Users")]
+    partial class Users
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -72,11 +72,9 @@ namespace Organic.Migrations
 
             modelBuilder.Entity("Organic.Database.Models.User", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -132,8 +130,8 @@ namespace Organic.Migrations
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
@@ -141,6 +139,30 @@ namespace Organic.Migrations
                         .IsUnique();
 
                     b.ToTable("UserActivations", (string)null);
+                });
+
+            modelBuilder.Entity("Organic.Database.Models.UserLogo", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ImageName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageNameInFileSystem")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserLogos", (string)null);
                 });
 
             modelBuilder.Entity("Organic.Database.Models.User", b =>
@@ -163,6 +185,15 @@ namespace Organic.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Organic.Database.Models.UserLogo", b =>
+                {
+                    b.HasOne("Organic.Database.Models.User", "User")
+                        .WithMany("UserLogos")
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Organic.Database.Models.Role", b =>
                 {
                     b.Navigation("Users");
@@ -171,6 +202,8 @@ namespace Organic.Migrations
             modelBuilder.Entity("Organic.Database.Models.User", b =>
                 {
                     b.Navigation("UserActivation");
+
+                    b.Navigation("UserLogos");
                 });
 #pragma warning restore 612, 618
         }

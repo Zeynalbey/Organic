@@ -23,8 +23,13 @@ namespace Organic.Areas.Admin.Controllers
         #region Login and Logout
 
         [HttpGet("login", Name = "admin-auth-login")]
-        public async Task<IActionResult> LoginAsync()
+        public async Task<IActionResult> LoginAsync()       
+        
         {
+            if (_userService.IsAuthenticated)
+            {
+                return RedirectToRoute("admin-dashboard-index");
+            }
             return View(new LoginViewModel());
         }
 
@@ -46,7 +51,7 @@ namespace Organic.Areas.Admin.Controllers
                 .Include(u => u.Role)
                 .SingleAsync(u => u.Email == model!.Email);
 
-            await _userService.SignInAsync(model.Email, model.Password, user.Role.Name);
+            await _userService.SignInAsync(model.Email, model.Password, user.Role!.Name);
 
             return RedirectToRoute("admin-dashboard-index");
         }
