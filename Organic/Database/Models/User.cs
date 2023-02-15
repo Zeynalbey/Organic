@@ -19,7 +19,5 @@ namespace Organic.Database.Models
 
         public UserActivation? UserActivation { get; set; }
 
-        public List<UserLogo>? UserLogos { get; set; }
-
     }
 }
