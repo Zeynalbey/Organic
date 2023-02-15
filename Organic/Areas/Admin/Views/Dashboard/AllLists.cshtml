@@ -1,4 +1,6 @@
-﻿
+﻿@using Organic.Areas.Admin.ViewModels.User
+@model List<UserListViewModel>
+@*@inject int number = 0;*@
 
 <div class="container-fluid pt-4 px-4">
     <div class="row g-4">
@@ -8,33 +10,36 @@
                 <table class="table table-striped">
                     <thead>
                         <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Name</th>
-                            <th scope="col">List</th>
+@*                            <th scope="col">#</th>*@
+                            <th scope="col">FirstName</th>
+                            <th scope="col">LastName</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Role</th>
+                            <th scope="col">Password</th>
+
+                            <th scope="col">Add user image</th>
                             <th scope="col">Add</th>
                             <th scope="col">Edit</th>
                             <th scope="col">Delete</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>User</td>
-                            <td>Doe</td>
-                            <td>jhon@email.com</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">2</th>
-                            <td>Mark</td>
-                            <td>Otto</td>
-                            <td>mark@email.com</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td>Jacob</td>
-                            <td>Thornton</td>
-                            <td>jacob@email.com</td>
-                        </tr>
+                        @foreach (var user in Model)
+                        {
+                            <tr>
+ @*                               <th scope="row"></th>*@
+                                <td>@user.FirstName</td>
+                                <td>@user.LastName</td>
+                                <td>@user.Email</td>
+                                <td>@user.Role</td>
+                                <td>@user.Password</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+
+                            </tr>
+                        }
                     </tbody>
                 </table>
             </div>

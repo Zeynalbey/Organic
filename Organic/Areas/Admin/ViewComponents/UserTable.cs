@@ -4,7 +4,7 @@ using Organic.Database;
 using Organic.Services.Abstracts;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Organic.Areas.Admin.ViewModels.Authentication;
+using Organic.Areas.Admin.ViewModels.User;
 
 namespace Organic.Areas.Admin.ViewComponents
 {
@@ -27,7 +27,8 @@ namespace Organic.Areas.Admin.ViewComponents
                 u.FirstName,
                 u.LastName,
                 u.Email,
-                u.Role!.Name!
+                u.Role!.Name!,
+                u.Password!
                 )).ToListAsync();
 
             return View(user);
