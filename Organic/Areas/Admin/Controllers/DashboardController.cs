@@ -19,5 +19,11 @@ namespace Organic.Areas.Admin.Controllers
         {
             return View();
         }
+
+        [HttpGet("AllLists", Name = "admin-dashboard-alllists")]
+        public IActionResult AllLists()
+        {
+            return View();
+        }
     }
 }

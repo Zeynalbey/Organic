@@ -1,0 +1,29 @@
+﻿@using Organic.Areas.Admin.ViewModels.Authentication
+@model List<UserListViewModel>
+
+<div class="col-sm-12 col-xl-6">
+    <div class="bg-secondary rounded h-100 p-4">
+        <h6 class="mb-4">Last 4 Users</h6>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">First Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Role</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var user in Model)
+                {
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>@user.FirstName</td>
+                        <td>@user.Email</td>
+                        <td>@user.Role</td>         
+                    </tr>
+                }              
+            </tbody>
+        </table>
+    </div>
+</div>
