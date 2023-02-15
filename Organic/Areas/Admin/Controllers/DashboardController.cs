@@ -31,14 +31,14 @@ namespace Organic.Areas.Admin.Controllers
         }
 
         [HttpGet("AllLists", Name = "admin-dashboard-alllists")]
-        public IActionResult AllLists()
+        public IActionResult AllList()
         {
 
-            var user = _dbContext.Users.OrderByDescending(u => u.CreatedAt).Take(4).Select(u => new UserListViewModel(
-                u.FirstName,u.LastName,u.Email,u.Role!.Name!,u.Password!))
-                .ToList();
+            //var user = _dbContext.Users.OrderByDescending(u => u.CreatedAt).Take(4).Select(u => new UserListViewModel(
+            //    u.FirstName, u.LastName, u.Email, u.Role!.Name!, u.Password!))
+            //    .ToList();
 
-            return View(user);
+            return View(/*user*/);
         }
     }
 }

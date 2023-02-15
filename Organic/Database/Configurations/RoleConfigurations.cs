@@ -35,7 +35,7 @@ namespace Organic.Database.Configurations
                     new Role
                     {
                         Id = _idCounter++,
-                        Name = RoleNames.HR,
+                        Name = RoleNames.USER,
                         CreatedAt = Convert.ToDateTime("2022-12-27"),
                         UpdatedAt = Convert.ToDateTime("2022-12-27")
                     }

@@ -74,6 +74,7 @@ namespace Organic.Areas.Admin.Controllers
                    .ToList();
                 return View(model);
             }
+            _dbContext.Users.Add(user);
             await _dbContext.SaveChangesAsync();
 
             return RedirectToRoute("admin-user-list");
