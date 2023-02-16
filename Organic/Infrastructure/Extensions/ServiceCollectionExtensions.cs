@@ -31,6 +31,8 @@ namespace Organic.Infrastructure.Extensions
 
             services.ConfigureOptions(configuration);
 
+            services.ConfigureFluentValidatios(configuration);
+
             services.RegisterCustomServices(configuration);
         }
     }

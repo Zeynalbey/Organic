@@ -8,7 +8,7 @@ namespace Organic.Areas.Admin.Controllers
 {
     [Area("admin")]
     [Route("admin/dashboard")]
-    [Authorize(Roles = "admin")]
+    [Authorize(Roles = "admin,moderator")]
     public class DashboardController : Controller
     {
         private readonly DataContext _dbContext;
@@ -33,12 +33,7 @@ namespace Organic.Areas.Admin.Controllers
         [HttpGet("AllLists", Name = "admin-dashboard-alllists")]
         public IActionResult AllList()
         {
-
-            //var user = _dbContext.Users.OrderByDescending(u => u.CreatedAt).Take(4).Select(u => new UserListViewModel(
-            //    u.FirstName, u.LastName, u.Email, u.Role!.Name!, u.Password!))
-            //    .ToList();
-
-            return View(/*user*/);
+            return View();
         }
     }
 }

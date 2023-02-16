@@ -26,6 +26,7 @@ namespace Organic.Areas.Admin.Controllers
         public async Task<IActionResult> ListAsync()
         {
             var user = await _dbContext.Users.Select(u => new UserListViewModel(
+              u.Id,
               u.FirstName,
               u.LastName,
               u.Email,
@@ -36,6 +37,8 @@ namespace Organic.Areas.Admin.Controllers
             return View(user);
         }
         #endregion
+
+        #region AddUser
 
         [HttpGet("add", Name = "admin-user-add")]
         public IActionResult Add()
@@ -49,8 +52,13 @@ namespace Organic.Areas.Admin.Controllers
         }
 
         [HttpPost("add", Name = "admin-user-add")]
-        public async Task<IActionResult> AddAync(AddViewModel model)
+        public async Task<IActionResult> Add(AddViewModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                return GetView(model);
+            }
+
             if (!_dbContext.Roles.Any(c => c.Id == model.RoleId))
             {
                 ModelState.AddModelError(string.Empty, "Something went wrong");
@@ -80,11 +88,113 @@ namespace Organic.Areas.Admin.Controllers
             return RedirectToRoute("admin-user-list");
         }
 
+        #endregion
+
+        #region UpdateUser
+
+        [HttpGet("update/{id}", Name = "admin-user-update")]
+        public async Task<IActionResult> UpdateAsync([FromRoute] Guid id)
+        {
+            var user = await _dbContext.Users.FirstOrDefaultAsync(b => b.Id == id);
+            if (user is null)
+            {
+                return NotFound();
+            }
+
+            var model = new UpdateViewModel
+            {
+                Id = user.Id,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                RoleId = user.RoleId,
+                Roles = _dbContext.Roles
+                    .Select(r => new RoleListViewModel(r.Id, r.Name))
+                    .ToList()
+            };
+
+            return View(model);
+        }
+
+        [HttpPost("update/{id}", Name = "admin-user-update")]
+        public async Task<IActionResult> UpdateAsync(UpdateViewModel model)
+        {
+            var user = await _dbContext.Users.FirstOrDefaultAsync(b => b.Id == model.Id);
+
+            if (user is null)
+            {
+                return NotFound();
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return GetView(model);
+            }
+
+            if (!_dbContext.Roles.Any(a => a.Id == model.RoleId))
+            {
+                ModelState.AddModelError(string.Empty, "Role is not found");
+                return GetView(model);
+            }
+
+            user.FirstName = model.FirstName;
+            user.LastName = model.LastName;
+            user.Email = model.Email;
+            user.Password = model.Password;
+            user.RoleId = model.RoleId;
+
+            await _dbContext.SaveChangesAsync();
+
+            return RedirectToRoute("admin-user-list");
+
+            IActionResult GetView(UpdateViewModel model)
+            {
+                model.Roles = _dbContext.Roles
+                    .Select(r => new RoleListViewModel(r.Id, r.Name))
+                    .ToList();
+
+                return View(model);
+            }
+        }
+
+        #endregion
+
+        #region DeleteUser
+
+        [HttpPost("delete/{id}", Name = "admin-user-delete")]
+        public async Task<IActionResult> DeleteAsync([FromRoute] Guid id)
+        {
+            var user = await _dbContext.Users.FirstOrDefaultAsync(b => b.Id == id);
+            if (user is null)
+            {
+                return NotFound();
+            }
+
+            _dbContext.Users.Remove(user);
+            await _dbContext.SaveChangesAsync();
+
+            return RedirectToRoute("admin-user-list");
+        }
 
 
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        #endregion
 
     }
 

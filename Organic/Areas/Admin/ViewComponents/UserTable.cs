@@ -24,6 +24,7 @@ namespace Organic.Areas.Admin.ViewComponents
         public async Task<IViewComponentResult> InvokeAsync()
         {
             var user = await _dbContext.Users.OrderByDescending(u => u.CreatedAt).Take(4).Select(u => new UserListViewModel(
+                u.Id,
                 u.FirstName,
                 u.LastName,
                 u.Email,

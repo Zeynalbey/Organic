@@ -49,7 +49,7 @@ namespace Organic.Areas.Admin.Controllers
 
             var user = await _dataContext.Users
                 .Include(u => u.Role)
-                .SingleAsync(u => u.Email == model!.Email);
+                .FirstOrDefaultAsync(u => u.Email == model!.Email);
 
             await _userService.SignInAsync(model.Email, model.Password, user.Role!.Name);
 

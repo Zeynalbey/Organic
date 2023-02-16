@@ -1,4 +1,4 @@
-﻿namespace Organic.Services.Concretes
+﻿namespace Organic.Services.Abstracts
 {
     public interface INotificationService
     {
