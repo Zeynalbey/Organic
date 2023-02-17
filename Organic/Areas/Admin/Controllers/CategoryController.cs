@@ -29,7 +29,7 @@ namespace Organic.Areas.Admin.Controllers
         public async Task <ActionResult> List()
         {
             var model = await _dbContext.Categories
-                .Select(b => new CategoryViewModel(b.Id, b.Name!))
+                .Select(c => new CategoryViewModel(c.Id, c.Name!, c.IconClass!))
                 .ToListAsync();
 
             return View(model);
@@ -55,7 +55,8 @@ namespace Organic.Areas.Admin.Controllers
 
             await _dbContext.Categories.AddAsync(new Category
             {
-                Name = model.Name
+                Name = model.Name,
+                IconClass = model.IconClass
             });
 
             await _dbContext.SaveChangesAsync();
@@ -75,7 +76,7 @@ namespace Organic.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            return View(new UpdateViewModel { Id = category.Id, Name = category.Name!});
+            return View(new UpdateViewModel { Id = category.Id, Name = category.Name!, IconClass = category.IconClass});
         }
 
         [HttpPost("update/{id}", Name = "admin-category-update")]
@@ -93,10 +94,11 @@ namespace Organic.Areas.Admin.Controllers
             }
 
             category.Name = model.Name;
+            category.IconClass = model.IconClass;   
+
             await _dbContext.SaveChangesAsync();
             return RedirectToAction(nameof(List));
-        }
-
+        }   
 
         #endregion
 

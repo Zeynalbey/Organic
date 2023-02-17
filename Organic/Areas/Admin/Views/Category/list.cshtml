@@ -5,11 +5,12 @@
     <div class="row g-4">
         <div class="col-sm-12 col-xl-12">
             <div class="bg-secondary rounded h-100 p-4">
-                <h6 class="mb-4">Commands</h6>
+                <h6 class="mb-4">Categories</h6>
                 <table class="table table-striped">
                     <thead>
                         <tr>
                             <th scope="col">Category name</th>
+                            <th scope="col">Icon class</th>
 
                             <th scope="col">Add category</th>
                             <th scope="col">Edit</th>
@@ -21,6 +22,7 @@
                         {
                             <tr>
                                 <td>@category.Name</td>
+                                <td>@category.IconClass</td>
 
                                 <td>
                                     <a asp-route="admin-category-add">add</a>

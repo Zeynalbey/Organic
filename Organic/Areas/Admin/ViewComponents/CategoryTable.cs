@@ -23,7 +23,8 @@ namespace Organic.Areas.Admin.ViewComponents
         {
             var category = await _dbContext.Categories.OrderByDescending(c => c.CreatedAt).Take(4).Select(c => new CategoryViewModel(
                 c.Id,
-                c.Name!
+                c.Name!,
+                c.IconClass!
                 )).ToListAsync();
 
             return View(category);
