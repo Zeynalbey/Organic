@@ -3,9 +3,14 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Organic.Areas.Admin.ViewModels.Authentication;
 using Organic.Areas.Admin.ViewModels.User;
+using Organic.Areas.Admin.ViewModels.User.UserImage;
+using Organic.Contracts.File;
 using Organic.Database;
 using Organic.Database.Models;
+using Organic.Services.Abstracts;
 using System.Drawing;
+using System.Net;
+using Organic.Areas.Admin.ViewModels.User;
 
 namespace Organic.Areas.Admin.Controllers
 {
@@ -15,10 +20,12 @@ namespace Organic.Areas.Admin.Controllers
     public class UserController : Controller
     {
         private readonly DataContext _dbContext;
+        private readonly IFileService _fileService;
 
-        public UserController(DataContext dbContext)
+        public UserController(DataContext dbContext, IFileService fileService)
         {
             _dbContext = dbContext;
+            _fileService = fileService;
         }
 
         #region List
@@ -31,7 +38,10 @@ namespace Organic.Areas.Admin.Controllers
               u.LastName,
               u.Email,
               u.Role!.Name!,
-              u.Password!
+              u.Password!,
+              u.Images!.Take(1).FirstOrDefault() != null
+                   ? _fileService.GetFileUrl(u.Images!.Take(1).FirstOrDefault()!.ImageNameInFileSystem, UploadDirectory.User)
+                   : String.Empty
               )).ToListAsync();
 
             return View(user);
@@ -43,7 +53,7 @@ namespace Organic.Areas.Admin.Controllers
         [HttpGet("add", Name = "admin-user-add")]
         public IActionResult Add()
         {
-            var model = new AddViewModel
+            var model = new ViewModels.User.AddViewModel
             {
                 Roles = _dbContext.Roles.Select(r => new RoleListViewModel(r.Id, r.Name)).ToList()
             };
@@ -52,7 +62,7 @@ namespace Organic.Areas.Admin.Controllers
         }
 
         [HttpPost("add", Name = "admin-user-add")]
-        public async Task<IActionResult> Add(AddViewModel model)
+        public async Task<IActionResult> Add(ViewModels.User.AddViewModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -75,7 +85,7 @@ namespace Organic.Areas.Admin.Controllers
                 RoleId = model.RoleId
             };
 
-            IActionResult GetView(AddViewModel model)
+            IActionResult GetView(ViewModels.User.AddViewModel model)
             {
                 model.Roles = _dbContext.Roles
                    .Select(c => new RoleListViewModel(c.Id, c.Name))
@@ -197,157 +207,9 @@ namespace Organic.Areas.Admin.Controllers
         #endregion
 
     }
-
-
-
-
-
-
-
-
-
-
-
 }
 
 
 
 
-
-
-//#region Update
-
-//[HttpGet("update/{id}", Name = "admin-book-update")]
-//public async Task<IActionResult> UpdateAsync([FromRoute] int id)
-//{
-//    var book = await _dataContext.Books.Include(b => b.BookCategories).FirstOrDefaultAsync(b => b.Id == id);
-//    if (book is null)
-//    {
-//        return NotFound();
-//    }
-
-//    var model = new AddViewModel
-//    {
-//        Id = book.Id,
-//        Title = book.Title,
-//        Price = book.Price,
-//        AuthorId = book.AuthorId,
-//        Authors = _dataContext.Authors
-//            .Select(a => new AuthorListItemViewModel(a.Id, $"{a.FirstName} {a.LastName}"))
-//            .ToList(),
-//        Categories = _dataContext.Categories
-//            .Select(c => new CategoryListItemViewModel(c.Id, c.Title))
-//            .ToList(),
-//        CategoryIds = book.BookCategories.Select(bc => bc.CategoryId).ToList(),
-//    };
-
-//    return View(model);
-//}
-
-//[HttpPost("update/{id}", Name = "admin-book-update")]
-//public async Task<IActionResult> UpdateAsync(AddViewModel model)
-//{
-//    var book = await _dataContext.Books.Include(b => b.BookCategories).FirstOrDefaultAsync(b => b.Id == model.Id);
-//    if (book is null)
-//    {
-//        return NotFound();
-//    }
-
-//    if (!ModelState.IsValid)
-//    {
-//        return GetView(model);
-//    }
-
-//    if (!_dataContext.Authors.Any(a => a.Id == model.AuthorId))
-//    {
-//        ModelState.AddModelError(string.Empty, "Author is not found");
-//        return GetView(model);
-//    }
-
-//    foreach (var categoryId in model.CategoryIds)
-//    {
-//        if (!_dataContext.Categories.Any(c => c.Id == categoryId))
-//        {
-//            ModelState.AddModelError(string.Empty, "Something went wrong");
-//            _logger.LogWarning($"Category with id({categoryId}) not found in db ");
-//            return GetView(model);
-//        }
-
-//    }
-
-
-//    //await _fileService.DeleteAsync(book.ImageNameInFileSystem, UploadDirectory.Book);
-//    //var imageFileNameInSystem = await _fileService.UploadAsync(model.Image, UploadDirectory.Book);
-
-//    await UpdateBookAsync();
-
-//    return RedirectToRoute("admin-book-list");
-
-
-
-
-//    IActionResult GetView(AddViewModel model)
-//    {
-//        model.Authors = _dataContext.Authors
-//            .Select(a => new AuthorListItemViewModel(a.Id, $"{a.FirstName} {a.LastName}"))
-//            .ToList();
-
-//        model.Categories = _dataContext.Categories
-//           .Select(c => new CategoryListItemViewModel(c.Id, c.Title))
-//           .ToList();
-
-//        model.CategoryIds = book.BookCategories.Select(bc => bc.CategoryId).ToList();
-
-//        return View(model);
-//    }
-
-//    async Task UpdateBookAsync()
-//    {
-//        book.Title = model.Title;
-//        book.AuthorId = model.AuthorId;
-//        book.Price = model.Price;
-
-//        var categoriesInDb = book.BookCategories.Select(bc => bc.CategoryId).ToList();
-//        var categoriesToRemove = categoriesInDb.Except(model.CategoryIds).ToList();
-//        var categoriesToAdd = model.CategoryIds.Except(categoriesInDb).ToList();
-
-//        book.BookCategories.RemoveAll(bc => categoriesToRemove.Contains(bc.CategoryId));
-
-//        foreach (var categoryId in categoriesToAdd)
-//        {
-//            var bookCategory = new BookCategory
-//            {
-//                CategoryId = categoryId,
-//                Book = book,
-//            };
-
-//            _dataContext.BookCategories.Add(bookCategory);
-//        }
-
-//        _dataContext.SaveChanges();
-//    }
-//}
-
-//#endregion
-
-//#region Delete
-
-//[HttpPost("delete/{id}", Name = "admin-book-delete")]
-//public async Task<IActionResult> DeleteAsync([FromRoute] int id)
-//{
-//    var book = await _dataContext.Books.FirstOrDefaultAsync(b => b.Id == id);
-//    if (book is null)
-//    {
-//        return NotFound();
-//    }
-
-//    //await _fileService.DeleteAsync(book.ImageNameInFileSystem, UploadDirectory.Book);
-
-//    _dataContext.Books.Remove(book);
-//    await _dataContext.SaveChangesAsync();
-
-//    return RedirectToRoute("admin-book-list");
-//}
-
-//#endregion
 

@@ -54,8 +54,8 @@ namespace Organic.Services.Concretes
 
             switch (uploadDirectory)
             {
-                case UploadDirectory.Book:
-                    return Path.Combine(startPath, "books");
+                case UploadDirectory.User:
+                    return Path.Combine(startPath, "users");
                 default:
                     throw new Exception("Something went wrong");
             }
@@ -72,8 +72,8 @@ namespace Organic.Services.Concretes
 
             switch (uploadDirectory)
             {
-                case UploadDirectory.Book:
-                    return $"{initialSegment}/books/{fileName}";
+                case UploadDirectory.User:
+                    return $"{initialSegment}/users/{fileName}";
                 default:
                     throw new Exception("Something went wrong");
             }

@@ -1,8 +1,8 @@
 ﻿namespace Organic.Areas.Admin.ViewModels.User
 {
-    public class UserListViewModel
+    public class UserTableViewModel
     {
-        public UserListViewModel(Guid id, string? firstName, string? lastName, string? email, string role, string password, string image)
+        public UserTableViewModel(Guid id, string? firstName, string? lastName, string? email, string role, string password)
         {
             Id = id;
             FirstName = firstName;
@@ -10,7 +10,6 @@
             Email = email;
             Role = role;
             Password = password;
-            Image = image;
         }
 
         public Guid Id { get; set; }
@@ -19,7 +18,6 @@
         public string? Email { get; set; }
         public string Role { get; set; }
         public string Password { get; set; }
-        public string Image { get; set; } 
     }
 
 

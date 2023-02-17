@@ -2,6 +2,6 @@
 {
     public enum UploadDirectory
     {
-        Book = 1,
+        User = 1,
     }
 }

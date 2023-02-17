@@ -12,8 +12,8 @@ using Organic.Database;
 namespace Organic.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230215092447_Product_Category_Tag_Image")]
-    partial class ProductCategoryTagImage
+    [Migration("20230217091118_User_Images")]
+    partial class UserImages
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -168,7 +168,7 @@ namespace Organic.Migrations
                         {
                             Id = 3,
                             CreatedAt = new DateTime(2022, 12, 27, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "hr",
+                            Name = "user",
                             UpdatedAt = new DateTime(2022, 12, 27, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
                 });
@@ -213,7 +213,7 @@ namespace Organic.Migrations
                     b.Property<string>("Password")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("RoleId")
+                    b.Property<int>("RoleId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("UpdatedAt")
@@ -258,6 +258,28 @@ namespace Organic.Migrations
                         .IsUnique();
 
                     b.ToTable("UserActivations", (string)null);
+                });
+
+            modelBuilder.Entity("Organic.Database.Models.UserImage", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ImageName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageNameInFileSystem")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserImages");
                 });
 
             modelBuilder.Entity("Organic.Database.Models.Product", b =>
@@ -305,7 +327,9 @@ namespace Organic.Migrations
                 {
                     b.HasOne("Organic.Database.Models.Role", "Role")
                         .WithMany("Users")
-                        .HasForeignKey("RoleId");
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Role");
                 });
@@ -315,6 +339,17 @@ namespace Organic.Migrations
                     b.HasOne("Organic.Database.Models.User", "User")
                         .WithOne("UserActivation")
                         .HasForeignKey("Organic.Database.Models.UserActivation", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Organic.Database.Models.UserImage", b =>
+                {
+                    b.HasOne("Organic.Database.Models.User", "User")
+                        .WithMany("Images")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -345,6 +380,8 @@ namespace Organic.Migrations
 
             modelBuilder.Entity("Organic.Database.Models.User", b =>
                 {
+                    b.Navigation("Images");
+
                     b.Navigation("UserActivation");
                 });
 #pragma warning restore 612, 618

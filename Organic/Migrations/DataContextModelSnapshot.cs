@@ -210,7 +210,7 @@ namespace Organic.Migrations
                     b.Property<string>("Password")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("RoleId")
+                    b.Property<int>("RoleId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("UpdatedAt")
@@ -259,11 +259,9 @@ namespace Organic.Migrations
 
             modelBuilder.Entity("Organic.Database.Models.UserImage", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("ImageName")
                         .HasColumnType("nvarchar(max)");
@@ -276,10 +274,9 @@ namespace Organic.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId")
-                        .IsUnique();
+                    b.HasIndex("UserId");
 
-                    b.ToTable("UserImage");
+                    b.ToTable("UserImages");
                 });
 
             modelBuilder.Entity("Organic.Database.Models.Product", b =>
@@ -327,7 +324,9 @@ namespace Organic.Migrations
                 {
                     b.HasOne("Organic.Database.Models.Role", "Role")
                         .WithMany("Users")
-                        .HasForeignKey("RoleId");
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Role");
                 });
@@ -346,8 +345,8 @@ namespace Organic.Migrations
             modelBuilder.Entity("Organic.Database.Models.UserImage", b =>
                 {
                     b.HasOne("Organic.Database.Models.User", "User")
-                        .WithOne("Image")
-                        .HasForeignKey("Organic.Database.Models.UserImage", "UserId")
+                        .WithMany("Images")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -378,7 +377,7 @@ namespace Organic.Migrations
 
             modelBuilder.Entity("Organic.Database.Models.User", b =>
                 {
-                    b.Navigation("Image");
+                    b.Navigation("Images");
 
                     b.Navigation("UserActivation");
                 });

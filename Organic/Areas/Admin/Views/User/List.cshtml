@@ -14,8 +14,8 @@
                             <th scope="col">Email</th>
                             <th scope="col">Role</th>
                             <th scope="col">Password</th>
-@*
-                            <th scope="col">Add user image</th>*@
+
+                            <th scope="col">Add user image</th>
                             <th scope="col">Edit</th>
                             <th scope="col">Delete</th>
                         </tr>
@@ -30,6 +30,11 @@
                                 <td>@user.Role</td>
                                 <td>@user.Password</td>
 
+
+                                <td>
+                                    <a asp-route="admin-user-image-list" asp-route-userId="@user.Id">image</a>
+                                </td>
+
                                 <td>
                                     <a class="text-warning" asp-route="admin-user-update" asp-route-id="@user.Id">edit</a>
                                 </td>
@@ -38,7 +43,6 @@
                                     </form>
                                     <button class="btn btn-danger" type="submit" form="update-@user.Id">delete</button>
                                 </td>
-
                             </tr>
                         }
                     </tbody>

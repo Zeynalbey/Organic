@@ -13,6 +13,7 @@ namespace Organic.Database
             : base(options) { }
 
         public DbSet<User> Users { get; set; }
+        public DbSet<UserImage> UserImages { get; set; }
         public DbSet<UserActivation> UserActivations { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<Category> Categories { get; set; }

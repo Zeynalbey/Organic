@@ -2,7 +2,7 @@
 
 namespace Organic.Database.Models
 {
-    public class UserImage : BaseEntity<int>
+    public class UserImage : BaseEntity<Guid>
     {
         public Guid UserId { get; set; }
         public User? User { get; set; }
