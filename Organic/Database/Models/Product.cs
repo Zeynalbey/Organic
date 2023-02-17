@@ -6,9 +6,9 @@ namespace Organic.Database.Models
     {
         public string? Name { get; set; }
         public decimal Price { get; set; }
-        public int? Rate { get; set; }
+        public int Rate { get; set; }
         public int ProductCount { get; set; }
-
+        public string? Info { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
 

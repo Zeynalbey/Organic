@@ -50,7 +50,7 @@ namespace Organic.Services.Concretes
 
         private string GetUploadDirectory(UploadDirectory uploadDirectory)
         {
-            string startPath = Path.Combine("wwwroot", "client", "custom-files");
+            string startPath = Path.Combine("wwwroot", "admin", "custom-files");
 
             switch (uploadDirectory)
             {
@@ -68,7 +68,7 @@ namespace Organic.Services.Concretes
 
         public string GetFileUrl(string? fileName, UploadDirectory uploadDirectory)
         {
-            string initialSegment = "client/custom-files/";
+            string initialSegment = "admin/custom-files/";
 
             switch (uploadDirectory)
             {
