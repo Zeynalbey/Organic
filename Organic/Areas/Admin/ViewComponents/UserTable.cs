@@ -15,10 +15,9 @@ namespace Organic.Areas.Admin.ViewComponents
         private readonly DataContext _dbContext;
         private readonly IFileService _fileService;
 
-        public UserTable(DataContext dbContext, IFileService fileService)
+        public UserTable(DataContext dbContext)
         {
             _dbContext = dbContext;
-            _fileService = fileService;
         }
 
         public async Task<IViewComponentResult> InvokeAsync()

@@ -1,4 +1,4 @@
-﻿namespace Organic.Areas.Admin.ViewModels.Category
+﻿namespace Organic.Areas.Admin.ViewModels.Product.Category
 {
     public class CategoryViewModel
     {

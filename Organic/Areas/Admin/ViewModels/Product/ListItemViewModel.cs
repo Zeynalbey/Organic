@@ -1,6 +1,5 @@
 ﻿
-
-using Organic.Areas.Admin.ViewModels.Category;
+using Organic.Areas.Admin.ViewModels.Product.Category;
 
 namespace Organic.Areas.Admin.ViewModels.Product
 {
