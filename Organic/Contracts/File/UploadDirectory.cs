@@ -3,5 +3,6 @@
     public enum UploadDirectory
     {
         User = 1,
+        Slider = 2
     }
 }

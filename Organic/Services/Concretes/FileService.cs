@@ -56,6 +56,8 @@ namespace Organic.Services.Concretes
             {
                 case UploadDirectory.User:
                     return Path.Combine(startPath, "users");
+                case UploadDirectory.Slider:
+                    return Path.Combine(startPath, "sliders");
                 default:
                     throw new Exception("Something went wrong");
             }
@@ -74,6 +76,8 @@ namespace Organic.Services.Concretes
             {
                 case UploadDirectory.User:
                     return $"{initialSegment}/users/{fileName}";
+                case UploadDirectory.Slider:
+                    return $"{initialSegment}/sliders/{fileName}";
                 default:
                     throw new Exception("Something went wrong");
             }

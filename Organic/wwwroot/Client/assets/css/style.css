@@ -1,6 +1,6 @@
 /*
 ----------------------------------------------------
-* Template Name    : Biolife - Organic Food        *
+* Template Name    : biolife - Organic Food        *
 * Author           : Kutetheme                     *
 * Version          : 1.0.0                         *
 * Created          : August 2019                   *
@@ -234,7 +234,7 @@ select option{
     background-color: transparent;
     font-weight: 400;
 }
-/* BIOLIFE ICON */
+/* biolife ICON */
 @font-face {
     font-family: 'biolife';
     src: url('../fonts/biolifebbd0.eot?t4lhqt');
@@ -2869,7 +2869,7 @@ body.open-mobile-search .header-area.layout-02{
     display: inline-block;
 }
 /***********************
-* Biolife Social list *
+* biolife Social list *
 ***********************/
 .biolife-social{
     margin-top: 25px;

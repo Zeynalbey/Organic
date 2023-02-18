@@ -1,4 +1,4 @@
-/*Biolife Framework*/
+/*biolife Framework*/
 ;(function ($) {
     'use strict';
 
@@ -6,7 +6,7 @@
         $sidebar                    = $('#sidebar'),
     	$document					= $(document),
     	$body					    = $('body'),
-    	BIOLIFE_MOBILE_MENU 		= {
+    	biolife_MOBILE_MENU 		= {
 
     		init:function(obj){
 				this.wrap_container();
@@ -28,12 +28,12 @@
 				            $thisClone  = $this.clone(true);
 				        $thisClone.find('.menu-item').addClass('clone-menu-item');
 				        $thisClone.find('[id]').each(function () {
-				            $__this.attr('id', BIOLIFE_MOBILE_MENU.add_string_prefix( this_id, 'biolife-clone-'));
+				            $__this.attr('id', biolife_MOBILE_MENU.add_string_prefix( this_id, 'biolife-clone-'));
 				        });
 				        $thisClone.find('.biolife-menu').addClass('biolife-menu-clone');
 				        let $thisMainPanel = $('#biolife-clone-wrap .biolife-panels #biolife-main-panel ul');
 				        $thisMainPanel.append( $thisClone.html());
-				        BIOLIFE_MOBILE_MENU.insert_children( $thisMainPanel, i);
+				        biolife_MOBILE_MENU.insert_children( $thisMainPanel, i);
 				    }
 				});
 
@@ -116,7 +116,7 @@
 		            children.each(function () {
 		                let thisChildItem   = $(this),
 		                	next_nav_target = 'biolife-panel-' + String(index);
-		                BIOLIFE_MOBILE_MENU.insert_children(thisChildItem,index);
+		                biolife_MOBILE_MENU.insert_children(thisChildItem,index);
 		                while ($('#' + next_nav_target).length) {
 		                    index++;
 		                    next_nav_target = 'biolife-panel-' + String(index);
@@ -164,7 +164,7 @@
     $.fn.biolife_init_carousel = function () {
 
         if( typeof $.fn.slick == 'undefined'){
-            console.error('Biolife-Framework need to use slick library inside, pls make sure It was loaded before used');
+            console.error('biolife-Framework need to use slick library inside, pls make sure It was loaded before used');
             return;
         }
 
@@ -288,7 +288,7 @@
 
     $.fn.biolife_countdown = function () {
         if( typeof $.fn.countdown == 'undefined'){
-            console.error('Biolife-Framework need to use countdown library inside, pls make sure It was loaded before used');
+            console.error('biolife-Framework need to use countdown library inside, pls make sure It was loaded before used');
             return;
         }
         let $this           = $(this),
@@ -365,7 +365,7 @@
     };
 
     $.fn.biolife_menu_mobile = function () {
-        BIOLIFE_MOBILE_MENU.init(this);
+        biolife_MOBILE_MENU.init(this);
     };
 
     $.fn.biolife_sidebar_handle = function(){
