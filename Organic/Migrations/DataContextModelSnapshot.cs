@@ -64,6 +64,9 @@ namespace Organic.Migrations
                     b.Property<string>("Info")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("IsDollar")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
@@ -76,12 +79,18 @@ namespace Organic.Migrations
                     b.Property<int>("Rate")
                         .HasColumnType("int");
 
+                    b.Property<int>("SliderId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryID");
+
+                    b.HasIndex("SliderId")
+                        .IsUnique();
 
                     b.ToTable("Products", (string)null);
                 });
@@ -174,6 +183,52 @@ namespace Organic.Migrations
                             Name = "user",
                             UpdatedAt = new DateTime(2022, 12, 27, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
+                });
+
+            modelBuilder.Entity("Organic.Database.Models.Slider", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DetailButton")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DetailButtonUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageNameInSystem")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ProductName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ShopButtonName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ShopButtonUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Slider");
                 });
 
             modelBuilder.Entity("Organic.Database.Models.Tag", b =>
@@ -299,7 +354,15 @@ namespace Organic.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Organic.Database.Models.Slider", "Slider")
+                        .WithOne("Product")
+                        .HasForeignKey("Organic.Database.Models.Product", "SliderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Category");
+
+                    b.Navigation("Slider");
                 });
 
             modelBuilder.Entity("Organic.Database.Models.ProductImage", b =>
@@ -380,6 +443,11 @@ namespace Organic.Migrations
             modelBuilder.Entity("Organic.Database.Models.Role", b =>
                 {
                     b.Navigation("Users");
+                });
+
+            modelBuilder.Entity("Organic.Database.Models.Slider", b =>
+                {
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("Organic.Database.Models.Tag", b =>

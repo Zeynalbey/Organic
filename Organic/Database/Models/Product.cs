@@ -9,6 +9,7 @@ namespace Organic.Database.Models
         public int Rate { get; set; }
         public int ProductCount { get; set; }
         public string? Info { get; set; }
+        public bool IsDollar { get; set; } = false;
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
 
@@ -17,6 +18,11 @@ namespace Organic.Database.Models
 
         public List<ProductTag>? ProductTags { get; set; }
 
-        public List<ProductImage>? ProductImages { get; set; }   
+        public List<ProductImage>? ProductImages { get; set; }
+
+        public int SliderId { get; set; }
+        public Slider? Slider { get; set; }
+
+
     }
 }

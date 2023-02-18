@@ -12,6 +12,7 @@ namespace Organic.Database
         public DataContext(DbContextOptions options)
             : base(options) { }
 
+        public DbSet<Slider> Sliders { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<UserImage> UserImages { get; set; }
         public DbSet<UserActivation> UserActivations { get; set; }
