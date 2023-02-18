@@ -1,11 +1,11 @@
 ﻿using FluentValidation;
 using Organic.Areas.Admin.ViewModels.User;
 
-namespace Organic.Areas.Admin.Validators.Admin.User.Add
+namespace Organic.Validators.Admin.User
 {
-    public class UpdateViewModelValidator : AbstractValidator<AddViewModel>
+    public class AddViewModelValidator : AbstractValidator<AddViewModel>
     {
-        public UpdateViewModelValidator()
+        public AddViewModelValidator()
         {
             RuleFor(avm => avm.FirstName)
                 .NotEmpty().WithMessage("Firstname can't be empty")

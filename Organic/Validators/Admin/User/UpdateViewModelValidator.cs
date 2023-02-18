@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using Organic.Areas.Admin.ViewModels.User;
 
-namespace Organic.Areas.Admin.Validators.Admin.User.Update
+namespace Organic.Validators.Admin.User
 {
     public class UpdateViewModelValidator : AbstractValidator<UpdateViewModel>
     {

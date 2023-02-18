@@ -1,11 +1,12 @@
 ﻿
 using Organic.Areas.Admin.ViewModels.Product.Category;
+using Organic.Areas.Admin.ViewModels.Product.Tag;
 
 namespace Organic.Areas.Admin.ViewModels.Product
 {
     public class ListItemViewModel
     {
-        public ListItemViewModel(int id, string? name, string? info, decimal price, decimal count, int rate, DateTime createdAt, List<CategoryViewModel>? categories)
+        public ListItemViewModel(int id, string? name, string? info, decimal price, decimal count, int rate, DateTime createdAt, List<TagViewModel>? categories)
         {
             Id = id;
             Name = name;
@@ -24,7 +25,7 @@ namespace Organic.Areas.Admin.ViewModels.Product
         public decimal Count { get; set; }
         public int Rate { get; set; }
         public DateTime CreatedAt { get; set; }
-        public List<CategoryViewModel>? Categories { get; set; }
+        public List<TagViewModel>? Categories { get; set; }
 
     }
 }
