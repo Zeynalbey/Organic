@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Organic.Areas.Admin.ViewModels.Product;
 using Organic.Areas.Admin.ViewModels.Slider;
 using Organic.Contracts.File;
 using Organic.Database;
@@ -11,7 +12,7 @@ using Organic.Services.Abstracts;
 namespace Organic.Areas.Admin.Controllers
 {
     [Area("admin")]
-    [Route("admin/tag")]
+    [Route("admin/slider")]
     [Authorize(Roles = "admin, moderator")]
     public class SliderController : Controller
     {
@@ -30,14 +31,10 @@ namespace Organic.Areas.Admin.Controllers
         {
             var model = await _dataContext.Sliders.Select(s => new ListViewModel(
                 s.Id,
-                s.ProductName!,
+                s.Product!.Name!,
                 s.Title!,
                 s.Description!,
-                s.ShopButtonName!,
-                s.ShopButtonUrl!,
-                s.DetailButton!,
-                s.DetailButtonUrl!,
-                _fileService.GetFileUrl(s.ImageNameInSystem,UploadDirectory.Slider),
+                _fileService.GetFileUrl(s.ImageNameInSystem, UploadDirectory.Slider),
                 s.CreatedAt)).ToListAsync();
 
             return View(model);
@@ -46,8 +43,15 @@ namespace Organic.Areas.Admin.Controllers
         [HttpGet("add", Name = "admin-slider-add")]
         public async Task<IActionResult> AddAsync()
         {
-            return View();
+            var model = new AddViewModel
+            {
+                Products = _dataContext.Products
+                    .Select(c => new ProductViewModel(c.Id, c.Name))
+                    .ToList(),
+            };
+            return View(model);
         }
+
         [HttpPost("add", Name = "admin-slider-add")]
         public async Task<IActionResult> Add(AddViewModel model)
         {
@@ -57,29 +61,39 @@ namespace Organic.Areas.Admin.Controllers
                 return View(model);
             }
 
-            var imageNameInSystem = await _fileService.UploadAsync(model.Image!, UploadDirectory.Slider);
+            if (!_dataContext.Products.Any(a => a.Id == model.ProductId))
+            {
+                ModelState.AddModelError(string.Empty, "Product is not found");
+                return await GetView(model);
+            }
 
+            var imageNameInSystem = await _fileService.UploadAsync(model.Image!, UploadDirectory.Slider);
 
             var slider = new Slider
             {
-                ProductName = model.ProductName,
+                ProductId = model.ProductId,
                 Title = model.Title,
                 Description = model.Description,
-                ShopButtonName = model.ShopButtonName,
-                ShopButtonUrl = model.ShopButtonUrl,
-                DetailButton = model.DetailButton,
-                DetailButtonUrl = model.DetailButtonUrl,
-                ImageName = model.Image.FileName,
+                ImageName = model.Image!.FileName,
                 ImageNameInSystem = imageNameInSystem,
                 CreatedAt = DateTime.Now,
             };
 
+
+            async Task<IActionResult> GetView(AddViewModel model)
+            {
+                model.Products = await _dataContext.Products
+                    .Select(a => new ProductViewModel(a.Id, a.Name))
+                    .ToListAsync();
+
+                return View(model);
+            }
+
             _dataContext.Sliders.Add(slider);
 
-            _dataContext.SaveChanges();
+            await _dataContext.SaveChangesAsync();
 
             return RedirectToRoute("admin-slider-list");
-
         }
 
 
@@ -135,20 +149,20 @@ namespace Organic.Areas.Admin.Controllers
         //    return RedirectToRoute("admin-slider-list");
         //}
 
-        //[HttpPost("delete/{id}", Name = "admin-slider-delete")]
-        //public async Task<IActionResult> Delete([FromRoute] int id)
-        //{
-        //    var slider = await _dataContext.Sliders.FirstOrDefaultAsync(b => b.Id == id);
-        //    if (slider is null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    await _fileService.DeleteAsync(slider.İmageInSystem, UploadDirectory.Slider);
-        //    _dataContext.Sliders.Remove(slider);
-        //    await _dataContext.SaveChangesAsync();
+        [HttpPost("delete/{id}", Name = "admin-slider-delete")]
+        public async Task<IActionResult> Delete([FromRoute] int id)
+        {
+            var slider = await _dataContext.Sliders.FirstOrDefaultAsync(b => b.Id == id);
+            if (slider is null)
+            {
+                return NotFound();
+            }
+            await _fileService.DeleteAsync(slider.ImageNameInSystem, UploadDirectory.Slider);
+            _dataContext.Sliders.Remove(slider);
+            await _dataContext.SaveChangesAsync();
 
-        //    return RedirectToRoute("admin-slider-list");
-        //}
+            return RedirectToRoute("admin-slider-list");
+        }
     }
 
 }

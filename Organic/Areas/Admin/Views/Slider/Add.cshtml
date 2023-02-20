@@ -1,9 +1,8 @@
-﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-@using Organic.Areas.Admin.ViewModels.Slider
+﻿@using Organic.Areas.Admin.ViewModels.Slider
 @model AddViewModel
 <div class="row">
     <div class="col-lg-12">
-        <div class="card">
+        <div class="card bg-secondary rounded h-100 p-4">
             <div class="card-header">
                 <h4 class="card-title">Sliders</h4>
             </div>
@@ -12,12 +11,12 @@
                     <form method="POST" asp-route="admin-slider-add" enctype="multipart/form-data">
                         <div class="text-danger" asp-validation-summary="ModelOnly"></div>
                         <div class="form-group">
-                            <label>ProductName</label>
-                            <input asp-for="ProductName" class="form-control">
-                            <span asp-validation-for="ProductName" class="text-danger"></span>
+                            <label>Products</label>
+                            <select asp-for="ProductId" asp-items="@(new SelectList(Model.Products, nameof(Organic.Areas.Admin.ViewModels.Product.ProductViewModel.Id), nameof(Organic.Areas.Admin.ViewModels.Product.ProductViewModel.Name)))" class="form-select">                            </select>
+                            <span asp-validation-for="ProductId" class="text-danger"></span>
                         </div>
                         <div class="form-group">
-                            <label>Title</label>
+                            <label>Name</label>
                             <input asp-for="Title" class="form-control">
                             <span asp-validation-for="Title" class="text-danger"></span>
                         </div>
@@ -27,30 +26,11 @@
                             <span asp-validation-for="Description" class="text-danger"></span>
                         </div>
                         <div class="form-group">
-                            <label>ShopButtonName</label>
-                            <input asp-for="ShopButtonName" class="form-control">
-                            <span asp-validation-for="ShopButtonName" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label>ShopButtonUrl</label>
-                            <input asp-for="ShopButtonUrl" class="form-control">
-                            <span asp-validation-for="ShopButtonUrl" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label>DetailButton</label>
-                            <input asp-for="DetailButton" class="form-control">
-                            <span asp-validation-for="DetailButton" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label>DetailButtonUrl</label>
-                            <input asp-for="DetailButtonUrl" class="form-control">
-                            <span asp-validation-for="DetailButtonUrl" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
                             <label>İmage</label>
-                            <input asp-for="ImageUrl" class="form-control">
-                            <span asp-validation-for="ImageUrl" class="text-danger"></span>
+                            <input asp-for="Image" class="form-control">
+                            <span asp-validation-for="Image" class="text-danger"></span>
                         </div>
+
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </form>
                 </div>

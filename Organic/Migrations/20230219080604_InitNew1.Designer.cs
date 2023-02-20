@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Organic.Database;
 
@@ -11,9 +12,11 @@ using Organic.Database;
 namespace Organic.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20230219080604_InitNew1")]
+    partial class InitNew1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,62 +24,6 @@ namespace Organic.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("Organic.Database.Models.Basket", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Basket");
-                });
-
-            modelBuilder.Entity("Organic.Database.Models.BasketProduct", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("BasketId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BasketId");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("BasketProducts");
-                });
 
             modelBuilder.Entity("Organic.Database.Models.Category", b =>
                 {
@@ -120,11 +67,20 @@ namespace Organic.Migrations
                     b.Property<string>("Info")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("IsDollar")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("ProductCount")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Rate")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2");
@@ -240,6 +196,12 @@ namespace Organic.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("DetailButton")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DetailButtonUrl")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("ImageName")
                         .HasColumnType("nvarchar(max)");
 
@@ -249,6 +211,16 @@ namespace Organic.Migrations
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
 
+                    b.Property<string>("ProductName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ShopButtonName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ShopButtonUrl")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
 
@@ -257,7 +229,8 @@ namespace Organic.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProductId");
+                    b.HasIndex("ProductId")
+                        .IsUnique();
 
                     b.ToTable("Sliders");
                 });
@@ -377,36 +350,6 @@ namespace Organic.Migrations
                     b.ToTable("UserImages", (string)null);
                 });
 
-            modelBuilder.Entity("Organic.Database.Models.Basket", b =>
-                {
-                    b.HasOne("Organic.Database.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("Organic.Database.Models.BasketProduct", b =>
-                {
-                    b.HasOne("Organic.Database.Models.Basket", "Basket")
-                        .WithMany("BasketProducts")
-                        .HasForeignKey("BasketId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Organic.Database.Models.Product", "Product")
-                        .WithMany("BasketProducts")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Basket");
-
-                    b.Navigation("Product");
-                });
-
             modelBuilder.Entity("Organic.Database.Models.Product", b =>
                 {
                     b.HasOne("Organic.Database.Models.Category", "Category")
@@ -451,8 +394,8 @@ namespace Organic.Migrations
             modelBuilder.Entity("Organic.Database.Models.Slider", b =>
                 {
                     b.HasOne("Organic.Database.Models.Product", "Product")
-                        .WithMany("Sliders")
-                        .HasForeignKey("ProductId")
+                        .WithOne("Slider")
+                        .HasForeignKey("Organic.Database.Models.Slider", "ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -492,11 +435,6 @@ namespace Organic.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Organic.Database.Models.Basket", b =>
-                {
-                    b.Navigation("BasketProducts");
-                });
-
             modelBuilder.Entity("Organic.Database.Models.Category", b =>
                 {
                     b.Navigation("Products");
@@ -504,13 +442,11 @@ namespace Organic.Migrations
 
             modelBuilder.Entity("Organic.Database.Models.Product", b =>
                 {
-                    b.Navigation("BasketProducts");
-
                     b.Navigation("ProductImages");
 
                     b.Navigation("ProductTags");
 
-                    b.Navigation("Sliders");
+                    b.Navigation("Slider");
                 });
 
             modelBuilder.Entity("Organic.Database.Models.Role", b =>

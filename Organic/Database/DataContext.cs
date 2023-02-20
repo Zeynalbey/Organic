@@ -19,6 +19,8 @@ namespace Organic.Database
         public DbSet<Role> Roles { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<BasketProduct> BasketProducts { get; set; }
+        public DbSet<Basket> Baskets { get; set; }
         public DbSet<ProductImage> ProductImages { get; set; }
         public DbSet<ProductTag> ProductTags { get; set; }
         public DbSet<Tag> Tags { get; set; }
