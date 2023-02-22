@@ -24,6 +24,9 @@ namespace Organic.Database
         public DbSet<ProductImage> ProductImages { get; set; }
         public DbSet<ProductTag> ProductTags { get; set; }
         public DbSet<Tag> Tags { get; set; }
+        public DbSet<ProductCount> ProductCounts { get; set; }
+        public DbSet<ProductRate> ProductRates { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
