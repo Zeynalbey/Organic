@@ -1,6 +1,4 @@
-﻿
-
-using Organic.Areas.Admin.ViewModels.Product.Count;
+﻿using Organic.Areas.Admin.ViewModels.Product.Count;
 using Organic.Areas.Admin.ViewModels.Product.Rate;
 
 namespace Organic.Areas.Admin.ViewModels.Product

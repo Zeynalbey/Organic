@@ -26,6 +26,7 @@ namespace Organic.Areas.Admin.Controllers
             _fileService = fileService;
         }
 
+        #region List
         [HttpGet("list", Name = "admin-slider-list")]
         public async Task<IActionResult> ListAsync()
         {
@@ -39,6 +40,9 @@ namespace Organic.Areas.Admin.Controllers
 
             return View(model);
         }
+        #endregion
+
+        #region Add
 
         [HttpGet("add", Name = "admin-slider-add")]
         public async Task<IActionResult> AddAsync()
@@ -76,7 +80,7 @@ namespace Organic.Areas.Admin.Controllers
                 Description = model.Description,
                 ImageName = model.Image!.FileName,
                 ImageNameInSystem = imageNameInSystem,
-                CreatedAt = DateTime.Now,
+               // CreatedAt = DateTime.Now,
             };
 
 
@@ -95,59 +99,9 @@ namespace Organic.Areas.Admin.Controllers
 
             return RedirectToRoute("admin-slider-list");
         }
+        #endregion
 
-
-        //[HttpGet("update/{id}", Name = "admin-slider-update")]
-        //public async Task<IActionResult> UpdateAsync([FromRoute] int id)
-        //{
-        //    var slider = await _dataContext.Sliders.FirstOrDefaultAsync(n => n.Id == id);
-
-        //    if (slider is null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    var model = new AddViewModel()
-        //    {
-        //        Id = slider.Id,
-        //        MainTitle = slider.MainTitle!,
-        //        Content = slider.Content!,
-        //        SecondTitle = slider.SecondTitle,
-        //        Button = slider.Button,
-        //        ButtonRedirectUrl = slider.ButtonRedirectUrl,
-        //        Order = slider.Order,
-        //        İmageUrl = _fileService.GetFileUrl(slider.İmageInSystem, UploadDirectory.Slider)
-        //    };
-
-        //    return View(model);
-        //}
-
-        //[HttpPost("update/{id}", Name = "admin-slider-update")]
-        //public async Task<IActionResult> UpdateAsync(AddViewModel model)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return View(model);
-        //    }
-
-        //    var slider = await _dataContext.Sliders.FirstOrDefaultAsync(n => n.Id == model.Id);
-        //    if (slider is null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    var imageNameInSystem = await _fileService.UploadAsync(model.İmage!, UploadDirectory.Slider);
-
-        //    slider.MainTitle = model.MainTitle;
-        //    slider.Content = model.Content;
-        //    slider.İmage = model.İmage!.FileName;
-        //    slider.İmageInSystem = imageNameInSystem;
-
-
-        //    await _dataContext.SaveChangesAsync();
-
-        //    return RedirectToRoute("admin-slider-list");
-        //}
+        #region Delete
 
         [HttpPost("delete/{id}", Name = "admin-slider-delete")]
         public async Task<IActionResult> Delete([FromRoute] int id)
@@ -163,6 +117,7 @@ namespace Organic.Areas.Admin.Controllers
 
             return RedirectToRoute("admin-slider-list");
         }
+        #endregion
     }
 
 }

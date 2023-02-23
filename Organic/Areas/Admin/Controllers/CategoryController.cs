@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Organic.Areas.Admin.ViewModels.Product;
+
 using Organic.Areas.Admin.ViewModels.Product.Category;
 using Organic.Database;
 using Organic.Database.Models;

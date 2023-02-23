@@ -15,11 +15,9 @@
                             <th scope="col">CreatedAt</th>
                             <th scope="col">Category Name</th>
                             <th scope="col">Rate</th>
-                            <th scope="col">Count</th>
-                           
-                            
+                            <th scope="col">Count(kq/litr)</th>
 
-                           @* <th scope="col">Add product</th>
+                            @* <th scope="col">Add product</th>
                             <th scope="col">Edit</th>
                             <th scope="col">Delete</th>*@
                         </tr>
@@ -33,26 +31,30 @@
                                 <td>@product.Info</td>
                                 <td>@product.CreatedAt.ToString("dd,mm,yyyy")</td>
                                 <td>@product.Categoryname</td>
-                                @foreach (var item in product.Rates)
-                                {
-                                    <td>@item.Rate</td>
-                                }
-                                @foreach (var item in product.Counts)
-                                {
-                                    <td>@item.Count</td>
-                                }
+                                <td>
+                                    @foreach (var item in product.Rates)
+                                    {
+                                        @item.Rate
+                                    }
+                                </td>
+                                <td>
+                                    @foreach (var item in product.Counts)
+                                    {
+                                        @item.Count
+                                    }
+                                </td>
 
-@*                                <td>
-                                    <a asp-route="admin-product-add">add</a>
-                                </td>
-                                <td>
-                                    <a class="text-warning" asp-route="admin-product-update" asp-route-id="@product.Id">edit</a>
-                                </td>
-                                <td>
-                                    <form method="POST" asp-route="admin-product-delete" asp-route-id="@product.Id" id="update-@product.Id">
-                                    </form>
-                                    <button class="btn btn-danger" type="submit" form="update-@product.Id">delete</button>
-                                </td>*@
+                                @*                                <td>
+                            <a asp-route="admin-product-add">add</a>
+                            </td>
+                            <td>
+                            <a class="text-warning" asp-route="admin-product-update" asp-route-id="@product.Id">edit</a>
+                            </td>
+                            <td>
+                            <form method="POST" asp-route="admin-product-delete" asp-route-id="@product.Id" id="update-@product.Id">
+                            </form>
+                            <button class="btn btn-danger" type="submit" form="update-@product.Id">delete</button>
+                            </td>*@
                             </tr>
                         }
                     </tbody>
