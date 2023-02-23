@@ -2,13 +2,13 @@
 {
     public class CountViewModel
     {
-        public CountViewModel(int id, int count)
+        public CountViewModel(int id, decimal count)
         {
             Id = id;
             Count = count;
         }
 
         public int Id { get; set; }
-        public int Count { get; set; }
+        public decimal Count { get; set; }
     }
 }

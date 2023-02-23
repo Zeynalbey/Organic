@@ -1,0 +1,38 @@
+﻿@using Organic.Areas.Admin.ViewModels.Product
+@model List<ListItemViewModel>
+
+<div class="col-12">
+    <div class="bg-secondary rounded h-100 p-4">
+        <h6 class="mb-4">Last added 5 products</h6>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">ProductName</th>
+                        <th scope="col">Category</th>
+                        <th scope="col">Count</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">CreatedAt</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var product in Model)
+                    {
+                        <tr>
+                            <td>@product.Name</td>
+                            <td>@product.Categoryname</td>
+                            <td>
+                                @foreach (var item in product.Counts)
+                                {
+                                    @item.Count
+                                }
+                            </td>
+                            <td>@product.Price</td>
+                            <td>@product.CreatedAt.ToString("dd/MM/yyyy")</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

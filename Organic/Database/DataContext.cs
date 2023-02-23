@@ -31,6 +31,7 @@ namespace Organic.Database
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Product>().Property(x => x.Price).HasColumnType("decimal(18,2)");
+            modelBuilder.Entity<ProductCount>().Property(x => x.Count).HasColumnType("decimal(18,2)");
             modelBuilder.ApplyConfigurationsFromAssembly<Program>();
         }
     }

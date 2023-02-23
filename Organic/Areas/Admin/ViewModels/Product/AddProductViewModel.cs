@@ -1,15 +1,23 @@
 ﻿using Organic.Areas.Admin.ViewModels.Product.Category;
+using System.ComponentModel.DataAnnotations;
 
 namespace Organic.Areas.Admin.ViewModels.Product
 {
     public class AddProductViewModel
     {
+        [Required]
         public string? Name { get; set; }
+        [Required]
         public decimal Price { get; set; }
+        [Required]
         public string? Info { get; set; }
-        public int Count { get; set; }
+        [Required]
+        public decimal Count { get; set; }
+        [Required]
         public List<int>? TagIds { get; set; }
-        public List<int>? CategoryIds { get; set; }
+        [Required]
+        public int CategoryId { get; set; }
+
         public List<CategoryListViewModel>? Categories { get; set; }
         public List<TagListViewModel>? Tags { get; set; }
 
