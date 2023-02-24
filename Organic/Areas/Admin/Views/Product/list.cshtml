@@ -18,6 +18,7 @@
                             <th scope="col">Count(kq/litr)</th>
 
                             <th scope="col">Add product</th>
+                            <th scope="col">Add image</th>
                             <th scope="col">Edit</th>
                             <th scope="col">Delete</th>
                         </tr>
@@ -45,7 +46,10 @@
                                 </td>
 
                                 <td>
-                                    <a asp-route="admin-product-add">add</a>
+                                    <a asp-route="admin-product-add">Add</a>
+                                </td>
+                                <td>
+                                    <a asp-route="admin-product-image-add" asp-route-productId = "@product.Id">Add image</a>
                                 </td>
                                 <td>
                                     <a class="text-warning" asp-route="admin-product-update" asp-route-id="@product.Id">edit</a>

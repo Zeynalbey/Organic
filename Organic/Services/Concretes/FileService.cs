@@ -43,7 +43,7 @@ namespace Organic.Services.Concretes
 
         public async Task DeleteAsync(string? fileName, UploadDirectory uploadDirectory)
         {
-            var deletePath = Path.Combine(GetUploadDirectory(uploadDirectory), fileName);
+            var deletePath = Path.Combine(GetUploadDirectory(uploadDirectory), fileName!);
 
             await Task.Run(() => File.Delete(deletePath));
         }
@@ -54,8 +54,6 @@ namespace Organic.Services.Concretes
 
             switch (uploadDirectory)
             {
-                case UploadDirectory.User:
-                    return Path.Combine(startPath, "users");
                 case UploadDirectory.Slider:
                     return Path.Combine(startPath, "sliders");
                 case UploadDirectory.Product:
@@ -76,8 +74,6 @@ namespace Organic.Services.Concretes
 
             switch (uploadDirectory)
             {
-                case UploadDirectory.User:
-                    return $"{initialSegment}/users/{fileName}";
                 case UploadDirectory.Slider:
                     return $"{initialSegment}/sliders/{fileName}";
                 case UploadDirectory.Product:

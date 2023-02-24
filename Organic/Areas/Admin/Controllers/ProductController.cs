@@ -151,6 +151,8 @@ namespace Organic.Areas.Admin.Controllers
             var product = await _dbContext.Products
                 .Include(b => b.ProductTags).FirstOrDefaultAsync(b=>b.Id == id);
 
+            var productCount = await _dbContext.ProductCounts.FirstAsync(p => p.Id == product.Id);
+
             if (product is null)
             {
                 return NotFound();
@@ -162,13 +164,8 @@ namespace Organic.Areas.Admin.Controllers
                 Name = product.Name,
                 Price = product.Price,
                 Info = product.Info,
-                Count = _dbContext.ProductCounts!.Select(co=>co.Id == product.Id).Count(),     //count db-dan niye gelmir? ????????
-
-
+                Count = productCount.Count,                    
                 CategoryId = product.CategoryID,
-
-                
-
                 Categories = await _dbContext.Categories.Select(c => new CategoryListViewModel(c.Id, c.Name)).ToListAsync(),
                 Tags = await _dbContext.Tags.Select(c => new TagListViewModel(c.Id, c.Name)).ToListAsync(),
                 TagIds = product.ProductTags!.Select(pt => pt.TagId).ToList()
@@ -177,14 +174,15 @@ namespace Organic.Areas.Admin.Controllers
             return View(model);
         }
 
-       
-
         [HttpPost("update/{id}", Name = "admin-product-update")]
         public async Task<IActionResult> UpdateAsync(UpdateProductViewModel model)
         {
             var product = await _dbContext.Products
-                .Include(b => b.ProductCounts)
                 .Include(p => p.ProductTags).FirstOrDefaultAsync(p => p.Id == model.Id);
+
+            var productCount = await _dbContext.ProductCounts.FirstAsync(p => p.Id == product.Id);
+
+            #region Errors
 
             if (product is null)
             {
@@ -196,8 +194,6 @@ namespace Organic.Areas.Admin.Controllers
                 return GetView(model);
             }
 
-            #region Errors
-
             foreach (var id in model.TagIds!)
             {
                 if (!await _dbContext.Tags.AnyAsync(t => t.Id == id))
@@ -208,50 +204,6 @@ namespace Organic.Areas.Admin.Controllers
             }
 
             #endregion
-
-            UpdateProductAsync();
-
-            await _dbContext.SaveChangesAsync();
-
-            return RedirectToRoute("admin-product-list");
-
-            async Task UpdateProductAsync()
-            {
-                product.Name = model.Name;
-                product.Info = model.Info;
-                product.Price = model.Price;
-                product.CategoryID = model.CategoryId;
-                
-
-                var productCount = new ProductCount
-                {
-                    Id = product.Id,                         ////////////////// count deyismir.///////////////////////
-                    Count = model.Count
-                };
-
-                _dbContext.ProductCounts.Update(productCount);
-                
-                
-
-                var DbTag = product.ProductTags!.Select(bc => bc.TagId).ToList();
-                var RemoveTag = DbTag.Except(model.TagIds).ToList();
-                var AddTag = model.TagIds.Except(DbTag).ToList();
-
-                product.ProductTags!.RemoveAll(bc => RemoveTag.Contains(bc.TagId));
-
-
-                foreach (var tagId in AddTag)
-                {
-                    var productTag = new ProductTag
-                    {
-                        TagId = tagId,
-                        Product = product,
-                    };
-
-                    await _dbContext.ProductTags.AddAsync(productTag);
-                }
-        
-            }
 
             #region GetView
 
@@ -268,6 +220,35 @@ namespace Organic.Areas.Admin.Controllers
                 return View(model);
             }
             #endregion
+
+            var productId = product.Id;
+            var count = model.Count;
+            product.Name = model.Name;
+            product.Info = model.Info;
+            product.Price = model.Price;
+            product.CategoryID = model.CategoryId;
+            productCount.Count = model.Count;
+
+            var DbTag = product.ProductTags!.Select(bc => bc.TagId).ToList();
+            var RemoveTag = DbTag.Except(model.TagIds).ToList();
+            var AddTag = model.TagIds.Except(DbTag).ToList();
+
+            product.ProductTags!.RemoveAll(bc => RemoveTag.Contains(bc.TagId));
+
+            foreach (var tagId in AddTag)
+            {
+                var productTag = new ProductTag
+                {
+                    TagId = tagId,
+                    Product = product,
+                };
+
+                await _dbContext.ProductTags.AddAsync(productTag);
+            }
+
+            await _dbContext.SaveChangesAsync();
+
+            return RedirectToRoute("admin-product-list");
         }
 
         #endregion

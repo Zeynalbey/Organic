@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Organic.Areas.Admin.ViewModels.Authentication;
 using Organic.Areas.Admin.ViewModels.User;
-using Organic.Areas.Admin.ViewModels.User.UserImage;
 using Organic.Contracts.File;
 using Organic.Database;
 using Organic.Database.Models;
@@ -38,10 +37,7 @@ namespace Organic.Areas.Admin.Controllers
               u.LastName,
               u.Email,
               u.Role!.Name!,
-              u.Password!,
-              u.Images!.Take(1).FirstOrDefault() != null
-                   ? _fileService.GetFileUrl(u.Images!.Take(1).FirstOrDefault()!.ImageNameInFileSystem, UploadDirectory.User)
-                   : String.Empty
+              u.Password!
               )).ToListAsync();
 
             return View(user);

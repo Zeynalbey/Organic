@@ -1,5 +1,5 @@
-﻿@using Organic.Areas.Admin.ViewModels.User.UserImage
-@model UserImageViewModel
+﻿@using Organic.Areas.Admin.ViewModels.Product.Image
+@model ImageViewModel
 
 <div>
     <div class="row">
@@ -8,12 +8,12 @@
                 <div class="float-end">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item">
-                            <a asp-route="admin-user-list">users</a>
+                            <a asp-route="admin-product-list">Products</a>
                         </li><!--end nav-item-->
-                        <li class="breadcrumb-item active">user image</li>
+                        <li class="breadcrumb-item active">add image</li>
                     </ol>
                 </div>
-                <h4 class="page-title">users</h4>
+                <h4 class="page-title">Products</h4>
             </div><!--end page-title-box-->
         </div><!--end col-->
     </div>
@@ -22,7 +22,7 @@
 <div class="col-lg-12">
     <div class="row justify-content-end">
         <div class="">
-            <a asp-route="admin-user-image-add" asp-route-userId="@Model.UserId"  target="_blank" class="btn btn-secondary">Add new user image</a>
+            <a asp-route="admin-product-image-add" asp-route-userId="@Model.ProductId"  target="_blank" class="btn btn-secondary">Add new user image</a>
         </div>
     </div>
 </div>
@@ -44,9 +44,9 @@
                             <tr>
                                 <td><img src="~/@userImage.ImageUrL" width="20%" /></td>
                                 <td class="text-end">
-                                    <a asp-route="admin-user-image-update" asp-route-id="@userImage.Id"><i class="las la-pen text-secondary font-16"></i></a>
-                                    <form method="POST" asp-route="admin-user-image-delete" asp-route-userId="@Model.UserId" asp-route-userImageId="@userImage.Id" id="user-image-form-@userImage.Id"></form>
-                                    <button class="btn-danger" type="submit" form="user-image-form-@userImage.Id">
+                                    <a asp-route="admin-product-image-update" asp-route-id="@userImage.Id"><i class="las la-pen text-secondary font-16"></i></a>
+                                    <form method="POST" asp-route="admin-product-image-delete" asp-route-productId="@Model.ProductId" asp-route-userImageId="@userImage.Id" id="product-image-form-@userImage.Id"></form>
+                                    <button class="btn-danger" type="submit" form="product-image-form-@userImage.Id">
                                         delete
                                     </button>
                                 </td>

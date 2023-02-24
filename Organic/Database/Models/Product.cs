@@ -14,15 +14,10 @@ namespace Organic.Database.Models
         public Category? Category { get; set; }
 
         public List<ProductTag>? ProductTags { get; set; }
-
         public List<ProductImage>? ProductImages { get; set; }
-
         public List<Slider>? Sliders { get; set; }
-
         public List<BasketProduct>? BasketProducts { get; set; }
-
         public List<ProductCount>? ProductCounts { get; set; }
-
         public List<ProductRate>? ProductRates { get; set; }
     }
 }

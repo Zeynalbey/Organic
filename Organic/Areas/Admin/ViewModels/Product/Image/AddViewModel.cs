@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Organic.Areas.Admin.ViewModels.User.UserImage
+namespace Organic.Areas.Admin.ViewModels.Product.Image
 {
     public class AddViewModel
     {

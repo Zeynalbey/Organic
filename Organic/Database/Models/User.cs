@@ -17,8 +17,6 @@ namespace Organic.Database.Models
         public int RoleId { get; set; }
         public Role? Role { get; set; }
 
-        public List<UserImage>? Images { get; set; }
-
         public UserActivation? UserActivation { get; set; }
 
     }
