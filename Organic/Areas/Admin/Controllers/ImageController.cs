@@ -24,6 +24,7 @@ namespace Organic.Areas.Admin.Controllers
             _dbContext = dbContext;
             _fileService = fileService;
         }
+
         #region List
 
         [HttpGet("{productId}/image/list", Name = "admin-product-image-list")]
@@ -91,27 +92,27 @@ namespace Organic.Areas.Admin.Controllers
 
         #endregion
 
-        //#region Delete
+        #region Delete
 
-        //[HttpPost("{userId}/image/{userImageId}/delete", Name = "admin-user-image-delete")]
-        //public async Task<IActionResult> DeleteAsync(Guid userId, Guid userImageId)
-        //{
-        //    var userImage = await _dbContext.UserImages
-        //        .FirstOrDefaultAsync(bi => bi.Id == userImageId && bi.UserId == userId);
-        //    if (userImage is null)
-        //    {
-        //        return NotFound();
-        //    }
+        [HttpPost("{productId}/image/{imageId}/delete", Name = "admin-product-image-delete")]
+        public async Task<IActionResult> DeleteAsync(int productId, int imageId)
+        {
+            var image = await _dbContext.ProductImages
+                .FirstOrDefaultAsync(bi => bi.Id == imageId && bi.ProductId == productId);
+            if (image is null)
+            {
+                return NotFound();
+            }
 
-        //    await _fileService.DeleteAsync(userImage.ImageNameInFileSystem, UploadDirectory.User);
+            await _fileService.DeleteAsync(image.ImageNameInFileSystem, UploadDirectory.Product);
 
-        //    _dbContext.UserImages.Remove(userImage);
-        //    await _dbContext.SaveChangesAsync();
+            _dbContext.ProductImages.Remove(image);
+            await _dbContext.SaveChangesAsync();
 
-        //    return RedirectToRoute("admin-user-image-list", new { userId = userId });
-        //}
+            return RedirectToRoute("admin-product-image-list", new { productId = productId });
+        }
 
-        //#endregion
+        #endregion
 
     }
 }

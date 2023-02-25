@@ -37,10 +37,10 @@ namespace Organic.Services.Concretes
             _emailService = emailService;
             _urlHelper = urlHelper;
 
-            //double activationValidityMonute =
-            //    Convert.ToDouble(configuration.GetRequiredSection("ActivationValidityMinute").Value);
+            double activationValidityMonute =
+                Convert.ToDouble(configuration.GetRequiredSection("ActivationValidityMinute").Value);
 
-            //_activationExpireDate = DateTime.Now.AddMinutes(activationValidityMonute);
+            _activationExpireDate = DateTime.Now.AddMinutes(activationValidityMonute);
         }
 
 
