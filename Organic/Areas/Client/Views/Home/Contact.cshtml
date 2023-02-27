@@ -1,0 +1,93 @@
+﻿@using Organic.Areas.Client.ViewModels.Home.Contact
+@model CreateViewModel
+
+<!--Hero Section-->
+<div class="hero-section hero-background">
+    <h1 class="page-title">Organic Fruits</h1>
+</div>
+
+<!--Navigation section-->
+<div class="container">
+    <nav class="biolife-nav nav-86px">
+        <ul>
+            <li class="nav-item"><a asp-route="client-home-index" class="permal-link">Ana Səhifə</a></li>
+            <li class="nav-item"><span class="current-page">Əlaqə</span></li>
+        </ul>
+    </nav>
+</div>
+
+<div class="page-contain contact-us">
+
+    <!-- Main content -->
+    <div id="main-content" class="main-content">
+        <div class="container">
+
+            <div class="row">
+
+                <!--Contact info-->
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <div class="contact-info-container sm-margin-top-27px xs-margin-bottom-60px xs-margin-top-60px">
+                        <h4 class="box-title">Bizimlə Əlaqə</h4>
+                        <p class="frst-desc">Artıq 5 ildən çoxdur, xidmətinizdəyik. Nə sualınız olsa, buyurun yazın.</p>
+                        <ul class="addr-info">
+                            <li>
+                                <div class="if-item">
+                                    <b class="tie">Əlaqə (WhatsApp):</b>
+                                    <p class="dsc">(055) 215 92 21</p>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="if-item">
+                                    <b class="tie">Email:</b>
+                                    <p class="dsc">info@kendchi.az</p>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="if-item">
+                                    <b class="tie">Iş Vaxtı:</b>
+                                    <p class="dsc">8:00 - dan  20:00 - dək</p>
+                                </div>
+                            </li>
+                        </ul>
+                        <div class="biolife-social inline">
+                            <ul class="socials">
+                                <li><a href="#" title="twitter" class="socail-btn"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                                <li><a href="#" title="facebook" class="socail-btn"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                                <li><a href="#" title="pinterest" class="socail-btn"><i class="fa fa-pinterest" aria-hidden="true"></i></a></li>
+                                <li><a href="#" title="youtube" class="socail-btn"><i class="fa fa-youtube" aria-hidden="true"></i></a></li>
+                                <li><a href="#" title="instagram" class="socail-btn"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!--Contact form-->
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <div class="contact-form-container sm-margin-top-112px">
+                        <form method="post" asp-route="client-home-contact" name="frm-contact">
+                            <p class="form-row">
+                                <input asp-for="Name" class="form-control" placeholder="Ad">
+                                <span asp-validation-for="Name" class="text-danger"></span>
+                            </p>
+                            <p class="form-row">
+                                <input asp-for="Email" class="form-control" placeholder="Email">
+                                <span asp-validation-for="Email" class="text-danger"></span>
+                            </p>
+                            <p class="form-row">
+                                <input asp-for="PhoneNumber" class="form-control" placeholder="Telefon nömrəsi">
+                                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                            </p>
+                            <p class="form-row">
+                                <input asp-for="Message" class="form-control" placeholder="Mesaj">
+                                <span asp-validation-for="Message" class="text-danger"></span>
+                            </p>
+                            <p class="form-row">
+                                <button class="btn btn-submit" type="submit">Göndər</button>
+                            </p>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

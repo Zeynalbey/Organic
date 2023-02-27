@@ -1,18 +1,10 @@
-﻿using Backend_Final.Areas.Client.ViewModels.Authentication;
-using Backend_Final.Database;
-using Backend_Final.Database.Models;
-using Backend_Final.Services.Abstracts;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
+﻿using Organic.Areas.Client.ViewModels.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Organic.Areas.Client.ViewModels.Authentication;
 using Organic.Database;
 using Organic.Services.Abstracts;
-using System.Data;
-using System.Security.Claims;
 
-namespace Backend_Final.Controllers
+namespace Organic.Controllers
 {
     [Area("client")]
     [Route("auth")]
@@ -34,7 +26,7 @@ namespace Backend_Final.Controllers
         {
             if (_userService.IsAuthenticated)
             {
-                return RedirectToRoute("client-account-dashboard");
+                return RedirectToRoute("client-home-index");
             }
 
             return View(new LoginViewModel());
@@ -79,6 +71,7 @@ namespace Backend_Final.Controllers
 
         [HttpGet("register", Name = "client-auth-register")]
         public ViewResult Register()
+        
         {
             return View(new RegisterViewModel());
         }

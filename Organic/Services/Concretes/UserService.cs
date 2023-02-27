@@ -1,17 +1,15 @@
-﻿
-using Organic.Contracts.Email;
-using Organic.Contracts.Identity;
+﻿using Organic.Contracts.Identity;
 using Organic.Database;
 using Organic.Database.Models;
 using Organic.Exceptions;
 using Organic.Services.Abstracts;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json.Linq;
 using System.Security.Claims;
 using System.Text.Json;
+using Organic.Areas.Client.ViewModels.Authentication;
+using Organic.Areas.Client.ViewModels.Basket;
 
 namespace Organic.Services.Concretes
 {
@@ -61,6 +59,10 @@ namespace Organic.Services.Concretes
             return await _dataContext.Users.AnyAsync(u => u.Email == email && u.IsEmailConfirmed);
         }
 
+        //public async Task<bool> CheckRoleAsync(int roleId)
+        //{
+        //    return CurrentUser.RoleId == roleId;
+        //}
 
         public string GetCurrentUserFullName()
         {
@@ -107,65 +109,66 @@ namespace Organic.Services.Concretes
             await _httpContextAccessor.HttpContext!.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
         }
 
-        //public async Task CreateAsync(RegisterViewModel model)
-        //{
-        //    var user = await CreateUserAsync();
-        //    var basket = await CreateBasketAsync();
-        //    await CreteBasketProductsAsync();
+        public async Task CreateAsync(RegisterViewModel model)
+        {
+            var user = await CreateUserAsync();
+            var basket = await CreateBasketAsync();
+            await CreteBasketProductsAsync();
 
-        //    await _userActivationService.SendActivationUrlAsync(user);
+            await _userActivationService.SendActivationUrlAsync(user);
 
-        //    await _dataContext.SaveChangesAsync();
+            await _dataContext.SaveChangesAsync();
 
 
-        //    async Task<User> CreateUserAsync()
-        //    {
-        //        var user = new User
-        //        {
-        //            FirstName = model.FirstName,
-        //            LastName = model.LastName,
-        //            Email = model.Email,
-        //            Password = model.Password,
-        //        };
-        //        await _dataContext.Users.AddAsync(user);
+            async Task<User> CreateUserAsync()
+            {
+                var user = new User
+                {
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    Email = model.Email,
+                    Password = model.Password,
+                    RoleId = 3
+                };
+                await _dataContext.Users.AddAsync(user);
 
-        //        return user;
-        //    }
+                return user;
+            }
 
-        //    async Task<Basket> CreateBasketAsync()
-        //    {
-        //        //Create basket process
-        //        var basket = new Basket
-        //        {
-        //            User = user,
-        //        };
-        //        await _dataContext.Baskets.AddAsync(basket);
+            async Task<Basket> CreateBasketAsync()
+            {
+                //Create basket process
+                var basket = new Basket
+                {
+                    User = user,
+                };
+                await _dataContext.Baskets.AddAsync(basket);
 
-        //        return basket;
-        //    }
+                return basket;
+            }
 
-        //    async Task CreteBasketProductsAsync()
-        //    {
-        //        //Add products to basket if cookie exists
-        //        var productCookieValue = _httpContextAccessor.HttpContext!.Request.Cookies["products"];
-        //        if (productCookieValue is not null)
-        //        {
-        //            var productsCookieViewModel = JsonSerializer.Deserialize<List<ProductCookieViewModel>>(productCookieValue);
-        //            foreach (var productCookieViewModel in productsCookieViewModel)
-        //            {
-        //                var book = await _dataContext.Books.FirstOrDefaultAsync(b => b.Id == productCookieViewModel.Id);
-        //                var basketProduct = new BasketProduct
-        //                {
-        //                    Basket = basket,
-        //                    BookId = book!.Id,
-        //                    Quantity = productCookieViewModel.Quantity,
-        //                };
+            async Task CreteBasketProductsAsync()
+            {
+                //Add products to basket if cookie exists
+                var productCookieValue = _httpContextAccessor.HttpContext!.Request.Cookies["products"];
+                if (productCookieValue is not null)
+                {
+                    var productsCookieViewModel = JsonSerializer.Deserialize<List<ProductCookieViewModel>>(productCookieValue);
+                    foreach (var productCookieViewModel in productsCookieViewModel!)
+                    {
+                        var product = await _dataContext.Products.FirstOrDefaultAsync(b => b.Id == productCookieViewModel.Id);
+                        var basketProduct = new BasketProduct
+                        {
+                            Basket = basket,
+                            ProductId = product!.Id,
+                            Quantity = productCookieViewModel.Quantity,
+                        };
 
-        //                await _dataContext.BasketProducts.AddAsync(basketProduct);
-        //            }
-        //        }
-        //    }
+                        await _dataContext.BasketProducts.AddAsync(basketProduct);
+                    }
+                }
+            }
 
-        //}
+        }
     }
 }

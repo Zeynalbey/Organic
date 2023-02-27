@@ -1,5 +1,6 @@
 ﻿using FluentValidation.AspNetCore;
 using FluentValidation;
+using Organic.Options;
 
 namespace Organic.Infrastructure.Configurations
 {
@@ -10,7 +11,7 @@ namespace Organic.Infrastructure.Configurations
             //var emailConfig = configuration.GetSection("EmailConfiguration").Get<EmailConfigOptions>();
             //services.AddSingleton(emailConfig);
 
-            //services.Configure<EmailConfigOptions>(configuration.GetSection(nameof(EmailConfigOptions)));
+            services.Configure<EmailConfigOptions>(configuration.GetSection(nameof(EmailConfigOptions)));
         }
     }
 }

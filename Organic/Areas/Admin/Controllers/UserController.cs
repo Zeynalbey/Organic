@@ -10,6 +10,7 @@ using Organic.Services.Abstracts;
 using System.Drawing;
 using System.Net;
 using Organic.Areas.Admin.ViewModels.User;
+using Organic.Contracts.Identity;
 
 namespace Organic.Areas.Admin.Controllers
 {
@@ -20,11 +21,13 @@ namespace Organic.Areas.Admin.Controllers
     {
         private readonly DataContext _dbContext;
         private readonly IFileService _fileService;
+        private readonly IUserService _userService;
 
-        public UserController(DataContext dbContext, IFileService fileService)
+        public UserController(DataContext dbContext, IFileService fileService, IUserService userService)
         {
             _dbContext = dbContext;
             _fileService = fileService;
+            _userService = userService;
         }
 
         #region List
@@ -99,19 +102,24 @@ namespace Organic.Areas.Admin.Controllers
         #region UpdateUser
 
         [HttpGet("update/{id}", Name = "admin-user-update")]
-        public async Task<IActionResult> UpdateAsync([FromRoute] Guid id)
+        public async Task<IActionResult> UpdateAsync([FromRoute] Guid id, int roleId)
         {
             var user = await _dbContext.Users.FirstOrDefaultAsync(b => b.Id == id);
+            
             if (user is null)
             {
                 return NotFound();
             }
+
+            
 
             var model = new UpdateViewModel
             {
                 Id = user.Id,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
+                Email= user.Email,
+                Password= user.Password,
                 RoleId = user.RoleId,
                 Roles = _dbContext.Roles
                     .Select(r => new RoleListViewModel(r.Id, r.Name))
@@ -125,7 +133,7 @@ namespace Organic.Areas.Admin.Controllers
         public async Task<IActionResult> UpdateAsync(UpdateViewModel model)
         {
             var user = await _dbContext.Users.FirstOrDefaultAsync(b => b.Id == model.Id);
-
+            
             if (user is null)
             {
                 return NotFound();
@@ -136,9 +144,17 @@ namespace Organic.Areas.Admin.Controllers
                 return GetView(model);
             }
 
+            //var role = await _userService.CheckRoleAsync(user.RoleId);
+
+            //if (role)
+            //{
+            //    ModelState.AddModelError(string.Empty, "Admin can't update!");
+            //    return GetView(model);
+            //}
+
             if (!_dbContext.Roles.Any(a => a.Id == model.RoleId))
             {
-                ModelState.AddModelError(string.Empty, "Role is not found");
+                ModelState.AddModelError(string.Empty, "Role is not found!");
                 return GetView(model);
             }
 
