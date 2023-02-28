@@ -52,9 +52,18 @@ namespace Organic.Services.Concretes
             var token = GenerateActivationToken();
             var activationUrl = GenerateUrl(token, EMAIL_CONFIRMATION_ROUTE_NAME);
             await CreateUserActivationAsync(user, token, activationUrl, _activationExpireDate);
-            var activationMessageDto = PrepareActivationMessage(user.Email!, activationUrl);
+            if(user.IsEmailConfirmed == true)
+            {
+                var activationMessageDto1 = PrepareActivationMessage1(user.Email!, activationUrl);
+                _emailService.Send(activationMessageDto1);
+            }
+            else
+            {
+                var activationMessageDto = PrepareActivationMessage(user.Email!, activationUrl);
 
-            _emailService.Send(activationMessageDto);
+                _emailService.Send(activationMessageDto);
+            }
+            
         }
 
 
@@ -85,6 +94,16 @@ namespace Organic.Services.Concretes
         }
 
         private MessageDto PrepareActivationMessage(string email, string activationUrl)
+        {
+            string body = EmailMessages.Body.ACTIVATION_MESSAGE
+                .Replace(EmailMessageKeywords.ACTIVATION_URL, activationUrl);
+
+            string subject = EmailMessages.Subject.ACTIVATION_MESSAGE;
+
+            return new MessageDto(email, subject, body);
+        }
+
+        private MessageDto PrepareActivationMessage1(string email, string activationUrl)
         {
             string body = EmailMessages.Body.ACTIVATION_MESSAGE
                 .Replace(EmailMessageKeywords.ACTIVATION_URL, activationUrl);

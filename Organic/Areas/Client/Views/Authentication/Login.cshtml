@@ -1,6 +1,7 @@
 ﻿@using Organic.Areas.Client.ViewModels.Authentication
-@model RegisterViewModel
+@model LoginViewModel
 
+<!--Hero Section-->
 <div class="hero-section hero-background">
     <h1 class="page-title">Kənd Məhsulları</h1>
 </div>
@@ -9,31 +10,18 @@
     <nav class="biolife-nav">
         <ul>
             <li class="nav-item"><a href="index-2.html" class="permal-link">Ana Səhifə</a></li>
-            <li class="nav-item"><span class="current-page">Qeydiyyat</span></li>
+            <li class="nav-item"><span class="current-page">Login</span></li>
         </ul>
     </nav>
 </div>
 
 <div class="page-contain login-page">
-
-    <!-- Main content -->
     <div id="main-content" class="main-content">
         <div class="container">
-
             <div class="row">
                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <div class="signin-container">
-                        <form method="post" asp-route="client-auth-register">
-                            <p class="form-row">
-                                <label for="LastName">Ad:<span class="requite">*</span></label>
-                                <input asp-for="FirstName" class="txt-input">
-                                <span asp-validation-for="FirstName" class="text-danger"></span>
-                            </p>
-                            <p class="form-row">
-                                <label>Soyad:<span class="requite">*</span></label>
-                                <input asp-for="LastName" type="text" id="fid-pass" value="" class="txt-input">
-                                <span asp-validation-for="LastName" class="text-danger"></span>
-                            </p>
+                        <form method="post" asp-route="client-auth-login">
                             <p class="form-row">
                                 <label>Email:<span class="requite">*</span></label>
                                 <input asp-for="Email" type="email" id="fid-pass" name="email" value="" class="txt-input">
@@ -44,16 +32,25 @@
                                 <input asp-for="Password" type="password" id="fid-pass" name="password" value="" class="txt-input">
                                 <span asp-validation-for="Password" class="text-danger"></span>
                             </p>
-                            <p class="form-row">
-                                <label for="Password">Təkrar şifrə:<span class="requite">*</span></label>
-                                <input asp-for="ConfirmPassword"  class="txt-input">
-                                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
-                            </p>
-
                             <p class="form-row wrap-btn">
-                                <button class="btn btn-submit btn-bold" type="submit">Qeydiyyat</button>
+                                <button class="btn btn-submit btn-bold" type="submit">Giriş</button>
+                                <a href="#" class="link-to-help">Şifrəni unutmuşam</a>
                             </p>
                         </form>
+                    </div>
+                </div>
+
+
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <div class="register-in-container">
+                        <div class="intro">
+                            <h4 class="box-title">Qeydiyyatınız yoxdursa, qeydiyyatdan keçin.</h4>
+                            <ul class="lis">
+                                <li>İstediyiniz məhsulu sifariş edə biləcksiniz.</li>
+                                <li>Keçmiş sifarişlərinizi görəcəksiniz.</li>
+                            </ul>
+                            <a asp-route="client-auth-register" class="btn btn-bold">Qeydiyyat</a>
+                        </div>
                     </div>
                 </div>
 

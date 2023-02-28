@@ -10,6 +10,10 @@ using System.Security.Claims;
 using System.Text.Json;
 using Organic.Areas.Client.ViewModels.Authentication;
 using Organic.Areas.Client.ViewModels.Basket;
+using Microsoft.AspNetCore.Identity;
+using System;
+using Microsoft.AspNetCore.Mvc;
+using Org.BouncyCastle.Security;
 
 namespace Organic.Services.Concretes
 {
@@ -59,11 +63,6 @@ namespace Organic.Services.Concretes
             return await _dataContext.Users.AnyAsync(u => u.Email == email && u.IsEmailConfirmed);
         }
 
-        //public async Task<bool> CheckRoleAsync(int roleId)
-        //{
-        //    return CurrentUser.RoleId == roleId;
-        //}
-
         public string GetCurrentUserFullName()
         {
             return $"{CurrentUser.FirstName} {CurrentUser.LastName}";
@@ -103,6 +102,7 @@ namespace Organic.Services.Concretes
             var user = await _dataContext.Users.FirstAsync(u => u.Email == email && u.Password == password);
             await SignInAsync(user.Id, role);
         }
+
 
         public async Task SignOutAsync()
         {
@@ -170,5 +170,20 @@ namespace Organic.Services.Concretes
             }
 
         }
+
+        public async Task<bool> CheckEmailConfirmed1Async(string? email)
+        {
+            if (await _dataContext.Users.AnyAsync(u => u.Email == email && u.IsEmailConfirmed))
+            {
+                var user = await _dataContext.Users.FirstAsync(u => u.Email == email);
+                await _userActivationService.SendActivationUrlAsync(user);
+                return true;
+            }
+
+            return false;
+  
+        }
     }
+
+
 }

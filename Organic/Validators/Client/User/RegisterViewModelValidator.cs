@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using Organic.Areas.Client.ViewModels.Authentication;
 
-namespace Organic.Validators.Admin.User
+namespace Organic.Validators.Client.User
 {
     public class RegisterViewModelValidator : AbstractValidator<RegisterViewModel>
     {
@@ -9,12 +9,14 @@ namespace Organic.Validators.Admin.User
         {
             RuleFor(avm => avm.FirstName)
                 .NotEmpty().WithMessage("Adınızı qeyd edin.")
-                .MinimumLength(3).MaximumLength(18).WithMessage("Adın uzunluğu 3 və ya 18 arasında olmalıdır.");
+                .MinimumLength(3).WithMessage("Adın uzunluğu 3-dən çox olmalıdır.")
+                .MaximumLength(28).WithMessage("Adın uzunluğu 28-dən az olmalıdır.");
 
 
             RuleFor(avm => avm.LastName)
                 .NotEmpty().WithMessage("Soyadınızı qeyd edin.")
-                .MinimumLength(3).MaximumLength(28).WithMessage("Soyadın uzunluğu 3 və ya 28 arasında olmalıdır.");
+                .MinimumLength(3).WithMessage("Soyadın uzunluğu 3-dən çox olmalıdır.")
+                .MaximumLength(28).WithMessage("Soyadın uzunluğu 28-dən az olmalıdır.");
 
             RuleFor(avm => avm.Email)
                 .NotEmpty().WithMessage("Email bölməsini doldurun.")
@@ -22,7 +24,8 @@ namespace Organic.Validators.Admin.User
 
             RuleFor(avm => avm.Password)
                         .NotEmpty().WithMessage("Şifrə daxil edilməlidir")
-                        .MinimumLength(8).MaximumLength(15).WithMessage("Şifrənin uzunluğu 8 və ya 15 arasında olmalıdır")
+                        .MinimumLength(3).WithMessage("Şifrənin uzunluğu 8-den çox olmalıdır.")
+                        .MaximumLength(28).WithMessage("Şifrənin uzunluğu 15-den az olmalıdır.")
                         .Matches(@"[a-z]").WithMessage("Ən azı bir kiçik hərf olmalıdır")
                         .Matches(@"[A-Z]").WithMessage("Ən azı bir böyük hərf olmalıdır")
                         .Matches(@"\d").WithMessage("Ən azı bir rəqəm olmalıdır")

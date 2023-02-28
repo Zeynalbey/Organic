@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Organic.Database;
 using Organic.Services.Abstracts;
+using Microsoft.AspNetCore.Identity;
 
 namespace Organic.Controllers
 {
@@ -71,7 +72,7 @@ namespace Organic.Controllers
 
         [HttpGet("register", Name = "client-auth-register")]
         public ViewResult Register()
-        
+
         {
             return View(new RegisterViewModel());
         }
@@ -116,6 +117,31 @@ namespace Organic.Controllers
         }
 
         #endregion
+
+
+        [HttpGet("forgot", Name ="client-forgot-password")]
+        public async Task <IActionResult> ForgotPassword()
+        
+        {
+            return View();
+        }
+
+        [HttpPost("forgot", Name = "client-forgot-password")]
+        public async Task<ActionResult> ForgotPasswordAsync(ForgotPasswordViewModel model)
+        {
+            if (!await _userService.CheckEmailConfirmed1Async(model!.Email))
+            {
+                ModelState.AddModelError(String.Empty, "Email is not confirmed");
+                return View(model);
+
+            }
+
+            
+
+            return View(model);
+        }
+
+
     }
 
 }

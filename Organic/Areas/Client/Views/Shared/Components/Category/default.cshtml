@@ -1,0 +1,33 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using Organic.Areas.Client.ViewModels.Category
+@model List<CategoryViewModel>
+
+@foreach (var category in Model)
+{
+    <li class="menu-item menu-item-has-children has-child">
+        <a href="#" class="menu-name" data-title=""><i class="biolife-icon icon-honey"></i>@category.Name</a>
+        <ul class="sub-menu">
+            @foreach (var item in category.Products)
+            {
+                <li class="menu-item"><a href="#">@item.Name</a></li>
+            }        
+        </ul>
+    </li>
+}
+
+@*@foreach (var category in Model)
+{
+
+    <option>@category.Name</option>
+}*@
+
+@*<option value="-1" selected>All Categories</option>*@
+@*<option value="vegetables">Vegetables</option>
+<option value="fresh_berries">Fresh Berries</option>
+<option value="ocean_foods">Ocean Foods</option>
+<option value="butter_eggs">Butter & Eggs</option>
+<option value="fastfood">Fastfood</option>
+<option value="fresh_meat">Fresh Meat</option>
+<option value="fresh_onion">Fresh Onion</option>
+<option value="papaya_crisps">Papaya & Crisps</option>
+<option value="oatmeal">Oatmeal</option>*@
