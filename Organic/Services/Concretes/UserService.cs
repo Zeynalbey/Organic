@@ -171,18 +171,24 @@ namespace Organic.Services.Concretes
 
         }
 
-        public async Task<bool> CheckEmailConfirmed1Async(string? email)
+        public async Task<bool> CheckEmailandUserAsync(string? email)
         {
             if (await _dataContext.Users.AnyAsync(u => u.Email == email && u.IsEmailConfirmed))
             {
+                await ForgotPasswordUser(email);
+                return true;
+            }  
+
+            async Task ForgotPasswordUser(string email)
+            {
                 var user = await _dataContext.Users.FirstAsync(u => u.Email == email);
                 await _userActivationService.SendActivationUrlAsync(user);
-                return true;
             }
 
             return false;
-  
         }
+
+        
     }
 
 

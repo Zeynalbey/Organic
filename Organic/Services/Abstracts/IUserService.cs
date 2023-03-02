@@ -15,6 +15,6 @@ namespace Organic.Services.Abstracts
         Task CreateAsync(RegisterViewModel model);
         Task SignOutAsync();
         Task<bool> CheckEmailConfirmedAsync(string? email);
-        Task<bool> CheckEmailConfirmed1Async(string? email);
+        Task<bool> CheckEmailandUserAsync(string? email);
     }
 }

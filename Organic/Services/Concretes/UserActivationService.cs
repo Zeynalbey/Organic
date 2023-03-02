@@ -23,7 +23,7 @@ namespace Organic.Services.Concretes
         private readonly IUrlHelper _urlHelper;
         private readonly DateTime _activationExpireDate;
         private const string EMAIL_CONFIRMATION_ROUTE_NAME = "client-auth-activate";
-
+        private const string EMAIL_NEWPASSWORD_ROUTE_NAME = "client-auth-password";
 
         public UserActivationService(
             DataContext dataContext,
@@ -43,30 +43,6 @@ namespace Organic.Services.Concretes
             _activationExpireDate = DateTime.Now.AddMinutes(activationValidityMonute);
         }
 
-
-
-        public async Task SendActivationUrlAsync(User user)
-        {
-            ArgumentNullException.ThrowIfNull(user);
-
-            var token = GenerateActivationToken();
-            var activationUrl = GenerateUrl(token, EMAIL_CONFIRMATION_ROUTE_NAME);
-            await CreateUserActivationAsync(user, token, activationUrl, _activationExpireDate);
-            if(user.IsEmailConfirmed == true)
-            {
-                var activationMessageDto1 = PrepareActivationMessage1(user.Email!, activationUrl);
-                _emailService.Send(activationMessageDto1);
-            }
-            else
-            {
-                var activationMessageDto = PrepareActivationMessage(user.Email!, activationUrl);
-
-                _emailService.Send(activationMessageDto);
-            }
-            
-        }
-
-
         private string GenerateActivationToken()
         {
             return Guid.NewGuid().ToString();
@@ -80,17 +56,55 @@ namespace Organic.Services.Concretes
 
         private async Task<UserActivation> CreateUserActivationAsync(User user, string token, string activationUrL, DateTime expireDate)
         {
-            var userActivation = new UserActivation
+            var userActivation = await _dataContext.UserActivations.FirstOrDefaultAsync(u => u.UserId == user.Id);
+
+            if (userActivation is null)
             {
-                User = user,
-                ActivationToken = token,
-                ActivationUrl = activationUrL,
-                ExpireDate = expireDate,
-            };
+                var useractivation = new UserActivation
+                {
+                    User = user,
+                    ActivationToken = token,
+                    ActivationUrl = activationUrL,
+                    ExpireDate = expireDate,
+                };
 
-            await _dataContext.UserActivations.AddAsync(userActivation);
+                await _dataContext.UserActivations.AddAsync(useractivation);
+            }
+            else
+            {
+                userActivation.ActivationUrl = activationUrL;
+                userActivation.ActivationToken = token;
+                userActivation.ExpireDate = expireDate;
 
+                _dataContext.UserActivations.Update(userActivation);
+                await _dataContext.SaveChangesAsync();
+
+            }
             return userActivation;
+        }
+
+        public async Task SendActivationUrlAsync(User user)
+        {
+            ArgumentNullException.ThrowIfNull(user);
+            var token = GenerateActivationToken();
+
+
+            if (user.IsEmailConfirmed == true)
+            {
+                var activationUrl = GenerateUrl(token, EMAIL_NEWPASSWORD_ROUTE_NAME);
+                var activationMessageDto = PrepareNewPasswordMessage(user.Email!, activationUrl);
+                await CreateUserActivationAsync(user, token, activationUrl, _activationExpireDate);
+                _emailService.Send(activationMessageDto);
+            }
+            else
+            {
+                var activationUrl = GenerateUrl(token, EMAIL_CONFIRMATION_ROUTE_NAME);
+                var activationMessageDto = PrepareActivationMessage(user.Email!, activationUrl);
+                await CreateUserActivationAsync(user, token, activationUrl, _activationExpireDate);
+                _emailService.Send(activationMessageDto);
+            }
+
+            
         }
 
         private MessageDto PrepareActivationMessage(string email, string activationUrl)
@@ -103,14 +117,15 @@ namespace Organic.Services.Concretes
             return new MessageDto(email, subject, body);
         }
 
-        private MessageDto PrepareActivationMessage1(string email, string activationUrl)
+        private MessageDto PrepareNewPasswordMessage(string email, string activationUrl)
         {
-            string body = EmailMessages.Body.ACTIVATION_MESSAGE
+            string body = EmailMessages.Body.NEWPASSWORD_MESSAGE
                 .Replace(EmailMessageKeywords.ACTIVATION_URL, activationUrl);
 
-            string subject = EmailMessages.Subject.ACTIVATION_MESSAGE;
+            string subject = EmailMessages.Subject.NEWPASSWORD_MESSAGE;
 
             return new MessageDto(email, subject, body);
         }
+
     }
 }

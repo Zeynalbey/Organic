@@ -90,6 +90,62 @@ namespace Organic.Controllers
             return RedirectToRoute("client-auth-login");
         }
 
+        #endregion
+
+        #region ForgotPassword
+
+        [HttpGet("forgot", Name ="client-forgot-password")]
+        public IActionResult ForgotPassword()
+        {
+            return View();
+        }
+
+        [HttpPost("forgot", Name = "client-forgot-password")]
+        public async Task<IActionResult> ForgotPasswordAsync(ForgotPasswordViewModel model)
+        {
+            if (!await _userService.CheckEmailandUserAsync(model!.Email))
+            {
+                ModelState.AddModelError(String.Empty, "Email is not confirmed");
+                return View(model);
+            }
+
+            return RedirectToAction(nameof(EmailSendMessage));
+        }
+
+        [HttpGet("message", Name = "Email-Send-Message")]
+        public async Task<ActionResult> EmailSendMessage()
+        {
+            return View();
+        }
+
+        [HttpGet("password/{token}", Name = "client-auth-password")]
+        public async Task<IActionResult> PasswordActivate(string token)
+        {
+            return View(new NewPasswordViewModel());
+        }
+
+        [HttpPost("password/{token}", Name = "client-auth-password")]
+        public async Task<IActionResult> PasswordActivate([FromRoute] string token, NewPasswordViewModel model)
+        {
+            var userActivation = await _dbContext.UserActivations
+                .Include(ua => ua.User)
+                .FirstOrDefaultAsync(ua => ua.ActivationToken == token);
+
+            if (userActivation is null)
+            {
+                return NotFound();
+            }
+
+            if (DateTime.Now > userActivation!.ExpireDate)
+            {
+                return Ok("Token expired olub teessufler");
+            }
+
+            userActivation!.User!.Password = model.Password;
+            await _dbContext.SaveChangesAsync();
+            return RedirectToRoute("client-auth-login");
+        }
+
         [HttpGet("activate/{token}", Name = "client-auth-activate")]
         public async Task<IActionResult> ActivateAsync([FromRoute] string token)
         {
@@ -110,38 +166,11 @@ namespace Organic.Controllers
             }
 
             userActivation!.User!.IsEmailConfirmed = true;
-
             await _dbContext.SaveChangesAsync();
-
             return RedirectToRoute("client-auth-login");
         }
 
         #endregion
-
-
-        [HttpGet("forgot", Name ="client-forgot-password")]
-        public async Task <IActionResult> ForgotPassword()
-        
-        {
-            return View();
-        }
-
-        [HttpPost("forgot", Name = "client-forgot-password")]
-        public async Task<ActionResult> ForgotPasswordAsync(ForgotPasswordViewModel model)
-        {
-            if (!await _userService.CheckEmailConfirmed1Async(model!.Email))
-            {
-                ModelState.AddModelError(String.Empty, "Email is not confirmed");
-                return View(model);
-
-            }
-
-            
-
-            return View(model);
-        }
-
-
     }
 
 }

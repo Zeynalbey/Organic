@@ -4,7 +4,6 @@ namespace Organic.Services.Abstracts
 {
     public interface IUserActivationService
     {
-        Task SendActivationUrlAsync(User user); 
-
+        Task SendActivationUrlAsync(User user);
     }
 }
