@@ -4977,11 +4977,15 @@ body.open-overlay #overlay {
         margin-left: 1px;
     }
 
-    .sumary-product .product-attribute .qa-text {
-        font-size: 15px;
-        color: #666666;
-        margin-left: 17px;
-    }
+.review-count{
+    font-size: 15px;
+}
+
+.sumary-product .product-attribute .qa-text {
+    font-size: 15px;
+    color: #666666;
+    margin-left: 17px;
+}
 
     .sumary-product .product-attribute .category {
         font-size: 15px;
@@ -8042,7 +8046,7 @@ body.open-overlay #overlay {
 
     .slider-opt03__layout01 .media {
         z-index: 10;
-        background-image: url('../images/home-03/slide-01.jpg');
+        background-image: url('../images/home-03/1920X620-Banner-2-1.jpg');
         background-repeat: no-repeat;
         background-position: center center;
         background-size: cover;

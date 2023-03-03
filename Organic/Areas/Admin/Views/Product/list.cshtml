@@ -33,7 +33,14 @@
                                 <td>@product.Info</td>
                                 <td>@product.CreatedAt.ToString("dd,mm,yyyy")</td>
                                 <td>@product.Categoryname</td>
-                                <td>@Math.Round((product.Rating/product.RatingCount),1)</td>
+                                @if (product.RatingCount !=0)
+                                {
+                                    <td>@Math.Round((product.Rating/product.RatingCount),1)</td>
+                                }
+                                else
+                                {
+                                    <td>0</td>
+                                }
                                 <td>
                                     @foreach (var item in product.Counts)
                                     {

@@ -109,7 +109,7 @@ namespace Organic.Areas.Admin.Controllers
                     Name = model.Name,
                     Info = model.Info!,
                     Price = model.Price,
-                    CategoryID = model.CategoryId           //men ancaq birdene category secmek isteyirem. ikinci mumkun olmasin.
+                    CategoryID = model.CategoryId
                 };
 
                 _dbContext.Products.Add(product);
@@ -119,7 +119,7 @@ namespace Organic.Areas.Admin.Controllers
                 var productCount = new ProductCount
                 {
                     Id = product.Id,
-                    Count = model.Count
+                    Count = model.Count,
                 };
 
                 _dbContext.ProductCounts.Add(productCount);

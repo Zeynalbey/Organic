@@ -20,9 +20,12 @@ namespace Organic.Areas.Admin.ViewModels.Product
             Categoryname = categoryname;
             Counts = counts;
             Percents = percents;
-        }
 
-        public int Id { get; set; }
+
+
+    }
+
+    public int Id { get; set; }
         public string? Name { get; set; }
         public string? Info { get; set; }
         public decimal Rating { get; set; }
