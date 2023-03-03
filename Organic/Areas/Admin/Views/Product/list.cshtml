@@ -16,6 +16,7 @@
                             <th scope="col">Category Name</th>
                             <th scope="col">Rate</th>
                             <th scope="col">Count(kq/litr)</th>
+                            <th scope="col">DiscounPercent</th>
 
                             <th scope="col">Add product</th>
                             <th scope="col">Add image</th>
@@ -32,16 +33,17 @@
                                 <td>@product.Info</td>
                                 <td>@product.CreatedAt.ToString("dd,mm,yyyy")</td>
                                 <td>@product.Categoryname</td>
-                                <td>
-                                    @foreach (var item in product.Rates)
-                                    {
-                                        @item.Rate
-                                    }
-                                </td>
+                                <td>@Math.Round((product.Rating/product.RatingCount),1)</td>
                                 <td>
                                     @foreach (var item in product.Counts)
                                     {
                                         @item.Count
+                                    }
+                                </td>
+                                <td>
+                                    @foreach (var item in product.Percents)
+                                    {
+                                        @item.Percent
                                     }
                                 </td>
 

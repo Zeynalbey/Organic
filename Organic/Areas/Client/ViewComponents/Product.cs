@@ -1,0 +1,42 @@
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Organic.Areas.Admin.ViewModels.Product.Discount;
+using Organic.Areas.Client.ViewModels.Product;
+using Organic.Contracts.File;
+using Organic.Database;
+using Organic.Services.Abstracts;
+
+namespace Organic.Areas.Client.ViewComponents
+{
+    [Area("Client")]
+    [ViewComponent(Name = "Product")]
+    public class Product : ViewComponent
+    {
+        public readonly DataContext _dataContext;
+        public readonly IFileService _fileService;
+        public Product(DataContext dataContext, IFileService fileService)
+        {
+            _dataContext = dataContext;
+            _fileService = fileService;
+        }
+
+        public async Task<IViewComponentResult> InvokeAsync()
+        {
+            var model = await _dataContext.Products.OrderByDescending(p => p.CreatedAt)
+                .Select(p => new ProductSaleViewModel(
+                        p.Id,
+                        p.Name!,
+                        p.Info,
+                        p.Rating,
+                        p.RatingCount,
+                        p.Price!,
+                        p.ProductDiscountPercents!.Select(pdp=> new DiscountViewModel(pdp.Id, pdp.Percent)).ToList(),
+                        p.ProductImages!.Take(1).FirstOrDefault() != null
+                   ? _fileService.GetFileUrl(p.ProductImages!.Take(1).FirstOrDefault()!.ImageNameInFileSystem, UploadDirectory.Product)
+                   : String.Empty))
+                .ToListAsync();
+
+            return View(model);
+        }
+    }
+}

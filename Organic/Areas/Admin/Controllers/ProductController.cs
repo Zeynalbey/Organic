@@ -2,9 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Organic.Areas.Admin.ViewModels.Product;
-using Organic.Areas.Admin.ViewModels.Product.Category;
 using Organic.Areas.Admin.ViewModels.Product.Count;
-using Organic.Areas.Admin.ViewModels.Product.Rate;
+using Organic.Areas.Admin.ViewModels.Product.Discount;
 using Organic.Database;
 using Organic.Database.Models;
 using Organic.Services.Abstracts;
@@ -33,10 +32,12 @@ namespace Organic.Areas.Admin.Controllers
         public async Task<IActionResult> ListAsync()
         {
             var product = await _dbContext.Products
-                .Select(p => new ListItemViewModel(p.Id, p.Name, p.Info, p.Price, p.CreatedAt, p.Category!.Id, p.Category.Name!, p.ProductRates!
-                .Select(r => new RateViewModel(r.Id, r.Rating)).ToList(),
+                .Select(p => new ListItemViewModel(p.Id, p.Name, p.Info, p.Rating, p.RatingCount, p.Price, p.CreatedAt, p.Category!.Id, p.Category.Name!,
                  p.ProductCounts!
-                .Select(pc => new CountViewModel(pc.Id, pc.Count)).ToList())).ToListAsync();
+                .Select(pc => new CountViewModel(pc.Id, pc.Count)).ToList(),
+                 p.ProductDiscountPercents!
+                 .Select(pc => new DiscountViewModel(pc.Id, pc.Percent)).ToList()))                 
+                .ToListAsync();
 
             return View(product);
         }
@@ -123,6 +124,13 @@ namespace Organic.Areas.Admin.Controllers
 
                 _dbContext.ProductCounts.Add(productCount);
 
+                var discountPercent = new ProductDiscountPercent
+                {
+                    Id = product.Id,
+                    Percent = model.Percent
+                };
+
+                _dbContext.ProductDiscountPercents!.Add(discountPercent);
 
                 foreach (var tagId in model.TagIds)
                 {
@@ -151,9 +159,15 @@ namespace Organic.Areas.Admin.Controllers
             var product = await _dbContext.Products
                 .Include(b => b.ProductTags).FirstOrDefaultAsync(b=>b.Id == id);
 
-            var productCount = await _dbContext.ProductCounts.FirstAsync(p => p.Id == product.Id);
+            var productCount = await _dbContext.ProductCounts.FirstAsync(p => p.Id == product!.Id);
+            var productDiscountPercent = await _dbContext.ProductDiscountPercents!.FirstOrDefaultAsync(p => p.Id == product!.Id);
 
             if (product is null)
+            {
+                return NotFound();
+            }
+
+            if (productDiscountPercent == null)
             {
                 return NotFound();
             }
@@ -164,7 +178,8 @@ namespace Organic.Areas.Admin.Controllers
                 Name = product.Name,
                 Price = product.Price,
                 Info = product.Info,
-                Count = productCount.Count,                    
+                Count = productCount.Count,
+                Percent = productDiscountPercent.Percent,
                 CategoryId = product.CategoryID,
                 Categories = await _dbContext.Categories.Select(c => new CategoryListViewModel(c.Id, c.Name)).ToListAsync(),
                 Tags = await _dbContext.Tags.Select(c => new TagListViewModel(c.Id, c.Name)).ToListAsync(),
@@ -180,7 +195,8 @@ namespace Organic.Areas.Admin.Controllers
             var product = await _dbContext.Products
                 .Include(p => p.ProductTags).FirstOrDefaultAsync(p => p.Id == model.Id);
 
-            var productCount = await _dbContext.ProductCounts.FirstAsync(p => p.Id == product.Id);
+            var productCount = await _dbContext.ProductCounts.FirstAsync(p => p.Id == product!.Id);
+            var productDiscountPercent = await _dbContext.ProductDiscountPercents!.FirstAsync(p => p.Id == product!.Id);
 
             #region Errors
 
@@ -228,6 +244,7 @@ namespace Organic.Areas.Admin.Controllers
             product.Price = model.Price;
             product.CategoryID = model.CategoryId;
             productCount.Count = model.Count;
+            productDiscountPercent.Percent = model.Percent;
 
             var DbTag = product.ProductTags!.Select(bc => bc.TagId).ToList();
             var RemoveTag = DbTag.Except(model.TagIds).ToList();

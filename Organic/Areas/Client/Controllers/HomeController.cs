@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Organic.Areas.Admin.ViewModels.Product.Rate;
 using Organic.Areas.Client.ViewModels.Home.Contact;
 using Organic.Database;
 using Organic.Database.Models;

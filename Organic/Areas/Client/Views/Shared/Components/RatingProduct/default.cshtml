@@ -1,0 +1,45 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using Organic.Areas.Client.ViewModels.Product
+@model List<ProductSaleViewModel>
+
+@foreach (var ratingProduct in Model)
+{
+    <li class="product-item">
+        <div class="contain-product right-info-layout contain-product__right-info-layout">
+            <div class="product-thumb">
+                <a href="#" class="link-to-product">
+                    <img src="~/@ratingProduct.MainImgUrl" alt="dd" width="270" height="270" class="product-thumnail">
+                </a>
+            </div>
+            <div class="info">
+                <b class="categories">@ratingProduct.Name</b>
+                <h4 class="product-title"><a href="#" class="pr-name">@ratingProduct.Info</a></h4>
+                <div class="price ">
+                    @foreach (var price in ratingProduct.DiscountPrices)
+                    {
+                        @if (price.Percent != 0)
+                        {
+                            <ins><span class="price-amount">@Math.Round((ratingProduct.Price * (100 - price.Percent)/100), 2)</span></ins>
+                            <del><span class="price-amount">@ratingProduct.Price</span></del>
+                        }
+                        else
+                        {
+                            <ins><span class="price-amount">@ratingProduct.Price</span></ins>
+                        }
+                    }
+                </div>
+                <div>
+                    <p class="star-rating-stars">
+                        <button class="rate-button" onclick="location.href='@Url.Action("Rate", "AllProduct", new { id = ratingProduct.Id })'"><span class="rate-icon"></span></button>
+                        <button class="rate-button" onclick="location.href='@Url.Action("Rate", "AllProduct", new { id = ratingProduct.Id , rate = 2 })'"><span class="rate-icon"></span></button>
+                        <button class="rate-button" onclick="location.href='@Url.Action("Rate", "AllProduct", new { id = ratingProduct.Id , rate = 3 })'"><span class="rate-icon"></span></button>
+                        <button class="rate-button" onclick="location.href='@Url.Action("Rate", "AllProduct", new { id = ratingProduct.Id , rate = 4 })'"><span class="rate-icon"></span></button>
+                        <button class="rate-button" onclick="location.href='@Url.Action("Rate", "AllProduct", new { id = ratingProduct.Id , rate = 5 })'"><span class="rate-icon"></span></button>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </li>
+}
+
+

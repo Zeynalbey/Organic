@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Organic.Database;
 using Organic.Services.Abstracts;
 
@@ -21,5 +22,20 @@ namespace Organic.Areas.Client.Controllers
         {
             return View();
         }
+
+        [HttpGet("Rate/{id}/{rate}")]
+        public ActionResult Rate(int id, int rate)
+        {
+            var product = _dbContext.Products.Find(id);
+            if (product != null)
+            {
+                product.Rating += rate;
+                product.RatingCount ++;
+                _dbContext.SaveChanges();
+            }
+            return RedirectToRoute("client-home-index");
+        }
+
     }
+
 }

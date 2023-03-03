@@ -11,7 +11,6 @@
                     <form method="POST" asp-route="admin-product-update" asp-route-id="@Model.Id" enctype="multipart/form-data">
                         <div class="text-danger" asp-validation-summary="ModelOnly"></div>
 
-
                         <div class="form-group">
                             <label>Name</label>
                             <input asp-for="Name" class="form-control">
@@ -41,6 +40,11 @@
                             <label>Count</label>
                             <input asp-for="Count" class="form-control">
                             <span asp-validation-for="Count" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label>Discount Percent</label>
+                            <input asp-for="Percent" class="form-control">
+                            <span asp-validation-for="Percent" class="text-danger"></span>
                         </div>
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </form>

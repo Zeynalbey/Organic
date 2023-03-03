@@ -1,7 +1,5 @@
-﻿
-using Organic.Extensions;
+﻿using Organic.Extensions;
 using Microsoft.EntityFrameworkCore;
-using System.Reflection;
 using Organic.Database.Models;
 using Organic.Database.Models.Common;
 
@@ -25,12 +23,13 @@ namespace Organic.Database
         public DbSet<ProductTag> ProductTags { get; set; }
         public DbSet<Tag> Tags { get; set; }
         public DbSet<ProductCount> ProductCounts { get; set; }
-        public DbSet<ProductRate> ProductRates { get; set; }
+        public DbSet<ProductDiscountPercent>? ProductDiscountPercents { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Product>().Property(x => x.Price).HasColumnType("decimal(18,2)");
+            modelBuilder.Entity<ProductDiscountPercent>().Property(x => x.Percent).HasColumnType("decimal(18,2)");
             modelBuilder.Entity<ProductCount>().Property(x => x.Count).HasColumnType("decimal(18,2)");
             modelBuilder.ApplyConfigurationsFromAssembly<Program>();
         }

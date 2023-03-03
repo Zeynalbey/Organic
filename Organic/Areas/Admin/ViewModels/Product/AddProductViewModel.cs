@@ -13,6 +13,7 @@ namespace Organic.Areas.Admin.ViewModels.Product
         public string? Info { get; set; }
         [Required]
         public decimal Count { get; set; }
+        public decimal Percent { get; set; }
         [Required]
         public List<int>? TagIds { get; set; }
         [Required]

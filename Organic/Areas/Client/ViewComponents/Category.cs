@@ -1,10 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Organic.Areas.Admin.ViewModels.Product;
-using Organic.Areas.Admin.ViewModels.Product.Tag;
-using Organic.Areas.Admin.ViewModels.Slider;
 using Organic.Areas.Client.ViewModels.Category;
-using Organic.Contracts.File;
 using Organic.Database;
 using Organic.Services.Abstracts;
 

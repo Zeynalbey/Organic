@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Organic.Database;
 
@@ -11,9 +12,11 @@ using Organic.Database;
 namespace Organic.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20230302091035_Discount")]
+    partial class Discount
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -154,12 +157,6 @@ namespace Organic.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("Rating")
-                        .HasColumnType("int");
-
-                    b.Property<int>("RatingCount")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2");
 
@@ -224,6 +221,19 @@ namespace Organic.Migrations
                     b.HasIndex("ProductId");
 
                     b.ToTable("ProductImages", (string)null);
+                });
+
+            modelBuilder.Entity("Organic.Database.Models.ProductRate", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Rating")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ProductRates", (string)null);
                 });
 
             modelBuilder.Entity("Organic.Database.Models.ProductTag", b =>
@@ -490,6 +500,17 @@ namespace Organic.Migrations
                     b.Navigation("Product");
                 });
 
+            modelBuilder.Entity("Organic.Database.Models.ProductRate", b =>
+                {
+                    b.HasOne("Organic.Database.Models.Product", "Product")
+                        .WithMany("ProductRates")
+                        .HasForeignKey("Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("Organic.Database.Models.ProductTag", b =>
                 {
                     b.HasOne("Organic.Database.Models.Product", "Product")
@@ -561,6 +582,8 @@ namespace Organic.Migrations
                     b.Navigation("ProductDiscountPercents");
 
                     b.Navigation("ProductImages");
+
+                    b.Navigation("ProductRates");
 
                     b.Navigation("ProductTags");
 
