@@ -1,58 +1,150 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Organic.Areas.Admin.ViewModels.Authentication;
-using Organic.Areas.Admin.ViewModels.User;
-using Organic.Contracts.File;
-using Organic.Database;
-using Organic.Database.Models;
-using Organic.Services.Abstracts;
-using System.Drawing;
-using System.Net;
-using Organic.Contracts.Identity;
-using Organic.Areas.Admin.ViewModels.Blog;
+﻿//using Microsoft.AspNetCore.Authorization;
+//using Microsoft.AspNetCore.Mvc;
+//using Microsoft.EntityFrameworkCore;
+//using Organic.Contracts.File;
+//using Organic.Database;
+//using Organic.Services.Abstracts;
+//using Organic.Areas.Admin.ViewModels.Blog;
+//using Organic.Database.Models;
 
-namespace Organic.Areas.Admin.Controllers
-{
-    [Area("admin")]
-    [Route("admin/blog")]
-    [Authorize(Roles = "admin,moderator")]
-    public class BlogController : Controller
-    {
-        private readonly DataContext _dbContext;
-        private readonly IFileService _fileService;
-        private readonly IUserService _userService;
+//namespace Organic.Areas.Admin.Controllers
+//{
+//    [Area("admin")]
+//    [Route("admin/blog")]
+//    [Authorize(Roles = "admin,moderator")]
+//    public class BlogController : Controller
+//    {
+//        private readonly DataContext _dbContext;
+//        private readonly IFileService _fileService;
+//        private readonly IUserService _userService;
+//        public readonly ILogger<BlogController> _logger;
 
-        public BlogController(DataContext dbContext, IFileService fileService, IUserService userService)
-        {
-            _dbContext = dbContext;
-            _fileService = fileService;
-            _userService = userService;
-        }
+//        public BlogController(DataContext dbContext,
+//            IFileService fileService,
+//            IUserService userService,
+//            ILogger<BlogController> logger)
+//        {
+//            _dbContext = dbContext;
+//            _fileService = fileService;
+//            _userService = userService;
+//            _logger = logger;
+//        }
 
-        #region List
-        [HttpGet("list", Name = "admin-blog-list")]
-        public async Task<IActionResult> ListAsync()
-        {
-            var blog = await _dbContext.Blogs.Select(b => new BlogListViewModel(
-             b.Id, 
-             b.Title, 
-             b.Description, 
-             $"{b.From!.FirstName} {b.From.LastName}", 
-             b.PostedDate,
-             _fileService.GetFileUrl(b.ImageNameInSystem, UploadDirectory.Blog),
-             b.Likes!.Select(l => new BlogLikeListViewModel(l.Id, l.Blog!.Title!, l.LikeCount)).ToList(),
-             b.Comments!.Select(c => new BlogCommentListViewModel(c.Id, c.CommentDate, c.Text, 
-             $"{b.From.FirstName} {b.From.LastName}", c.Blog!.Title
-             )).ToList())).ToListAsync();
+//        #region List
+//        [HttpGet("list", Name = "admin-blog-list")]
+//        public async Task<IActionResult> ListAsync()
+//        {
+//            var blog = await _dbContext.Blogs.Select(b => new BlogListViewModel(
+//             b.Id,
+//             b.Title,
+//             b.Description,
+//             $"{b.From!.FirstName} {b.From.LastName}",
+//             b.PostedDate,
+//             _fileService.GetFileUrl(b.ImageNameInSystem, UploadDirectory.Blog),
+//                             b.BlogAndCategories!.Select(pc => pc.BlogCategory)
+//                .Select(bc => new BlogCategoryViewModel(bc.Id, bc.Name)).ToList(),
+//             b.Likes!.Select(l => new BlogLikeListViewModel(l.Id, l.Blog!.Title!, l.LikeCount)).ToList(),
+//             b.Comments!.Select(c => new BlogCommentListViewModel(c.Id, c.CommentDate, c.Text,
+//             $"{b.From.FirstName} {b.From.LastName}", c.Blog!.Title
+//             )).ToList())).ToListAsync();
 
-            return View(blog);
-        }
-        #endregion
+//            return View(blog);
+//        }
+//        #endregion
+
+//        #region Add
+
+//        [HttpGet("add", Name = "admin-blog-add")]
+//        public async Task<IActionResult> Add()
+//        {
+//            var model = new AddViewModel
+//            {
+//                Categories = await _dbContext.BlogCategories
+//                    .Select(c => new BlogCategoryViewModel(c.Id, c.Name!))
+//                    .ToListAsync(),
+//            };
+
+//            return View(model);
+//        }
+
+//        [HttpPost("add", Name = "admin-blog-add")]
+//        public async Task<IActionResult> Add(AddViewModel model)
+//        {
+//            if (!ModelState.IsValid)
+//            {
+//                return GetView(model);
+//            }
+
+//            foreach (var categoryId in model.CategoryIds)
+//            {
+//                if (!await _dbContext.BlogCategories.AnyAsync(c => c.Id == categoryId))
+//                {
+//                    ModelState.AddModelError(string.Empty, "Something went wrong");
+//                    _logger.LogWarning($"Category with ({categoryId}) not found in database ");
+//                    return GetView(model);
+//                }
+
+//            }
+
+//            AddProduct();
+
+//            await _dbContext.SaveChangesAsync();
+
+//            return RedirectToRoute("admin-blog-list");
+
+//            IActionResult GetView(AddViewModel model)
+//            {
+//                model.Categories = _dbContext.BlogCategories
+//                   .Select(c => new BlogCategoryViewModel(c.Id, c.Name))
+//                   .ToList();
+
+//                return View(model);
+//            }
 
 
-    }
-}
+//            async void AddProduct()
+//            {
+//                var blog = new Blog
+//                {
+//                    Title = model.Title,
+//                    Description = model.Description
+//                };
+
+
+//                await _dbContext.Blogs.AddAsync(blog);
+
+
+//                foreach (var catagoryId in model.CategoryIds)
+//                {
+//                    var productCatagory = new BlogAndBlogCategory
+//                    {
+//                        BlogCategoryId = catagoryId,
+//                        Blog = product,
+//                    };
+
+//                    await _dataContext.BlogAndBlogCategories.AddAsync(productCatagory);
+//                }
+
+//                foreach (var tagId in model.TagIds)
+//                {
+//                    var productTag = new BlogAndBlogTag
+
+//                    {
+//                        BlogTagId = tagId,
+//                        Blog = product
+
+//                    };
+
+//                    await _dataContext.BlogAndBlogTags.AddAsync(productTag);
+//                }
+
+
+//            }
+//        }
+
+//        #endregion
+//    }
+//}
 
 
 

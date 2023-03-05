@@ -11,6 +11,7 @@ namespace Organic.Database
             : base(options) { }
 
         public DbSet<Blog> Blogs { get; set; }
+        public DbSet<BlogCategory> BlogCategories { get; set; }
         public DbSet<BlogLike> BlogLikes { get; set; }
         public DbSet<BlogComment> BlogComments { get; set; }
         public DbSet<Slider> Sliders { get; set; }

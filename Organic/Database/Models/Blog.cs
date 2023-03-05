@@ -12,6 +12,7 @@ namespace Organic.Database.Models
         public string? ImageNameInSystem { get; set; }
         public List<BlogLike>? Likes { get; set; }
         public List<BlogComment>? Comments { get; set; }
-
+        
+        public List<BlogAndCategory>? BlogAndCategories { get; set; }
     }
 }

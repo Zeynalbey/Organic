@@ -11,13 +11,13 @@
                         <tr>
                             <th scope="col">Blog title</th>
                             <th scope="col">From</th>
+                            <th scope="col">Category</th>
                             <th scope="col">Posted Date</th>
                             <th scope="col">Likes Count</th>
                             <th scope="col">Comments Count</th>
                             <th scope="col">Add</th>
                             <th scope="col">Edit</th>
                             <th scope="col">Delete</th>
-
                         </tr>
                     </thead>
                     <tbody>
@@ -26,9 +26,10 @@
                             <tr>
                                 <td>@blog.Title</td>
                                 <td>@blog.From</td>
+                                <td>@blog.BlogCategoryName</td>
                                 <td>@blog.PostedDate.ToString("dd,mm,yyyy")</td>
-                                <td>@blog.Likes.Count</td>
-                                <td>@blog.Comments.Count</td>
+                                <td>@blog.Likes!.Count</td>
+                                <td>@blog.Comments!.Count</td>
 
                                 <td>
                                     <a asp-route="admin-blog-add">add</a>
