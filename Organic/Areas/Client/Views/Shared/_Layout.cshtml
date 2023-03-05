@@ -1,5 +1,7 @@
 ﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using Organic.Services.Abstracts
 @using Organic.Areas.Client.ViewComponents
+@inject IUserService userService;
 
 <!DOCTYPE html>
 <html class="no-js" lang="en">
@@ -34,18 +36,7 @@
                         <li><a href="#"><i class="fa fa-envelope" aria-hidden="true"></i>info@zeynal.com</a></li>
                     </ul>
                 </div>
-                <div class="top-bar right">
 
-                    <ul class="horizontal-menu">
-@*                        <li class="horz-menu-item currency">
-                            <select name="currency">
-                                <option value="aze" selected>₼ AZN (Manat)</option>
-                                <option value="usd">$ USD (Dollar)</option>
-                            </select>
-                        </li>*@
-                        <li><a asp-route="client-auth-login" class="login-link"><i class="biolife-icon icon-login"></i>Giriş/Qeydiyyat</a></li>
-                    </ul>
-                </div>
             </div>
         </div>
         <div class="header-middle biolife-sticky-object ">
@@ -200,23 +191,34 @@
                             <form action="#" class="form-search" name="desktop-seacrh" method="get">
                                 <input type="text" name="s" class="input-text" value="" placeholder="Axtar...">
                                 @*<select name="category">
-                                    <option value="-1" selected>All Categories</option>
-                                    <option value="vegetables">Vegetables</option>
-                                    <option value="fresh_berries">Fresh Berries</option>
-                                    <option value="ocean_foods">Ocean Foods</option>
-                                    <option value="butter_eggs">Butter & Eggs</option>
-                                    <option value="fastfood">Fastfood</option>
-                                    <option value="fresh_meat">Fresh Meat</option>
-                                    <option value="fresh_onion">Fresh Onion</option>
-                                    <option value="papaya_crisps">Papaya & Crisps</option>
-                                    <option value="oatmeal">Oatmeal</option>
+                                <option value="-1" selected>All Categories</option>
+                                <option value="vegetables">Vegetables</option>
+                                <option value="fresh_berries">Fresh Berries</option>
+                                <option value="ocean_foods">Ocean Foods</option>
+                                <option value="butter_eggs">Butter & Eggs</option>
+                                <option value="fastfood">Fastfood</option>
+                                <option value="fresh_meat">Fresh Meat</option>
+                                <option value="fresh_onion">Fresh Onion</option>
+                                <option value="papaya_crisps">Papaya & Crisps</option>
+                                <option value="oatmeal">Oatmeal</option>
                                 </select>*@
                                 <button type="submit" class="btn-submit"><i class="biolife-icon icon-search"></i></button>
                             </form>
                         </div>
-                        <div class="live-info">
-                            <p class="telephone"><i class="fa fa-phone" aria-hidden="true"></i><b class="phone-number">(+99455) 215 92 21</b></p>
-
+                        <div class="login-reg">
+                            @if (userService.IsAuthenticated)
+                            {
+                                <a class="login-link" asp-route="client-account-dashboard">
+                                    @userService.GetCurrentUserFullName()
+                                </a>
+                                <a class="login-out" asp-route="client-auth-logout">
+                                    (çıxış)
+                                </a>
+                            }
+                            else
+                            {
+                                <a asp-route="client-auth-login" class="login-link"><i class="biolife-icon icon-login"></i>Giriş/Qeydiyyat</a>
+                            }
                         </div>
                     </div>
                 </div>

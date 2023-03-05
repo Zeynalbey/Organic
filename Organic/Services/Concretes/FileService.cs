@@ -58,6 +58,8 @@ namespace Organic.Services.Concretes
                     return Path.Combine(startPath, "sliders");
                 case UploadDirectory.Product:
                     return Path.Combine(startPath, "products");
+                case UploadDirectory.Blog:
+                    return Path.Combine(startPath, "blogs");
                 default:
                     throw new Exception("Something went wrong");
             }
@@ -78,6 +80,8 @@ namespace Organic.Services.Concretes
                     return $"{initialSegment}/sliders/{fileName}";
                 case UploadDirectory.Product:
                     return $"{initialSegment}/products/{fileName}";
+                case UploadDirectory.Blog:
+                    return $"{initialSegment}/blogs/{fileName}";
                 default:
                     throw new Exception("Something went wrong");
             }

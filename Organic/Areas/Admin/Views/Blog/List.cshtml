@@ -1,0 +1,51 @@
+﻿@using Organic.Areas.Admin.ViewModels.Blog
+@model List<BlogListViewModel>
+
+<div class="container-fluid pt-4 px-4">
+    <div class="row g-4">
+        <div class="col-sm-12 col-xl-12">
+            <div class="bg-secondary rounded h-100 p-4">
+                <h6 class="mb-4">Blogs</h6>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Blog title</th>
+                            <th scope="col">From</th>
+                            <th scope="col">Posted Date</th>
+                            <th scope="col">Likes Count</th>
+                            <th scope="col">Comments Count</th>
+                            <th scope="col">Add</th>
+                            <th scope="col">Edit</th>
+                            <th scope="col">Delete</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var blog in Model)
+                        {
+                            <tr>
+                                <td>@blog.Title</td>
+                                <td>@blog.From</td>
+                                <td>@blog.PostedDate.ToString("dd,mm,yyyy")</td>
+                                <td>@blog.Likes.Count</td>
+                                <td>@blog.Comments.Count</td>
+
+                                <td>
+                                    <a asp-route="admin-blog-add">add</a>
+                                </td>
+                                <td>
+                                    <a class="text-warning" asp-route="admin-blog-update" asp-route-id="@blog.Id">edit</a>
+                                </td>
+                                <td>
+                                    <form method="POST" asp-route="admin-blog-delete" asp-route-id="@blog.Id" id="update-@blog.Id">
+                                    </form>
+                                    <button class="btn btn-danger" type="submit" form="update-@blog.Id">delete</button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

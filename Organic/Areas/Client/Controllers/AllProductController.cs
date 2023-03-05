@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Organic.Database;
 using Organic.Services.Abstracts;
 
@@ -30,11 +29,57 @@ namespace Organic.Areas.Client.Controllers
             if (product != null)
             {
                 product.Rating += rate;
-                product.RatingCount ++;
+                product.RatingCount++;
                 _dbContext.SaveChanges();
             }
             return RedirectToRoute("client-home-index");
         }
+
+     //   [HttpGet("detail/{id}", Name = "client-product-detail")]
+     //   public async Task<IActionResult> Detail(int id)
+     //   {
+
+     //       var product = await _dbContext.Products.Include(p => p.ProductImages)
+     //           .Include(p => p.ProductTags)
+     //           .Include(p => p.ProductDiscountPercents)
+     //           .Include(p => p.ProductCounts)
+     //.FirstOrDefaultAsync(p => p.Id == id);
+
+     //       if (product is null)
+     //       {
+     //           return NotFound();
+     //       }
+
+     //       var imageUrls = product.ProductImages!.Select(pi => new ProductImageViewModel
+     //       {
+     //           Id = pi.Id,
+     //           ImageUrl = pi.ImageName,
+     //           ImageNameInFileSystem = pi.ImageNameInFileSystem
+     //       });
+
+     //       foreach (var item in imageUrls1)
+     //       {
+     //           var image1 = _fileService.GetFileUrl(product.ProductImages.FirstOrDefault()!.ImageNameInFileSystem, UploadDirectory.Product);
+     //           imageUrls.
+     //       }
+
+
+     //       var viewModel = new ProductDetailViewModel(
+     //           product.Id,
+     //           product.Name!,
+     //           product.Info!,
+     //           product.Rating,
+     //           product.RatingCount,
+     //           product.Price,
+     //           product.ProductDiscountPercents!.Select(pdp => new DiscountViewModel(pdp.Id, pdp.Percent)) ?? new List<DiscountViewModel>(),
+     //           imageUrls,
+     //           product.ProductTags!.Select(pt => pt.Tag).Select(t => new TagViewModel(t.Id, t.Name!)) ?? new List<TagViewModel>(),
+     //           product.ProductCounts!.Select(pc => new CountViewModel(pc.Id, pc.Count)).ToList() ?? new List<CountViewModel>());
+
+     //       return View(viewModel);
+
+
+     //   }
 
     }
 

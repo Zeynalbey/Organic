@@ -873,17 +873,34 @@ body {
     white-space: nowrap;
 }
 
+.login-link {
+    padding-left: 139px;
+    color: black;
+    font-weight: bold;
+}
+.login-out {
+    padding-left: 4px;
+    color: #e73918;
+    font-weight: bold;
+}
+.login-link:hover {
+    color: #e73918;
+}
+.login-out:hover {
+    color: black;
+}
+
 .biolife-clone-wrap .biolife-panels {
-    background: inherit;
-    border-color: inherit;
-    position: absolute;
-    margin-top: 50px;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    z-index: 0;
-    box-sizing: border-box;
+        background: inherit;
+        border-color: inherit;
+        position: absolute;
+        margin-top: 50px;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        z-index: 0;
+        box-sizing: border-box;
 }
 
 .biolife-next-panel {

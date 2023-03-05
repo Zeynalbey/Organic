@@ -5,9 +5,9 @@ namespace Organic.Areas.Admin.ViewModels.Product
 {
     public class ListItemViewModel
     {
-        public ListItemViewModel(int id, string? name, string? info, decimal rating, int ratingCount, decimal price, 
-            DateTime createdAt, int categoryId, string categoryname, 
-            List<CountViewModel> counts, List<DiscountViewModel>percents)
+        public ListItemViewModel(int id, string? name, string? info, decimal rating, int ratingCount, decimal price,
+            DateTime createdAt, int categoryId, string categoryname,
+            List<CountViewModel> counts, List<DiscountViewModel> percents)
         {
             Id = id;
             Name = name;
@@ -23,16 +23,16 @@ namespace Organic.Areas.Admin.ViewModels.Product
 
 
 
-    }
+        }
 
-    public int Id { get; set; }
+        public int Id { get; set; }
         public string? Name { get; set; }
         public string? Info { get; set; }
         public decimal Rating { get; set; }
         public int RatingCount { get; set; }
         public decimal Price { get; set; }
         public DateTime CreatedAt { get; set; }
-        public int CategoryId { get; set; } 
+        public int CategoryId { get; set; }
         public string Categoryname { get; set; }
         public List<CountViewModel> Counts { get; set; }
         public List<DiscountViewModel> Percents { get; set; }
