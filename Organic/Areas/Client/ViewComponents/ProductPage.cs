@@ -10,12 +10,12 @@ using Organic.Services.Abstracts;
 namespace Organic.Areas.Client.ViewComponents
 {
     [Area("Client")]
-    [ViewComponent(Name = "Product")]
-    public class Product : ViewComponent
+    [ViewComponent(Name = "ProductPage")]
+    public class ProductPage : ViewComponent
     {
         public readonly DataContext _dataContext;
         public readonly IFileService _fileService;
-        public Product(DataContext dataContext, IFileService fileService)
+        public ProductPage(DataContext dataContext, IFileService fileService)
         {
             _dataContext = dataContext;
             _fileService = fileService;

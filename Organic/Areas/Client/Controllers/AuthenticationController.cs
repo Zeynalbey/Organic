@@ -84,6 +84,11 @@ namespace Organic.Controllers
             {
                 return View(model);
             }
+            if (await _userService.CheckEmail(model.Email!))
+            {
+                ModelState.AddModelError("", "Bu email qeydiyyatdan keçib. Başqa email seçin.");
+                return View(model);
+            }
 
             await _userService.CreateAsync(model);
 

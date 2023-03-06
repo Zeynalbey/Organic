@@ -75,10 +75,6 @@ namespace Organic.Areas.Client.Controllers
                 product.ProductCounts!.Select(pc => new CountViewModel(pc.Id, pc.Count)).ToList() ?? new List<CountViewModel>());
 
             return View(viewModel);
-
-
         }
-
     }
-
 }

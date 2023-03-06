@@ -16,5 +16,6 @@ namespace Organic.Services.Abstracts
         Task SignOutAsync();
         Task<bool> CheckEmailConfirmedAsync(string? email);
         Task<bool> CheckEmailandUserAsync(string? email);
+        Task<bool> CheckEmail(string email);
     }
 }

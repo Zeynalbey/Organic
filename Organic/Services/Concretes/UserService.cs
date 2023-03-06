@@ -109,16 +109,19 @@ namespace Organic.Services.Concretes
             await _httpContextAccessor.HttpContext!.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
         }
 
+        public async Task <bool> CheckEmail(string email)
+        {
+             return await _dataContext.Users.AnyAsync(u => u.Email == email);
+        }
+
         public async Task CreateAsync(RegisterViewModel model)
         {
             var user = await CreateUserAsync();
             var basket = await CreateBasketAsync();
             await CreteBasketProductsAsync();
-
             await _userActivationService.SendActivationUrlAsync(user);
 
             await _dataContext.SaveChangesAsync();
-
 
             async Task<User> CreateUserAsync()
             {
@@ -177,7 +180,7 @@ namespace Organic.Services.Concretes
             {
                 await ForgotPasswordUser(email);
                 return true;
-            }  
+            }
 
             async Task ForgotPasswordUser(string email)
             {
@@ -188,7 +191,7 @@ namespace Organic.Services.Concretes
             return false;
         }
 
-        
+
     }
 
 
