@@ -12,8 +12,8 @@ using Organic.Database;
 namespace Organic.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230304233219_Blog")]
-    partial class Blog
+    [Migration("20230306090521_BlogCategories")]
+    partial class BlogCategories
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -111,7 +111,58 @@ namespace Organic.Migrations
 
                     b.HasIndex("FromId");
 
-                    b.ToTable("Blogs");
+                    b.ToTable("Blogs", (string)null);
+                });
+
+            modelBuilder.Entity("Organic.Database.Models.BlogAndCategory", b =>
+                {
+                    b.Property<int>("BlogId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("BlogCategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
+                    b.HasKey("BlogId", "BlogCategoryId");
+
+                    b.HasIndex("BlogCategoryId");
+
+                    b.ToTable("BlogAndCategories", (string)null);
+                });
+
+            modelBuilder.Entity("Organic.Database.Models.BlogCategory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("BlogCategories", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Sağlamlıq"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Meyvələr"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Tərəvəzlər"
+                        });
                 });
 
             modelBuilder.Entity("Organic.Database.Models.BlogComment", b =>
@@ -541,6 +592,25 @@ namespace Organic.Migrations
                     b.Navigation("From");
                 });
 
+            modelBuilder.Entity("Organic.Database.Models.BlogAndCategory", b =>
+                {
+                    b.HasOne("Organic.Database.Models.BlogCategory", "BlogCategory")
+                        .WithMany("BlogAndCategories")
+                        .HasForeignKey("BlogCategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Organic.Database.Models.Blog", "Blog")
+                        .WithMany("BlogAndCategories")
+                        .HasForeignKey("BlogId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Blog");
+
+                    b.Navigation("BlogCategory");
+                });
+
             modelBuilder.Entity("Organic.Database.Models.BlogComment", b =>
                 {
                     b.HasOne("Organic.Database.Models.Blog", "Blog")
@@ -672,9 +742,16 @@ namespace Organic.Migrations
 
             modelBuilder.Entity("Organic.Database.Models.Blog", b =>
                 {
+                    b.Navigation("BlogAndCategories");
+
                     b.Navigation("Comments");
 
                     b.Navigation("Likes");
+                });
+
+            modelBuilder.Entity("Organic.Database.Models.BlogCategory", b =>
+                {
+                    b.Navigation("BlogAndCategories");
                 });
 
             modelBuilder.Entity("Organic.Database.Models.Category", b =>

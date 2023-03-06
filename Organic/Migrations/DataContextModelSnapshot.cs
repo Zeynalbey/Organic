@@ -86,9 +86,6 @@ namespace Organic.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("BlogCategoryId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
@@ -108,8 +105,6 @@ namespace Organic.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("BlogCategoryId");
 
                     b.HasIndex("FromId");
 
@@ -148,6 +143,23 @@ namespace Organic.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("BlogCategories", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Sağlamlıq"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Meyvələr"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Tərəvəzlər"
+                        });
                 });
 
             modelBuilder.Entity("Organic.Database.Models.BlogComment", b =>
@@ -570,10 +582,6 @@ namespace Organic.Migrations
 
             modelBuilder.Entity("Organic.Database.Models.Blog", b =>
                 {
-                    b.HasOne("Organic.Database.Models.BlogCategory", null)
-                        .WithMany("Blogs")
-                        .HasForeignKey("BlogCategoryId");
-
                     b.HasOne("Organic.Database.Models.User", "From")
                         .WithMany()
                         .HasForeignKey("FromId");
@@ -741,8 +749,6 @@ namespace Organic.Migrations
             modelBuilder.Entity("Organic.Database.Models.BlogCategory", b =>
                 {
                     b.Navigation("BlogAndCategories");
-
-                    b.Navigation("Blogs");
                 });
 
             modelBuilder.Entity("Organic.Database.Models.Category", b =>

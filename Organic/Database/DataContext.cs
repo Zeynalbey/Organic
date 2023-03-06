@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Organic.Database.Models;
 using Organic.Database.Models.Common;
+using System.Drawing;
 
 namespace Organic.Database
 {
@@ -12,6 +13,7 @@ namespace Organic.Database
 
         public DbSet<Blog> Blogs { get; set; }
         public DbSet<BlogCategory> BlogCategories { get; set; }
+        public DbSet<BlogAndCategory> BlogAndCategories { get; set; }
         public DbSet<BlogLike> BlogLikes { get; set; }
         public DbSet<BlogComment> BlogComments { get; set; }
         public DbSet<Slider> Sliders { get; set; }
@@ -36,6 +38,10 @@ namespace Organic.Database
             modelBuilder.Entity<ProductDiscountPercent>().Property(x => x.Percent).HasColumnType("decimal(18,2)");
             modelBuilder.Entity<ProductCount>().Property(x => x.Count).HasColumnType("decimal(18,2)");
             modelBuilder.ApplyConfigurationsFromAssembly<Program>();
+            modelBuilder.Entity<BlogCategory>().HasData(
+               new() { Id = 1, Name = "Sağlamlıq" },
+               new() { Id = 2, Name = "Meyvələr" },
+               new() { Id = 3, Name = "Tərəvəzlər" });
         }
     }
 

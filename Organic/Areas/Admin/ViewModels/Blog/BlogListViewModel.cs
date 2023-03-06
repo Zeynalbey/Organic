@@ -5,7 +5,7 @@ namespace Organic.Areas.Admin.ViewModels.Blog
     public class BlogListViewModel
     {
         public BlogListViewModel(int id, string? title, string? description,
-            string? from, DateTime postedDate, string image, string blogCategoryName, 
+            string? from, DateTime postedDate, string image, List<BlogCategoryViewModel> categories, 
             List<BlogLikeListViewModel>? likes,
             List<BlogCommentListViewModel>? comments)
         {
@@ -15,7 +15,7 @@ namespace Organic.Areas.Admin.ViewModels.Blog
             From = from;
             PostedDate = postedDate;
             Image = image;
-            BlogCategoryName = blogCategoryName;
+            Categories = categories;
             Likes = likes;
             Comments = comments;  
         }

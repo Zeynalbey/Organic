@@ -26,7 +26,7 @@
                             <tr>
                                 <td>@blog.Title</td>
                                 <td>@blog.From</td>
-                                <td>@blog.BlogCategoryName</td>
+                                <td>@string.Join(", ", blog.Categories.Select(c => $"{c.BlogCategoryName}"))</td>
                                 <td>@blog.PostedDate.ToString("dd,mm,yyyy")</td>
                                 <td>@blog.Likes!.Count</td>
                                 <td>@blog.Comments!.Count</td>

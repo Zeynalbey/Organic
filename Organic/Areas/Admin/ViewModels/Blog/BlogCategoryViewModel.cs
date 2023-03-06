@@ -7,7 +7,7 @@
 
         public BlogCategoryViewModel(int id, string blogCategoryName)
         {
-            Id = id;
+            Id = id;    
             BlogCategoryName = blogCategoryName;
         }
     }

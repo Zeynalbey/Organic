@@ -1,4 +1,5 @@
-﻿
+﻿@using Organic.Areas.Client.ViewModels.Product
+@model ProductDetailViewModel
 <!--Navigation section-->
 <div class="container">
     <nav class="biolife-nav">
@@ -15,36 +16,53 @@
         <!-- Main content -->
         <div id="main-content" class="main-content">
 
+
             <!-- summary info -->
             <div class="sumary-product single-layout">
                 <div class="media">
                     <ul class="biolife-carousel slider-for" data-slick='{"arrows":false,"dots":false,"slidesMargin":30,"slidesToShow":1,"slidesToScroll":1,"fade":true,"asNavFor":".slider-nav"}'>
-                        <li><img src="assets/images/details-product/p01.jpg" alt="" width="500" height="500"></li>
-                        <li><img src="assets/images/details-product/p02.jpg" alt="" width="500" height="500"></li>
-                        <li><img src="assets/images/details-product/p03.jpg" alt="" width="500" height="500"></li>
-                        <li><img src="assets/images/details-product/p06.jpg" alt="" width="500" height="500"></li>
-                        <li><img src="assets/images/details-product/p07.jpg" alt="" width="500" height="500"></li>
+                        @foreach (var image in Model.ImageUrls)
+                        {
+                            <li><img src="~/@image.ImageUrl" alt="" width="500" height="500"></li>
+
+                        }
+
                     </ul>
                     <ul class="biolife-carousel slider-nav" data-slick='{"arrows":false,"dots":false,"centerMode":false,"focusOnSelect":true,"slidesMargin":10,"slidesToShow":4,"slidesToScroll":1,"asNavFor":".slider-for"}'>
-                        <li><img src="assets/images/details-product/thumb_p01.jpg" alt="" width="88" height="88"></li>
-                        <li><img src="assets/images/details-product/thumb_p02.jpg" alt="" width="88" height="88"></li>
-                        <li><img src="assets/images/details-product/thumb_p03.jpg" alt="" width="88" height="88"></li>
-                        <li><img src="assets/images/details-product/thumb_p06.jpg" alt="" width="88" height="88"></li>
-                        <li><img src="assets/images/details-product/thumb_p07.jpg" alt="" width="88" height="88"></li>
+                        @foreach (var image in Model.ImageUrls)
+                        {
+                            <li><img src="~/@image.ImageUrl" alt="" width="88" height="88"></li>
+                        }
+
                     </ul>
                 </div>
                 <div class="product-attribute">
-                    <h3 class="title">Organic Sweet Potatoes</h3>
+                    <h3 class="title">@Model.Name</h3>
                     <div class="rating">
-                        <p class="star-rating"><span class="width-80percent"></span></p>
-                        <span class="review-count">(04 Reviews)</span>
-                        <span class="qa-text">Q&amp;A</span>
-                        <b class="category">By: Natural food</b>
+                        <p class="star-rating-stars">
+                            <button class="rate-button" onclick="location.href='@Url.Action("Rate", "AllProduct", new { id = Model.Id })'"><span class="rate-icon"></span></button>
+                            <button class="rate-button" onclick="location.href='@Url.Action("Rate", "AllProduct", new { id = Model.Id , rate = 2 })'"><span class="rate-icon"></span></button>
+                            <button class="rate-button" onclick="location.href='@Url.Action("Rate", "AllProduct", new { id = Model.Id , rate = 3 })'"><span class="rate-icon"></span></button>
+                            <button class="rate-button" onclick="location.href='@Url.Action("Rate", "AllProduct", new { id = Model.Id , rate = 4 })'"><span class="rate-icon"></span></button>
+                            <button class="rate-button" onclick="location.href='@Url.Action("Rate", "AllProduct", new { id = Model.Id , rate = 5 })'"><span class="rate-icon"></span></button>
+                        </p>
+                        <span class="review-count">(@Model.RatingCount baxış)</span>
                     </div>
                     <span class="sku">Sku: #76584HH</span>
-                    <p class="excerpt">Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a. Cras ultricies ligula sed magna dictum porta. Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui. Cras ultricies ligula sed magna dictum porta. Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a.</p>
+                    <p class="excerpt">@Model.Info</p>
                     <div class="price">
-                        <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
+                        @foreach (var price in Model.Discounts)
+                        {
+                            @if (price.Percent != 0)
+                            {
+                                <ins><span class="price-amount">@Math.Round((Model.Price * (100 - price.Percent)/100), 2)</span></ins>
+                                <del><span class="price-amount">@Model.Price</span></del>
+                            }
+                            else
+                            {
+                                <ins><span class="price-amount">@Model.Price</span></ins>
+                            }
+                        }
                     </div>
                     <div class="shipping-info">
                         <p class="shipping-day">3-Day Shipping</p>
@@ -353,6 +371,7 @@
                     </div>
                 </div>
             </div>
+
 
             <!-- related products -->
             <div class="product-related-box single-layout">

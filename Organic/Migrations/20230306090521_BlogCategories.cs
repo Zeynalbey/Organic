@@ -3,14 +3,29 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace Organic.Migrations
 {
     /// <inheritdoc />
-    public partial class Blog : Migration
+    public partial class BlogCategories : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "BlogCategories",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BlogCategories", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Blogs",
                 columns: table => new
@@ -32,6 +47,31 @@ namespace Organic.Migrations
                         column: x => x.FromId,
                         principalTable: "Users",
                         principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "BlogAndCategories",
+                columns: table => new
+                {
+                    BlogId = table.Column<int>(type: "int", nullable: false),
+                    BlogCategoryId = table.Column<int>(type: "int", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BlogAndCategories", x => new { x.BlogId, x.BlogCategoryId });
+                    table.ForeignKey(
+                        name: "FK_BlogAndCategories_BlogCategories_BlogCategoryId",
+                        column: x => x.BlogCategoryId,
+                        principalTable: "BlogCategories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_BlogAndCategories_Blogs_BlogId",
+                        column: x => x.BlogId,
+                        principalTable: "Blogs",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -81,6 +121,21 @@ namespace Organic.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.InsertData(
+                table: "BlogCategories",
+                columns: new[] { "Id", "Name" },
+                values: new object[,]
+                {
+                    { 1, "Sağlamlıq" },
+                    { 2, "Meyvələr" },
+                    { 3, "Tərəvəzlər" }
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BlogAndCategories_BlogCategoryId",
+                table: "BlogAndCategories",
+                column: "BlogCategoryId");
+
             migrationBuilder.CreateIndex(
                 name: "IX_BlogComments_BlogId",
                 table: "BlogComments",
@@ -106,10 +161,16 @@ namespace Organic.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "BlogAndCategories");
+
+            migrationBuilder.DropTable(
                 name: "BlogComments");
 
             migrationBuilder.DropTable(
                 name: "BlogLikes");
+
+            migrationBuilder.DropTable(
+                name: "BlogCategories");
 
             migrationBuilder.DropTable(
                 name: "Blogs");
