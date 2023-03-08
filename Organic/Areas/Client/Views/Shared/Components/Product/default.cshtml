@@ -11,10 +11,10 @@
                 <a asp-route="client-product-detail" asp-route-id="@product.Id" class="link-to-product">
                     <img src="~/@product.MainImgUrl" width="270" height="270" class="product-thumnail">
                 </a>
-                <a class="lookup btn_call_quickview" href="#"><i class="biolife-icon icon-search"></i></a>
+                <a class="lookup btn_call_quickview" asp-route="client-product-detail" asp-route-id =@product.Id><i class="biolife-icon icon-search"></i></a>
             </div>
             <div class="info">
-                <b class="categories">@product.Name</b>
+                <a asp-route="client-product-detail" asp-route-id="@product.Id" class="categories">@product.Name</a>
                 <h4 class="product-title"><a href="#" class="pr-name">@product.Info</a></h4>
                 <div class="price ">
                     @foreach (var price in product.DiscountPrices)

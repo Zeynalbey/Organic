@@ -41,7 +41,7 @@
                                 <li class="menu-item"><a asp-route="client-home-index">Ana Səhifə</a></li>
                                 <li class="menu-item"><a asp-route="client-product-list">Məhsullar</a></li>
                                 <li class="menu-item menu-item-has-children has-megamenu">
-                                    <a href="#" class="menu-name" data-title="Blog">Bloq</a>
+                                    <a asp-route="client-blog-list" class="menu-name" data-title="Blog">Bloq</a>
                                     <div class="wrap-megamenu lg-width-800 md-width-750">
                                         <div class="mega-content">
                                             <div class="col-lg-3 col-md-3 col-xs-6">
@@ -199,6 +199,7 @@
                             @if (userService.IsAuthenticated)
                             {
                                 <a class="login-link" asp-route="client-account-dashboard">
+                                    <img class="post-meta__item author" src="~/@userService.GetCurrentUserImage()" alt="" style="width: 40px; height: 40px;">
                                     @userService.GetCurrentUserFullName()
                                 </a>
                                 <a class="login-out" asp-route="client-auth-logout">

@@ -27,7 +27,7 @@ namespace Organic.Areas.Client.ViewComponents
             var model = await _dataContext.Blogs
                 .Select(b => new BlogViewModel(b.Id,
                 b.Title,
-                b.Description,
+                b.Description!.Substring(0,40),
                 b.From!.FirstName, 
                 b.PostedDate,
                 b.ImageNameInSystem!.FirstOrDefault() !=null

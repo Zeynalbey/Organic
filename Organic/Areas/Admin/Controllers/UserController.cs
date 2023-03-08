@@ -11,6 +11,7 @@ using System.Drawing;
 using System.Net;
 using Organic.Areas.Admin.ViewModels.User;
 using Organic.Contracts.Identity;
+using Organic.Areas.Client.ViewComponents;
 
 namespace Organic.Areas.Admin.Controllers
 {
@@ -75,13 +76,16 @@ namespace Organic.Areas.Admin.Controllers
                 return GetView(model);
             }
 
+            var imageNameInSystem = await _fileService.UploadAsync(model.Image!, UploadDirectory.User);
             var user = new User
             {
                 FirstName = model.FirstName,
                 LastName = model.LastName,
                 Email = model.Email,
                 Password = model.Password,
-                RoleId = model.RoleId
+                RoleId = model.RoleId,
+                ImageName = model.Image!.Name,
+                ImageNameInSystem = imageNameInSystem
             };
 
             IActionResult GetView(ViewModels.User.AddViewModel model)
@@ -111,8 +115,6 @@ namespace Organic.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            
-
             var model = new UpdateViewModel
             {
                 Id = user.Id,
@@ -121,6 +123,7 @@ namespace Organic.Areas.Admin.Controllers
                 Email= user.Email,
                 Password= user.Password,
                 RoleId = user.RoleId,
+                İmageUrl = _fileService.GetFileUrl(user.ImageNameInSystem, UploadDirectory.Slider),
                 Roles = _dbContext.Roles
                     .Select(r => new RoleListViewModel(r.Id, r.Name))
                     .ToList()
@@ -144,25 +147,21 @@ namespace Organic.Areas.Admin.Controllers
                 return GetView(model);
             }
 
-            //var role = await _userService.CheckRoleAsync(user.RoleId);
-
-            //if (role)
-            //{
-            //    ModelState.AddModelError(string.Empty, "Admin can't update!");
-            //    return GetView(model);
-            //}
-
             if (!_dbContext.Roles.Any(a => a.Id == model.RoleId))
             {
                 ModelState.AddModelError(string.Empty, "Role is not found!");
                 return GetView(model);
             }
 
+            var imageNameInSystem = await _fileService.UploadAsync(model.Image!, UploadDirectory.User);
+
             user.FirstName = model.FirstName;
             user.LastName = model.LastName;
             user.Email = model.Email;
             user.Password = model.Password;
             user.RoleId = model.RoleId;
+            user.ImageName = model.Image!.FileName;
+            user.ImageNameInSystem = imageNameInSystem;
 
             await _dbContext.SaveChangesAsync();
 

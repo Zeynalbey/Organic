@@ -12,5 +12,7 @@ namespace Organic.Areas.Admin.ViewModels.User
         public string? Password { get; set; }
         public int RoleId { get; set; }
         public List<RoleListViewModel>? Roles { get; set; }
+        public IFormFile? Image { get; set; }
+        public string? İmageUrl { get; set; }
     }
 }

@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Identity;
 using System;
 using Microsoft.AspNetCore.Mvc;
 using Org.BouncyCastle.Security;
+using Organic.Contracts.File;
 
 namespace Organic.Services.Concretes
 {
@@ -22,16 +23,19 @@ namespace Organic.Services.Concretes
         private readonly DataContext _dataContext;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IUserActivationService _userActivationService;
+        private readonly IFileService _fileService;
         private User _currentUser;
 
         public UserService(
             DataContext dataContext,
             IHttpContextAccessor httpContextAccessor,
-            IUserActivationService userActivationService)
+            IUserActivationService userActivationService,
+            IFileService fileService)
         {
             _dataContext = dataContext;
             _httpContextAccessor = httpContextAccessor;
             _userActivationService = userActivationService;
+            _fileService = fileService;
         }
 
         public bool IsAuthenticated
@@ -72,6 +76,11 @@ namespace Organic.Services.Concretes
         {
             var _currentUserRole = _dataContext.Roles.First(u => u.Id == CurrentUser.RoleId);
             return _currentUserRole.Name!;
+        }
+
+        public string GetCurrentUserImage()
+        {
+            return _fileService.GetFileUrl(_currentUser.ImageNameInSystem, UploadDirectory.User);
         }
 
         public async Task<bool> CheckPasswordAsync(string? email, string? password)

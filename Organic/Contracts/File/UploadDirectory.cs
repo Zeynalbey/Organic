@@ -4,6 +4,7 @@
     {
         Product = 1,
         Slider = 2,
-        Blog = 3
+        Blog = 4,
+        User = 8
     }
 }
