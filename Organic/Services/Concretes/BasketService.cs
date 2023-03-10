@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using System.Security.Cryptography.X509Certificates;
 using System.Text.Json;
+using Organic.Contracts.File;
 
 namespace Organic.Services.Concretes
 {
@@ -19,12 +20,17 @@ namespace Organic.Services.Concretes
         private readonly DataContext _dataContext;
         private readonly IUserService _userService;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IFileService _fileService;
 
-        public BasketService(DataContext dataContext, IUserService userService, IHttpContextAccessor httpContextAccessor)
+        public BasketService(DataContext dataContext,
+            IUserService userService, 
+            IHttpContextAccessor httpContextAccessor, 
+            IFileService fileService)
         {
             _dataContext = dataContext;
             _userService = userService;
             _httpContextAccessor = httpContextAccessor;
+            _fileService = fileService;
         }
 
 
@@ -47,7 +53,7 @@ namespace Organic.Services.Concretes
             async Task AddToDatabaseAsync()
             {
                 var basketProduct = await _dataContext.BasketProducts
-                    .FirstOrDefaultAsync(bp => bp.Basket.UserId == _userService.CurrentUser.Id && bp.ProductId == product.Id);
+                    .FirstOrDefaultAsync(bp => bp.Basket!.UserId == _userService.CurrentUser.Id && bp.ProductId == product.Id);
                 if (basketProduct is not null)
                 {
                     basketProduct.Quantity++;
@@ -73,7 +79,7 @@ namespace Organic.Services.Concretes
             //Add product to cookie if user is not authenticated 
             List<ProductCookieViewModel> AddToCookie()
             {
-                var productCookieValue = _httpContextAccessor.HttpContext.Request.Cookies["products"];
+                var productCookieValue = _httpContextAccessor.HttpContext!.Request.Cookies["products"];
                 var productsCookieViewModel = productCookieValue is not null
                     ? JsonSerializer.Deserialize<List<ProductCookieViewModel>>(productCookieValue)
                     : new List<ProductCookieViewModel> { };
@@ -82,7 +88,11 @@ namespace Organic.Services.Concretes
                 if (productCookieViewModel is null)
                 {
                     productsCookieViewModel
-                        !.Add(new ProductCookieViewModel(product.Id, product.Name, string.Empty, 1, product.Price, product.Price));
+                         !.Add(new ProductCookieViewModel(product.Id, product.Name,
+                        product.ProductImages!.Take(1)
+                        .FirstOrDefault() != null ? _fileService.GetFileUrl(product.ProductImages!
+                        .Take(1).FirstOrDefault()!.ImageNameInFileSystem, UploadDirectory.Product) 
+                        : String.Empty, 1, product.Price, product.Price));
                 }
                 else
                 {
@@ -92,7 +102,7 @@ namespace Organic.Services.Concretes
 
                 _httpContextAccessor.HttpContext.Response.Cookies.Append("products", JsonSerializer.Serialize(productsCookieViewModel));
 
-                return productsCookieViewModel;
+                return productsCookieViewModel!;
             }
         }
     }

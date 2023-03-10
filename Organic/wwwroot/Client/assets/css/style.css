@@ -74,6 +74,56 @@ body {
     word-wrap: break-word;
 }
 
+
+/*----------------------------------------*/
+/*  20. Modal
+/*----------------------------------------*/
+.quick-view-modal .modal-dialog {
+    max-width: 100%;
+    width: 1125px;
+}
+
+@media (max-width: 1199px) {
+    .quick-view-modal .modal-dialog {
+        width: calc(100% - 30px);
+        margin: 30px auto;
+    }
+}
+
+.quick-view-modal .modal-content {
+    border: 0;
+}
+
+.quick-view-modal .modal-header {
+    padding: 1rem 2rem;
+}
+
+.quick-view-modal .modal-body {
+    padding: 2rem;
+}
+
+.modal-img {
+    height: 100%;
+}
+
+.modal-slider {
+    border: 1px solid #dee2e6;
+    height: 100%;
+}
+
+.modal-thumbs .swiper-slide {
+    border: 1px solid #dee2e6;
+    -webkit-transition: all 0.3s ease 0s;
+    -o-transition: all 0.3s ease 0s;
+    transition: all 0.3s ease 0s;
+}
+
+    .modal-thumbs .swiper-slide:hover {
+        opacity: 1;
+    }
+
+/*----------------------------------------*/
+
 label {
     font-weight: 400;
     color: #333333;
@@ -208,10 +258,37 @@ select {
     font-size: 17px;
 }
 
-    .rate-icon::before {
-        content: "\f005";
-        font-family: 'FontAwesome', sans-serif;
+
+
+
+
+.slide-down-box button {
+    background-color: #e73918;
+    color: white;
+    border-style: none;
+    border-radius: 5px;
+    width: 100%;
+    font-weight: bold;
+}
+
+
+@media (max-width:570px) {
+    .slide-down-box button {
+        background-color: black;
+        color: white;
+        border-style: none;
+        border-radius: 5px;
+        width: 100%;
+        font-weight: bold;
     }
+}
+
+
+
+.rate-icon::before {
+    content: "\f005";
+    font-family: 'FontAwesome', sans-serif;
+}
 
 .nice-select:after {
     content: "\f0d7";
@@ -878,29 +955,32 @@ body {
     color: black;
     font-weight: bold;
 }
+
 .login-out {
     padding-left: 4px;
     color: #e73918;
     font-weight: bold;
 }
+
 .login-link:hover {
     color: #e73918;
 }
+
 .login-out:hover {
     color: black;
 }
 
 .biolife-clone-wrap .biolife-panels {
-        background: inherit;
-        border-color: inherit;
-        position: absolute;
-        margin-top: 50px;
-        left: 0;
-        right: 0;
-        top: 0;
-        bottom: 0;
-        z-index: 0;
-        box-sizing: border-box;
+    background: inherit;
+    border-color: inherit;
+    position: absolute;
+    margin-top: 50px;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 0;
+    box-sizing: border-box;
 }
 
 .biolife-next-panel {
@@ -4994,7 +5074,7 @@ body.open-overlay #overlay {
         margin-left: 1px;
     }
 
-.review-count{
+.review-count {
     font-size: 15px;
 }
 
@@ -5004,103 +5084,103 @@ body.open-overlay #overlay {
     margin-left: 17px;
 }
 
-    .sumary-product .product-attribute .category {
-        font-size: 15px;
-        color: #222222;
-        font-weight: 400;
-        margin-left: 17px;
+.sumary-product .product-attribute .category {
+    font-size: 15px;
+    color: #222222;
+    font-weight: 400;
+    margin-left: 17px;
+}
+
+.sumary-product .product-attribute .sku {
+    font-size: 15px;
+    color: #666666;
+    display: inline-block;
+    margin: 13px 0 0;
+    line-height: 1;
+}
+
+.sumary-product .product-attribute .excerpt {
+    display: block;
+    color: #666666;
+    font-size: 14px;
+    line-height: 20px;
+    margin: 15px 0 0;
+    max-width: 352px;
+}
+
+.sumary-product .product-attribute .price {
+    margin-top: 23px;
+}
+
+.sumary-product .product-attribute .product-atts {
+    display: inline-block;
+    border-top: 1px solid #e6e6e6;
+    margin-top: 23px;
+}
+
+    .sumary-product .product-attribute .product-atts .atts-item {
+        display: table;
+        width: 100%;
+        max-width: 368px;
+        border-bottom: 1px solid #e6e6e6;
+        margin-top: 15px;
+        padding-bottom: 12px;
     }
 
-    .sumary-product .product-attribute .sku {
-        font-size: 15px;
-        color: #666666;
-        display: inline-block;
-        margin: 13px 0 0;
-        line-height: 1;
-    }
-
-    .sumary-product .product-attribute .excerpt {
-        display: block;
-        color: #666666;
-        font-size: 14px;
-        line-height: 20px;
-        margin: 15px 0 0;
-        max-width: 352px;
-    }
-
-    .sumary-product .product-attribute .price {
-        margin-top: 23px;
-    }
-
-    .sumary-product .product-attribute .product-atts {
-        display: inline-block;
-        border-top: 1px solid #e6e6e6;
-        margin-top: 23px;
-    }
-
-        .sumary-product .product-attribute .product-atts .atts-item {
-            display: table;
-            width: 100%;
-            max-width: 368px;
-            border-bottom: 1px solid #e6e6e6;
-            margin-top: 15px;
-            padding-bottom: 12px;
+        .sumary-product .product-attribute .product-atts .atts-item .title {
+            display: table-cell;
+            font-size: 18px;
+            color: #333333;
+            font-weight: 600;
         }
 
-            .sumary-product .product-attribute .product-atts .atts-item .title {
-                display: table-cell;
-                font-size: 18px;
-                color: #333333;
-                font-weight: 600;
+        .sumary-product .product-attribute .product-atts .atts-item ul {
+            padding: 0 0 0 10px;
+            margin: 0;
+            font-size: 0;
+            line-height: 0;
+            display: table-cell;
+        }
+
+            .sumary-product .product-attribute .product-atts .atts-item ul.color-list a {
+                display: inline-block;
+                color: inherit;
+                position: relative;
+                padding-left: 37px;
             }
 
-            .sumary-product .product-attribute .product-atts .atts-item ul {
-                padding: 0 0 0 10px;
-                margin: 0;
-                font-size: 0;
-                line-height: 0;
-                display: table-cell;
+            .sumary-product .product-attribute .product-atts .atts-item ul.color-list .hex-code {
+                border: 2px solid #e6e6e6;
             }
 
-                .sumary-product .product-attribute .product-atts .atts-item ul.color-list a {
-                    display: inline-block;
-                    color: inherit;
-                    position: relative;
-                    padding-left: 37px;
-                }
+            .sumary-product .product-attribute .product-atts .atts-item ul.color-list .symbol {
+                display: inline-block;
+                width: 27px;
+                height: 27px;
+                border-radius: 50%;
+                position: absolute;
+                top: 3px;
+                left: 0;
+                background-color: #ededed;
+            }
 
-                .sumary-product .product-attribute .product-atts .atts-item ul.color-list .hex-code {
-                    border: 2px solid #e6e6e6;
-                }
+            .sumary-product .product-attribute .product-atts .atts-item ul li {
+                list-style: none;
+                display: inline-block;
+                font-size: 14px;
+                line-height: 34px;
+                color: #444444;
+                margin-right: 18px;
+                margin-bottom: 2px;
+            }
 
-                .sumary-product .product-attribute .product-atts .atts-item ul.color-list .symbol {
-                    display: inline-block;
-                    width: 27px;
-                    height: 27px;
-                    border-radius: 50%;
-                    position: absolute;
-                    top: 3px;
-                    left: 0;
-                    background-color: #ededed;
-                }
+            .sumary-product .product-attribute .product-atts .atts-item ul .inline-list li {
+                padding: 0 5px;
+            }
 
-                .sumary-product .product-attribute .product-atts .atts-item ul li {
-                    list-style: none;
-                    display: inline-block;
-                    font-size: 14px;
-                    line-height: 34px;
-                    color: #444444;
-                    margin-right: 18px;
-                    margin-bottom: 2px;
-                }
-
-                .sumary-product .product-attribute .product-atts .atts-item ul .inline-list li {
-                    padding: 0 5px;
-                }
-
-                .sumary-product .product-attribute .product-atts .atts-item ul li a {
-                    color: inherit;
-                }
+            .sumary-product .product-attribute .product-atts .atts-item ul li a {
+                color: inherit;
+            }
 
 .sumary-product .shipping-info {
     margin-top: 10px;

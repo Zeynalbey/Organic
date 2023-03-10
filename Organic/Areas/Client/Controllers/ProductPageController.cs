@@ -31,7 +31,6 @@ namespace Organic.Areas.Client.Controllers
         [HttpGet("detail/{id}", Name = "client-product-detail")]
         public async Task<IActionResult> Detail(int id)
         {
-
             var product = await _dbContext.Products.Include(p => p.ProductImages)
                 .Include(p => p.ProductTags)
                 .Include(p => p.ProductDiscountPercents)

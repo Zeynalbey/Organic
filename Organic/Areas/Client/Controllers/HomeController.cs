@@ -57,9 +57,8 @@ namespace Organic.Areas.Client.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-
-     //   [HttpGet("quick/{id}", Name = "client-product-quick")]
-     //   public async Task<IActionResult> Quick(int id)
+     //   [HttpGet("modal/{id}", Name = "plant-modal")]
+     //   public async Task<ActionResult> ModalAsync(int id)
      //   {
 
      //       var product = await _dbContext.Products.Include(p => p.ProductImages)
@@ -91,7 +90,7 @@ namespace Organic.Areas.Client.Controllers
      //           product.ProductTags!.Select(pt => pt.Tag).Select(t => new TagViewModel(t.Id, t.Name!)) ?? new List<TagViewModel>(),
      //           product.ProductCounts!.Select(pc => new CountViewModel(pc.Id, pc.Count)).ToList() ?? new List<CountViewModel>());
 
-     //       return View(viewModel);
+     //       return PartialView("~/Areas/Client/Views/Shared/Partials/_ModalPartial.cshtml", viewModel);
      //   }
     }
 

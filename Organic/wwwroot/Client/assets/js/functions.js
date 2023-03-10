@@ -28,6 +28,7 @@
     if($('#biolife-quickview-block').length){
         $document.on('click','.btn_call_quickview', function (e){
             e.preventDefault();
+            
             $('body').trigger( 'open-overlay',['open-quickview-block']);
             $('#biolife-quickview-block-popup').modal('show');
         })

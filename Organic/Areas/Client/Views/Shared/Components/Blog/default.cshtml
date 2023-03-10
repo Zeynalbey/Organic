@@ -7,7 +7,7 @@
     <li>
         <div class="post-item effect-01 style-bottom-info layout-02 ">
             <div class="thumbnail">
-                <a href="#" class="link-to-post"><img src="~/@item.Image" width="370" height="270" alt=""></a>
+                <a asp-route="client-blog-single" asp-route-id = "@item.Id" class="link-to-post"><img src="~/@item.Image" width="370" height="270" alt=""></a>
                 <div class="post-date">
                     <span class="date">@item.PostedDate.ToString("dd")</span>
                     <span class="month">@item.PostedDate.ToString("MMM")</span>

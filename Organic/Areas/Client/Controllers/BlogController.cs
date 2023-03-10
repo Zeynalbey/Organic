@@ -50,46 +50,36 @@ namespace Organic.Areas.Client.Controllers
         [HttpGet("blog/{id}", Name = "client-blog-single")]
         public async Task<IActionResult> Detail(int id)
         {
-
             var blog = await _dbContext.Blogs
                 .Include(p => p.Likes)
                 .Include(p => p.Comments)
+                .Include(p=> p.From)
+                .Include(p=> p.BlogAndCategories)
      .FirstOrDefaultAsync(p => p.Id == id);
 
             if (blog is null)
             {
                 return NotFound();
             }
+            //var category = _dbContext.BlogCategories!.Select(bc => bc.BlogCategory)
+            //   .FirstOrDefault(b=>b.Id)
 
+            //var imageNameİnSystem = _fileService.GetFileUrl(blog.ImageNameInSystem, UploadDirectory.Blog);
 
-            var imageNameİnSystem = _fileService.GetFileUrl(blog.ImageName, UploadDirectory.Blog);
+            //var viewModel = new BlogDetailViewModel(
+            //   blog.Id,
+            //   blog.Title!,
+            //   blog.Description!,
+            //   blog.PostedDate,
+            //   imageNameİnSystem,
+            //   blog.From!.FirstName!,
+            //   category
+              
+            //   );
 
+            
 
-            var viewModel = new BlogDetailViewModel { Id = blog.Id };
-
-            //viewModel.Likes = blog.Likes!.Select(bi => new BlogDetailViewModel.LikeListViewModel
-            //{
-            //    Id = bi.Id,
-            //    LikeCount = bi.LikeCount
-            //}).ToList();
-
-
-
-
-            //blog.ImageNameInSystem!.FirstOrDefault() != null
-            //? _fileService.GetFileUrl(imageNameİnSystem, UploadDirectory.Blog)
-            //: Image.DEFAULTIMAGE,
-
-
-
-            //product.ProductDiscountPercents!.Select(pdp => new DiscountViewModel(pdp.Id, pdp.Percent)) ?? new List<DiscountViewModel>(),
-            //imageUrls,
-            //product.ProductTags!.Select(pt => pt.Tag).Select(t => new TagViewModel(t.Id, t.Name!)) ?? new List<TagViewModel>(),
-            //product.ProductCounts!.Select(pc => new CountViewModel(pc.Id, pc.Count)).ToList() ?? new List<CountViewModel>());
-
-            return View(viewModel);
+            return View(blog);
         }
-
-
     }
 }
