@@ -7,10 +7,17 @@
     <a href="javascript:void(0)" class="link-to">
         <span class="icon-qty-combine">
             <i class="icon-cart-mini biolife-icon"></i>
-            <span class="qty">8</span>
+            @foreach (var item in Model)
+            {
+                <span class="qty">@Model.Count</span>
+            }
+
         </span>
-        <span class="title">Mənim Səbətim -</span>
-        <span class="sub-total">$0.00</span>
+        <span class="title">Mənim Səbətim:</span>
+        <span class="sub-total">
+            @Math.Round(Model!.Sum(pcvm => 
+                pcvm.DiscountPrice * pcvm.Quantity), 2) Azn
+        </span>
     </a>
     <div class="cart-content">
         <div class="cart-inner">
@@ -25,11 +32,7 @@
                             <div class="left-info">
                                 <div class="product-title"><a href="#" class="product-name">@item.Title</a></div>
                                 <div class="price">
-                                    <span class="price-amount"><span class="currencySymbol">£</span>@item.Price</span>
-                                </div>
-                                <div class="qty">
-                                    <label for="cart[id123][qty]">Qty:</label>
-                                    <input type="number" class="input-qty" name="cart[id123][qty]" id="cart[id123][qty]" value="1" disabled>
+                                    <span class="price-amount"><span class="currencySymbol">£</span>@item.DiscountPrice x @item.Quantity</span>
                                 </div>
                             </div>
                             <div class="action">
@@ -39,7 +42,7 @@
                         </div>
                     </li>
                 }
-               
+
             </ul>
             <p class="btn-control">
                 <a href="#" class="btn view-cart">view cart</a>

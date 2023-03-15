@@ -18,8 +18,9 @@
                 <h3 class="second-line">@item.Title</h3>
                 <p class="third-line">@item.Description</p>
                 <p class="buttons">
-                    <a asp-route="client-basket-add" asp-route-id="@item.ProductId" class="btn btn-bold">Səbətə əlavə et</a>
-                    <a href="#" class="btn btn-thin">Detallara bax</a>
+                    <a asp-route="client-basket-add" asp-route-id="@item.ProductId" class="btn btn-bold add-basket-btn">Səbətə əlavə et</a>
+
+                    <a asp-route="client-product-detail" asp-route-id="@item.ProductId" class="btn btn-thin">Detallara bax</a>
                 </p>
             </div>
         </div>

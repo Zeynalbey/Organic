@@ -12,6 +12,7 @@ using System.Security.Claims;
 using System.Security.Cryptography.X509Certificates;
 using System.Text.Json;
 using Organic.Contracts.File;
+using System.Runtime.Intrinsics.Arm;
 
 namespace Organic.Services.Concretes
 {
@@ -67,12 +68,15 @@ namespace Organic.Services.Concretes
                         Quantity = 1,
                         BasketId = basket.Id,
                         ProductId = product.Id,
+
                     };
+
 
                     await _dataContext.BasketProducts.AddAsync(basketProduct);
                 }
 
                 await _dataContext.SaveChangesAsync();
+
             }
 
 
@@ -85,6 +89,8 @@ namespace Organic.Services.Concretes
                     : new List<ProductCookieViewModel> { };
 
                 var productCookieViewModel = productsCookieViewModel!.FirstOrDefault(pcvm => pcvm.Id == product.Id);
+                var discountPrice = _dataContext.ProductDiscountPercents!.FirstOrDefault(dp => dp.Product.Id == product.Id);
+
                 if (productCookieViewModel is null)
                 {
                     productsCookieViewModel
@@ -92,12 +98,11 @@ namespace Organic.Services.Concretes
                         product.ProductImages!.Take(1)
                         .FirstOrDefault() != null ? _fileService.GetFileUrl(product.ProductImages!
                         .Take(1).FirstOrDefault()!.ImageNameInFileSystem, UploadDirectory.Product) 
-                        : String.Empty, 1, product.Price, product.Price));
+                        : String.Empty, 1, product.Price, discountPrice!.Percent! ==0 ? product.Price : (100 - discountPrice.Percent) /100 * product.Price));
                 }
                 else
                 {
                     productCookieViewModel.Quantity += 1;
-                    productCookieViewModel.Total = productCookieViewModel.Quantity * productCookieViewModel.Price;
                 }
 
                 _httpContextAccessor.HttpContext.Response.Cookies.Append("products", JsonSerializer.Serialize(productsCookieViewModel));

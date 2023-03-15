@@ -36,6 +36,9 @@ namespace Organic.Database
         {
             modelBuilder.Entity<Product>().Property(x => x.Price).HasColumnType("decimal(18,2)");
             modelBuilder.Entity<ProductDiscountPercent>().Property(x => x.Percent).HasColumnType("decimal(18,2)");
+            modelBuilder.Entity<Order>().Property(x => x.Total).HasColumnType("decimal(18,2)");
+            modelBuilder.Entity<OrderProduct>().Property(x => x.Price).HasColumnType("decimal(18,2)");
+            modelBuilder.Entity<OrderProduct>().Property(x => x.Total).HasColumnType("decimal(18,2)");
             modelBuilder.Entity<ProductCount>().Property(x => x.Count).HasColumnType("decimal(18,2)");
             modelBuilder.ApplyConfigurationsFromAssembly<Program>();
             modelBuilder.Entity<BlogCategory>().HasData(

@@ -5,7 +5,7 @@ $(document).ready(function () {
 
     btns.forEach(x => x.addEventListener("click", function (e) {
         e.preventDefault()
-        fetch(e.target.parentElement.href)
+        fetch(e.target.href)
             .then(response => response.text())
             .then(data => {
                 $('.minicart-block').html(data);
@@ -19,19 +19,17 @@ $(document).ready(function () {
             .then(data => {
                 $('.cart-block').html(data);
             })
+    })
 
+/*    let counts = document.querySelector(".sub-total")*/
 
-        //e.preventDefault();
-
-        //let aHref = e.target.parentElement.href;
-        //$.ajax({
-
-        //    url: aHref,
-        //    success: function (response) {
-        //        $('.cart-block').html(response);
-        //    }
-        //}
-        //)
+    $(document).on("click", ".remove-basket-btn", function (e) {
+        e.preventDefault();
+        fetch(e.target.parentElement.href)
+            .then(response => response.text())
+            .then(data => {
+                $('.minicart-block').html(data);
+            })
     })
 
     $(document).on("click", ".plus-btn", function (e) {

@@ -261,29 +261,15 @@ select {
 
 
 
-
-.slide-down-box button {
-    background-color: #e73918;
-    color: white;
-    border-style: none;
-    border-radius: 5px;
-    width: 100%;
-    font-weight: bold;
-}
-
-
 @media (max-width:570px) {
-    .slide-down-box button {
-        background-color: black;
-        color: white;
-        border-style: none;
-        border-radius: 5px;
-        width: 100%;
-        font-weight: bold;
+    #basketbutton{
+        width:100%;
     }
 }
 
-
+#basketbutton{
+    color: white;
+}
 
 .rate-icon::before {
     content: "\f005";

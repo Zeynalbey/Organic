@@ -19,6 +19,7 @@ namespace Organic.Database.Models
 
         public UserActivation? UserActivation { get; set; }
 
+        public List<Order>? Orders { get; set; }
         public string? ImageName { get; set; }
         public string? ImageNameInSystem { get; set; }
 
