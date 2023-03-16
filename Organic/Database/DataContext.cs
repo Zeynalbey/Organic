@@ -30,6 +30,8 @@ namespace Organic.Database
         public DbSet<Tag> Tags { get; set; }
         public DbSet<ProductCount> ProductCounts { get; set; }
         public DbSet<ProductDiscountPercent>? ProductDiscountPercents { get; set; }
+        public DbSet<OrderProduct> OrderProducts { get; set; }
+        public DbSet<Order> Orders { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

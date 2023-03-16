@@ -15,8 +15,8 @@
         </span>
         <span class="title">Mənim Səbətim:</span>
         <span class="sub-total">
-            @Math.Round(Model!.Sum(pcvm => 
-                pcvm.DiscountPrice * pcvm.Quantity), 2) Azn
+            @Math.Round(Model!.Sum(pcvm =>
+            pcvm.DiscountPrice * pcvm.Quantity), 2) ₼
         </span>
     </a>
     <div class="cart-content">
@@ -27,16 +27,15 @@
                     <li>
                         <div class="minicart-item">
                             <div class="thumb">
-                                <a href="#"><img src="~/@item.ImageUrl" width="90" height="90" alt="National Fresh"></a>
+                                <a href="#"><img src="~/@item.ImageUrl" width="90" height="90" alt="National Fresh"></a> 
                             </div>
                             <div class="left-info">
                                 <div class="product-title"><a href="#" class="product-name">@item.Title</a></div>
                                 <div class="price">
-                                    <span class="price-amount"><span class="currencySymbol">£</span>@item.DiscountPrice x @item.Quantity</span>
+                                    <span class="price-amount"><span class="currencySymbol">₼</span> @Math.Round(item.DiscountPrice, 2) x @item.Quantity</span>
                                 </div>
                             </div>
                             <div class="action">
-                                <a href="#" class="edit"><i class="fa fa-pencil" aria-hidden="true"></i></a>
                                 <a asp-route="client-basket-delete" asp-route-Id="@item.Id" class="remove remove-basket-btn"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
                             </div>
                         </div>
@@ -46,7 +45,7 @@
             </ul>
             <p class="btn-control">
                 <a href="#" class="btn view-cart">view cart</a>
-                <a href="#" class="btn">checkout</a>
+                <a asp-route="client-order-checkout" class="btn btn-dark">Checkout</a>
             </p>
         </div>
     </div>

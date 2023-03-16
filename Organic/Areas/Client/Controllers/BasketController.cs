@@ -57,11 +57,11 @@ namespace Backend_Final.Areas.Client.Controllers
                 var basketProduct = await _dataContext.BasketProducts
                    .Include(b => b.Basket).FirstOrDefaultAsync(bp => bp.Basket!.UserId == _userService.CurrentUser.Id && bp.ProductId == id);
 
-                if (basketProduct is null)
+                if (basketProduct is not null)
                 {
-                    return NotFound();
+                    _dataContext.BasketProducts.Remove(basketProduct);
                 }
-                _dataContext.BasketProducts.Remove(basketProduct);
+                
                 await _dataContext.SaveChangesAsync();
             }
             else
@@ -82,12 +82,8 @@ namespace Backend_Final.Areas.Client.Controllers
                 productsCookieViewModel!.RemoveAll(pcvm => pcvm.Id == id);
 
                 HttpContext.Response.Cookies.Append("products", JsonSerializer.Serialize(productsCookieViewModel));
-
-
-
             }
             return ViewComponent(nameof(BasketMini), productsCookieViewModel);
-
         }
     }
 }

@@ -34,7 +34,7 @@ namespace Organic.Areas.Client.ViewComponents
                    p.Product.ProductImages!.Take(1).FirstOrDefault()! != null
                    ? _fileService.GetFileUrl(p.Product.ProductImages!.Take(1).FirstOrDefault()!.ImageNameInFileSystem, Contracts.File.UploadDirectory.Product)
                    : String.Empty,
-                   p.Quantity, p.Product.Price, p.Product.Price * p.Quantity)).ToListAsync();
+                   p.Quantity, p.Product.Price, p.Product.Price)).ToListAsync();
 
 
                 return View(model);
