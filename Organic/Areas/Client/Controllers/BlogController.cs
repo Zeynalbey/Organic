@@ -35,7 +35,7 @@ namespace Organic.Areas.Client.Controllers
                 b.Description!.Substring(0, 50),
                 b.From!.FirstName,
                 b.PostedDate,
-                b.ImageNameInSystem!.FirstOrDefault() != null
+                b.ImageNameInSystem.FirstOrDefault() != null
                 ? _fileService.GetFileUrl(b.ImageNameInSystem, UploadDirectory.Blog)
                 : Image.DEFAULTIMAGE,
                 b.BlogAndCategories!.Select(b => b.BlogCategory)

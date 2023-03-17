@@ -1,0 +1,103 @@
+﻿@using Organic.Areas.Client.ViewModels.Basket;
+@model List<ProductCookieViewModel>
+
+<div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+    <form class="shopping-cart-form" action="#" method="post">
+        <table class="shop_table cart-form">
+            <thead>
+                <tr>
+                    <th class="product-name">Məhsulun adı</th>
+                    <th class="product-price">Qiymət</th>
+                    <th class="product-quantity">Say</th>
+                    <th class="product-subtotal">Cəm</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var product in Model)
+                {
+                    <tr class="cart_item">
+                        <td class="product-thumbnail" data-title="Məhsulun adı">
+                            <a class="prd-thumb" href="#">
+                                <figure><img width="113" height="113" src="~/@product.ImageUrl" alt="shipping cart"></figure>
+                            </a>
+                            <a class="prd-name" href="#">@product.Title</a>
+                            <div class="action">
+                                <a asp-route="client-shop-basket-delete" asp-route-productId="@product.Id">
+                                    <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                </a>
+                            </div>
+                        </td>
+                        <td class="product-price" data-title="Qiymət">
+                            <div class="price price-contain">
+                                <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
+                                <del><span class="price-amount">@product.Price</span></del>
+                            </div>
+                        </td>
+                        <td class="product-quantity" data-title="Say">
+                            <div class="quantity-box type1">
+                                <div class="qty-input">
+
+                                    <a asp-route="client-individual-basket-delete" asp-route-id="@product.Id"
+                                   data-id="@product.Id" class="btn btn-dark minus-btn">
+                                        -
+                                    </a>
+                                    <a asp-route="client-cardpagebasket-update"></a>
+
+                                    <span class="btn btn-dark">@product.Quantity</span>
+
+                                    <a asp-route="client-cardpagebasket-add" asp-route-id="@product.Id"
+                                   data-id="@product.Id" class="btn btn-dark plus-btn">
+                                        +
+                                    </a>
+                                    <a asp-route="client-cardpagebasket-update"></a>
+
+
+                                </div>
+                            </div>
+                        </td>
+                        <td class="product-subtotal" data-title="Cəm">
+                            <div class="price price-contain">
+                                <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
+                                <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
+                            </div>
+                        </td>
+                    </tr>
+                }
+
+                <tr class="cart_item wrap-buttons">
+                    <td class="wrap-btn-control" colspan="4">
+                        <a class="btn back-to-shop">Back to Shop</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </form>
+</div>
+<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+    <div class="shpcart-subtotal-block">
+        <div class="subtotal-line">
+            <b class="stt-name">Subtotal <span class="sub">(2ittems)</span></b>
+            <span class="stt-price">£170.00</span>
+        </div>
+        <div class="btn-checkout">
+            <a asp-route="client-order-checkout" class="btn checkout">Check out</a>
+        </div>
+        <div class="biolife-progress-bar">
+            <table>
+                <tr>
+                    <td class="first-position">
+                        <span class="index">$0</span>
+                    </td>
+                    <td class="mid-position">
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    </td>
+                    <td class="last-position">
+                        <span class="index">$99</span>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>

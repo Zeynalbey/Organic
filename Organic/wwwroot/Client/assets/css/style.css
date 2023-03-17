@@ -275,6 +275,10 @@ select {
 #basketbutton{
     color: white;
 }
+.orders-table {
+    padding-top: 40px;
+    padding-bottom: 40px;
+}
 
 .rate-icon::before {
     content: "\f005";

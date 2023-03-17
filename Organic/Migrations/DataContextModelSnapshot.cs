@@ -289,7 +289,7 @@ namespace Organic.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Order");
+                    b.ToTable("Orders", (string)null);
                 });
 
             modelBuilder.Entity("Organic.Database.Models.OrderProduct", b =>
@@ -327,7 +327,7 @@ namespace Organic.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("OrderProduct");
+                    b.ToTable("OrderProducts", (string)null);
                 });
 
             modelBuilder.Entity("Organic.Database.Models.Product", b =>

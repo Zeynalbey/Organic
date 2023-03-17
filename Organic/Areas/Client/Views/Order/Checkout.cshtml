@@ -59,7 +59,7 @@
                                 <li>
                                     <div class="subtotal-line">
                                         <b class="stt-name">Yekun qiymət:</b>
-                                        <span class="stt-price">@*@Model.Summary!.Total ₼*@
+                                        <span class="stt-price">
 
                                             @Math.Round(Model.Summary!.Total, 2) ₼
 
@@ -68,7 +68,8 @@
                                 </li>
                                 <li>
                                     <div class="Sifarisler">
-                                        <a href="">Sifariş tarixcəniz</a>
+                                        <form method="POST" asp-route="client-order-placeorder" id="submit-form"></form>
+                                        <button form="submit-form" type="submit">Sifarişinizi təsdiqləyin</button>
                                     </div>
                                 </li>
                             </ul>

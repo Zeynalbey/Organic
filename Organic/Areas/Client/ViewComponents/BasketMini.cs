@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json;
 using System.Xml.Linq;
+using Organic.Database.Models;
 
 namespace Organic.Areas.Client.ViewComponents
 {
@@ -25,17 +26,33 @@ namespace Organic.Areas.Client.ViewComponents
         }
 
         public async Task<IViewComponentResult> InvokeAsync(List<ProductCookieViewModel>? viewModels = null)
-        {
+        {     
             if (_userService.IsAuthenticated)
             {
-                var model = await _dataContext.BasketProducts.Where(p => p.Basket.UserId == _userService.CurrentUser.Id)
+                //var model = await _dataContext.BasketProducts
+                //    .Include(p => p.Product)
+                //        .ThenInclude(p => p.ProductDiscountPercents).Where(p => p.Basket.UserId == _userService.CurrentUser.Id)
+                //   .Select(p =>
+                //   new ProductCookieViewModel(p.ProductId, p.Product!.Name,
+                //   p.Product.ProductImages!.Take(1).FirstOrDefault()! != null
+                //   ? _fileService.GetFileUrl(p.Product.ProductImages!.Take(1).FirstOrDefault()!.ImageNameInFileSystem, Contracts.File.UploadDirectory.Product)
+                //   : String.Empty,
+                //   p.Quantity, p.Product.Price, p.Product.ProductDiscountPercents.FirstOrDefault(d => d.Percent == 0).Percent ? p.Product.Price 
+                //   : p.Product.ProductDiscountPercents.FirstOrDefault(d => d.Percent != 0).Percent)
+                //   ).ToListAsync();
+
+                //return View(model);
+
+                var model = await _dataContext.BasketProducts
+                    .Include(p => p.Product)
+                        .ThenInclude(p => p!.ProductDiscountPercents).Where(p => p.Basket!.UserId == _userService.CurrentUser.Id)
                    .Select(p =>
                    new ProductCookieViewModel(p.ProductId, p.Product!.Name,
                    p.Product.ProductImages!.Take(1).FirstOrDefault()! != null
                    ? _fileService.GetFileUrl(p.Product.ProductImages!.Take(1).FirstOrDefault()!.ImageNameInFileSystem, Contracts.File.UploadDirectory.Product)
                    : String.Empty,
-                   p.Quantity, p.Product.Price, p.Product.Price)).ToListAsync();
-
+                   p.Quantity, p.Product.Price, p.Product.Price)
+                   ).ToListAsync();
 
                 return View(model);
             }

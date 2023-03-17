@@ -43,7 +43,7 @@ $(document).ready(function () {
                 fetch(e.target.nextElementSibling.href)
                     .then(response => response.text())
                     .then(data => {
-                        $('.cart-block').html(data);
+                        $('.minicart-block').html(data);
                     })
             })
     })
@@ -59,7 +59,7 @@ $(document).ready(function () {
                 fetch(e.target.nextElementSibling.href)
                     .then(response => response.text())
                     .then(data => {
-                        $('.cart-block').html(data);
+                        $('.minicart-block').html(data);
                     })
             })
     })

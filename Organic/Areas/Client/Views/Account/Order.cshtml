@@ -1,0 +1,29 @@
+﻿@using Organic.Areas.Client.ViewModels.OrderProducts
+@model OrdersProductsViewModel
+
+<div class="col-lg-12 row orders-table">
+    <div class="myaccount-orders">
+        <h4 class="small-title">Mənim sifarişlərim</h4>
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+                <tbody>
+                    <tr>
+                        <th>Ad</th>
+                        <th>Say</th>
+                        <th>Qiymət</th>
+                        <th>Cəm</th>
+                    </tr>
+                    @foreach (var item in Model.Products)
+                    {
+                        <tr>
+                            <td>@item.Name</td>
+                            <td>@item.Quantity</td>
+                            <td>@item.Price</td>
+                            <td>@item.Total</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

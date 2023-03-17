@@ -198,7 +198,7 @@
                         <div class="login-reg">
                             @if (userService.IsAuthenticated)
                             {
-                                <a class="login-link" asp-route="client-account-dashboard">
+                                <a class="login-link" asp-route="client-account-orders">
                                     @userService.GetCurrentUserFullName()
                                 </a>
                                 <a class="login-out" asp-route="client-auth-logout">
