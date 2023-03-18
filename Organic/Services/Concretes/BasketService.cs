@@ -55,6 +55,10 @@ namespace Organic.Services.Concretes
             {
                 var basketProduct = await _dataContext.BasketProducts
                     .FirstOrDefaultAsync(bp => bp.Basket!.UserId == _userService.CurrentUser.Id && bp.ProductId == product.Id);
+                
+            
+
+
                 if (basketProduct is not null)
                 {
                     basketProduct.Quantity++;
@@ -98,11 +102,12 @@ namespace Organic.Services.Concretes
                         product.ProductImages!.Take(1)
                         .FirstOrDefault() != null ? _fileService.GetFileUrl(product.ProductImages!
                         .Take(1).FirstOrDefault()!.ImageNameInFileSystem, UploadDirectory.Product) 
-                        : String.Empty, 1, product.Price, discountPrice!.Percent! ==0 ? product.Price : (100 - discountPrice.Percent) /100 * product.Price));
+                        : String.Empty, 1, product.Price, discountPrice!.Percent! ==0 ? product.Price : (100 - discountPrice.Percent) /100 * product.Price, product.Price));
                 }
                 else
                 {
                     productCookieViewModel.Quantity += 1;
+                    productCookieViewModel.Total = productCookieViewModel.Quantity * productCookieViewModel.Price;
                 }
 
                 _httpContextAccessor.HttpContext.Response.Cookies.Append("products", JsonSerializer.Serialize(productsCookieViewModel));
@@ -111,4 +116,5 @@ namespace Organic.Services.Concretes
             }
         }
     }
+
 }

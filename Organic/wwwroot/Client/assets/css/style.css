@@ -76,9 +76,37 @@ body {
 
 .Sifarisler a {
     color: #ff2727;
-    text-align: center;
+    text-align: right;
     font-size: 20px;
     font-weight: bold;
+}
+
+.wrap-btn-control2 td{
+    text-align:right !important;
+}
+.wrap-btn-control2 tr {
+    text-align: right !important;
+}
+.wrap-btn-control2 span {
+    text-align: right !important;
+}
+
+
+
+.cardpagetable1 {
+    padding-top: 40px;
+    padding-bottom: 20px;
+}
+
+.sub-toal {
+    font-size: 20px;
+    font-weight: bold;
+    color: #ff2727;
+}
+
+.cart_item wrap-buttons2 .wrap-btn-control2{
+    padding-top: 30px;
+    padding-bottom: 30px;
 }
 /*----------------------------------------*/
 /*  20. Modal
@@ -278,6 +306,17 @@ select {
 .orders-table {
     padding-top: 40px;
     padding-bottom: 40px;
+}
+
+.myaccount-orders .bodystyle {
+    color: black;
+    font-weight: bold;
+
+}
+
+.myaccount-orders h3 {
+    color: #e73918;
+    font-weight: bold;
 }
 
 .rate-icon::before {

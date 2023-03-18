@@ -11,7 +11,7 @@ namespace Backend_Final.Areas.Client.ViewComponents
 {
     [ViewComponent(Name = "CardPage")]
 
-    public class CardPage: ViewComponent
+    public class CardPage : ViewComponent
     {
         private readonly DataContext _dataContext;
         private readonly IUserService _userService;
@@ -26,6 +26,8 @@ namespace Backend_Final.Areas.Client.ViewComponents
 
         public async Task<IViewComponentResult> InvokeAsync(List<ProductCookieViewModel>? viewModels = null)
         {
+            //var discountPrice = await _dataContext.ProductDiscountPercents!.Include(p => p.Product).FirstOrDefaultAsync(p => p.Id == p.Product!.Id);
+
             if (_userService.IsAuthenticated)
             {
                 var model = await _dataContext.BasketProducts
@@ -34,8 +36,11 @@ namespace Backend_Final.Areas.Client.ViewComponents
                     p.Product!.ProductImages!.Take(1).FirstOrDefault()! != null
                     ? _fileService.GetFileUrl(p.Product!.ProductImages!.Take(1).FirstOrDefault()!.ImageNameInFileSystem, UploadDirectory.Product)
                     : String.Empty,
-                    p.Quantity, p.Product.Price, p.Product.Price * p.Quantity))
+                    p.Quantity, p.Product.Price,
+                    Math.Round((100 - p.Product.ProductDiscountPercents.FirstOrDefault().Percent) / 100 * p.Product.Price, 2),
+                    Math.Round((100 - p.Product.ProductDiscountPercents.FirstOrDefault().Percent) / 100 * p.Product.Price, 2) * p.Quantity))
                     .ToListAsync();
+
 
 
                 return View(model);

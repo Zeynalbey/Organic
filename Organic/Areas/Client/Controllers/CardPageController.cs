@@ -139,19 +139,24 @@ namespace Backend_Final.Areas.Client.Controllers
 
                 foreach (var cookieItem in productCookieViewModel)
                 {
-                    if (cookieItem.Quantity > 1)
+                    if (id == cookieItem.Id)
                     {
-                        cookieItem.Quantity -= 1;
-                        cookieItem.Price = cookieItem.Quantity * cookieItem.Price;
+                        if (cookieItem.Quantity > 1)
+                        {
+                            cookieItem.Quantity -= 1;
+                            cookieItem.Total = cookieItem.Quantity * cookieItem.Price;
+                        }
+                        else
+                        {
+                            productCookieViewModel.RemoveAll(p => p.Id == cookieItem.Id);
+                            break;
+                        }
                     }
-                    else
-                    {
-                        productCookieViewModel.RemoveAll(p => p.Id == cookieItem.Id);
-                        break;
-                    }
+                   
                 }
                 HttpContext.Response.Cookies.Append("products", JsonSerializer.Serialize(productCookieViewModel));
             }
+            
             await _dataContext.SaveChangesAsync();
             return ViewComponent(nameof(CardPage), productCookieViewModel);
         }

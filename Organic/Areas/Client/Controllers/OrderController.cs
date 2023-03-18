@@ -40,6 +40,8 @@ namespace Organic.Areas.Client.Controllers
         [HttpGet("checkout", Name = "client-order-checkout")]
         public async Task<IActionResult> CheckOut()
         {
+            //var discountPrice = _dataContext.ProductDiscountPercents!.FirstOrDefault(dp => dp.Product.Id == product.Id);
+
             var model = new OrdersProductsViewModel
             {
 
@@ -52,11 +54,14 @@ namespace Organic.Areas.Client.Controllers
                    ? _fileService.GetFileUrl(p.Product.ProductImages!.Take(1).FirstOrDefault()!.ImageNameInFileSystem, UploadDirectory.Product)
                    : Image.DEFAULTIMAGE,
                       Price = p.Product.Price,
-                      
-
                       Quantity = p.Quantity,
-                      Total = p.Product.Price * p.Quantity,
+                      Total = p.Product.ProductDiscountPercents.FirstOrDefault() != null
+                      ? p.Product.Price * p.Quantity
+                      : p.Product.ProductDiscountPercents.FirstOrDefault(p=>p.Percent != null).Percent
+
+                      * p.Quantity,
                   }).ToListAsync(),
+
 
                 Summary = new OrdersProductsViewModel.SummaryViewModel
                 {
