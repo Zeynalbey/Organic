@@ -57,7 +57,7 @@ namespace Organic.Areas.Client.Controllers
                       Quantity = p.Quantity,
                       Total = p.Product.ProductDiscountPercents.FirstOrDefault() != null
                       ? p.Product.Price * p.Quantity
-                      : p.Product.ProductDiscountPercents.FirstOrDefault(p=>p.Percent != null).Percent
+                      : p.Product.ProductDiscountPercents.FirstOrDefault(p => p.Percent != null).Percent
 
                       * p.Quantity,
                   }).ToListAsync(),
@@ -69,10 +69,10 @@ namespace Organic.Areas.Client.Controllers
                    .Where(pu => pu.Basket!.UserId == _userService.CurrentUser.Id)
                     .SumAsync(bp => bp.Product!.Price * bp.Quantity)
                 }
-                
+
             };
 
-            
+
 
             return View(model);
         }
@@ -92,8 +92,28 @@ namespace Organic.Areas.Client.Controllers
 
             await CreateFullOrderProductAync(order, basketProducts);
             order.Total = order.OrderProducts.Sum(p => p.Total);
+            
+
 
             await ResetBasketAsync(basketProducts);
+
+            //decimal count = 4;
+
+            //foreach (var item in basketProducts)
+            //{
+            //    var productCount = await _dataContext.ProductCounts
+            //    .FirstOrDefaultAsync(pc => pc.Id == item.Product.Id);
+
+            //    //if (productCount != null)
+            //    //{
+            //    //     productCount.Count - 5;
+            //    //}
+            //}
+
+
+
+
+
 
             await _dataContext.SaveChangesAsync();
 
@@ -122,6 +142,7 @@ namespace Organic.Areas.Client.Controllers
                     await _dataContext.OrderProducts.AddAsync(orderProduct);
                 }
 
+
             }
 
             async Task<Order> CreateOrder()
@@ -132,6 +153,7 @@ namespace Organic.Areas.Client.Controllers
                     UserId = _userService.CurrentUser.Id,
                     Status = Database.Models.Enums.OrderStatus.Created
                 };
+
                 await _dataContext.Orders.AddAsync(order);
                 return order;
             }

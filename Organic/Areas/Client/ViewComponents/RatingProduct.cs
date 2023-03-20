@@ -29,6 +29,7 @@ namespace Organic.Areas.Client.ViewComponents
                        p.Id,
                        p.Name!,
                        p.Info,
+                       p.Category!.Name!,
                        p.Rating,
                        p.RatingCount,
                        p.Price!,

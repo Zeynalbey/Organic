@@ -5,12 +5,13 @@ namespace Organic.Areas.Client.ViewModels.Product
 {
     public class ProductSaleViewModel
     {
-        public ProductSaleViewModel(int id, string? name, string? info, decimal rating, int ratingCount,  decimal price,
+        public ProductSaleViewModel(int id, string? name, string? info, string categoryName, decimal rating, int ratingCount,  decimal price,
             List<DiscountViewModel> discountPrices, string? mainImgUrl)
         {
             Id = id;
             Name = name;
             Info = info;
+            CategoryName = categoryName;
             Rating = rating;
             RatingCount = ratingCount;
             DiscountPrices = discountPrices;
@@ -21,6 +22,7 @@ namespace Organic.Areas.Client.ViewModels.Product
         public int Id { get; set; }
         public string? Name { get; set; }
         public string? Info { get; set; }
+        public string? CategoryName { get; set; }
         public decimal Rating { get; set; }
         public int RatingCount { get; set; }
         public List <DiscountViewModel> DiscountPrices { get; set; }

@@ -13,6 +13,7 @@ namespace Organic.Database.Models
         public Category? Category { get; set; }
         public int Rating { get; set; }
         public int RatingCount { get; set; }
+        public bool IsCooked { get; set; }
         public List<ProductTag>? ProductTags { get; set; }
         public List<ProductImage>? ProductImages { get; set; }
         public List<Slider>? Sliders { get; set; }
