@@ -12,6 +12,16 @@ $(document).ready(function () {
             })
     }))
 
+    let btns2 = document.querySelectorAll(".add-basket-kabab")
+    btns2.forEach(x => x.addEventListener("click", function (e) {
+        e.preventDefault()
+        fetch(e.target.parentElement.href)
+            .then(response => response.text())
+            .then(data => {
+                $('.minicart-block').html(data);
+            })
+    }))
+
     $(document).on("click", ".remove-basket-btn", function (e) {
         e.preventDefault();
         fetch(e.target.parentElement.href)
@@ -20,6 +30,8 @@ $(document).ready(function () {
                 $('.cart-block').html(data);
             })
     })
+
+
 
 /*    let counts = document.querySelector(".sub-total")*/
 

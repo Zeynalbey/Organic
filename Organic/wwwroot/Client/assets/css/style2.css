@@ -1,0 +1,124 @@
+
+
+.noselect1 {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.multiselect1 {
+    width: 170px;
+    font-size: 15px;
+    padding-bottom: 4px;
+    border-radius: 3px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    transition: 0.2s;
+    outline: none;
+}
+
+    .multiselect1:hover {
+        border: 1px solid rgba(0, 0, 0, 0.3);
+    }
+
+    .multiselect1.active {
+        border-bottom-left-radius: 0px;
+        border-bottom-right-radius: 0px;
+        border-bottom: 1px solid transparent;
+    }
+
+    .multiselect1 > .title {
+        cursor: pointer;
+        height: 28px;
+        padding: 6px;
+    }
+
+        .multiselect1 > .title > .text5 {
+            max-width: 130px;
+            max-height: 25px;
+            display: block;
+            float: left;
+            overflow: hidden;
+            line-height: 1.3em;
+        }
+
+        .multiselect1 > .title > .expand-icon5,
+        .multiselect1 > .title > .close-icon5 {
+            float: right;
+            border-radius: 50%;
+            padding: 0 4px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            font-weight: 700;
+            transition: 0.2s;
+            display: none;
+        }
+
+    .multiselect1.selection > .title > .expand-icon5 {
+        display: none;
+    }
+
+    .multiselect1 > .title > .expand-icon5,
+    .multiselect1.selection > .title > .close-icon5 {
+        display: block;
+    }
+
+    .multiselect1 > .title > .close-icon5:hover {
+        border: 1px solid rgba(0, 0, 0, 0.3);
+        background: rgb(203, 32, 32);
+        color: #fff;
+    }
+
+    .multiselect1 > .container {
+        max-height: 200px;
+        overflow: auto;
+        margin-top: 4px;
+        margin-left: -1px;
+        width: 170px;
+        transition: 0.2s;
+        position: absolute;
+        z-index: 99;
+        background: #fff;
+    }
+
+    .multiselect1.active > .container {
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        border-bottom-left-radius: 3px;
+        border-bottom-right-radius: 3px;
+        border-top: 0;
+    }
+
+    .multiselect1:hover > .container {
+        border-top-color: rgba(0, 0, 0, 0.3);
+    }
+
+    .multiselect1.active:hover > .container {
+        border-color: rgba(0, 0, 0, 0.3);
+    }
+
+    .multiselect1 > .container > option {
+        display: none;
+        padding: 5px;
+        cursor: pointer;
+        transition: 0.2s;
+        border-top: 1px solid transparent;
+        border-bottom: 1px solid transparent;
+    }
+
+        .multiselect1 > .container > option.selected {
+            background: rgb(122, 175, 233);
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            color: #fff;
+        }
+
+        .multiselect1 > .container > option:hover {
+            background: rgba(0, 0, 0, 0.1);
+            color: #000;
+        }
+
+    .multiselect1.active > .container > option {
+        display: block;
+    }
+*/

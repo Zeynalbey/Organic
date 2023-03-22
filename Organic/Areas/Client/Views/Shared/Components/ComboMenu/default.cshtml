@@ -1,0 +1,65 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using Organic.Areas.Client.ViewModels.Product
+@model List<ProductSaleViewModel>
+
+
+<div class="banner-promotion-01 xs-margin-top-50px sm-margin-top-11px">
+    <div class="biolife-banner promotion biolife-banner__promotion">
+        <div class="banner-contain">
+            <div class="media background-biolife-banner__promotion">
+
+                @if (Model.Count > 2)
+                {
+                    @for (int i = 0; i < 1; i++)
+                    {
+                        <div class="img-moving position-4">
+                            <a asp-route="client-basket-add" asp-route-id="@Model[i].Id" class="add-basket-kabab" >
+                        <img src="~/Client/assets/images/downloaded-images/img-moving-pst-4.png" width="198" height="269" alt="img msv">
+                            </a>
+                        </div>
+
+                        <div class="img-moving position-2">
+                            <a asp-route="client-basket-add" asp-route-id="@Model[i+1].Id" class="add-basket-kabab">
+                                <img src="~/Client/assets/images/downloaded-images/img-moving-pst-2.png" width="185" height="265" alt="img msv">
+                                </a>
+                        </div>
+
+                        <div class="img-moving position-3">
+                            <a asp-route="client-basket-add" asp-route-id="@Model[i+2].Id" class="add-basket-kabab">
+                                <img src="~/Client/assets/images/downloaded-images/img-moving-pst-3-cut.png" width="384" height="151" alt="img msv">
+                                </a>
+                        </div>
+                    }
+                }
+
+            </div>
+            <div class="text-content">
+                <div class="container text-wrap">
+                    <i class="first-line">Halal kəsilmiş</i>
+                    <span class="second-line">Kabablar Sizin süfrənizdə</span>
+                    <p class="third-line">Kabablar üçün kəsilən heyvanlar Bərdə şəhərinin Ginə kəndində dağ şəraitində yetişdirilmişdir...</p>
+                    <div class="product-detail">
+                        <p class="txt-price"><span>Only:</span>$8.00</p>
+                        <a href="#" class="btn add-to-cart-btn">add to cart</a>
+                        <div class="multiselect1" id="countries" multiple="multiple" data-target="multi-0">
+                            <div class="title noselect1">
+                                <span class="text5">Select</span>
+                                <span class="close-icon5">&times;</span>
+                                <span class="expand-icon5">&plus;</span>
+                            </div>
+                            <div class="container">
+                                <option value="us">USA</option>
+                                <option value="fr">France</option>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+
+
