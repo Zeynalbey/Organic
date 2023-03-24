@@ -5785,7 +5785,6 @@ body.open-overlay #overlay {
 .review-tab #comments {
     display: block;
     clear: both;
-    border-top: 2px solid #f1f1f1;
     margin-top: 39px;
 }
 
@@ -7691,7 +7690,6 @@ body.open-overlay #overlay {
         line-height: 1;
         font-weight: 700;
         color: #222222;
-        margin: 48px 0 0;
     }
 
         .post-comments .cmt-title sup {
@@ -7746,7 +7744,6 @@ body.open-overlay #overlay {
         border-bottom: 2px solid #e6e6e6;
         border-left: 2px solid #e6e6e6;
         border-right: 2px solid #e6e6e6;
-        padding: 17px 19px 18px;
     }
 
         .post-comments .form-row.last-btns .btn {
@@ -7849,10 +7846,6 @@ body.open-overlay #overlay {
     .post-comments .wrap-post-comment .cmt-inner {
         margin-top: 40px;
         padding-bottom: 22px;
-    }
-
-    .post-comments.lever-0 > li > .wrap-post-comment > .cmt-inner {
-        border-bottom: 2px solid #e6e6e6;
     }
 
     .post-comments .comment-list ol.lever-1 {

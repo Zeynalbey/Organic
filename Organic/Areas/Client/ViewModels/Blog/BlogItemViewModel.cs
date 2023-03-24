@@ -10,7 +10,10 @@
         public string Image { get; set; }
         public List<BlogCommentItemViewModel> Comments { get; set; }
         public List<BlogLikeItemViewModel> Likes { get; set; }
+        public List<BlogItemViewModel> Blogs { get; set; }
     }
+
+
 
     public class BlogCommentItemViewModel
     {
