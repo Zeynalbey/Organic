@@ -27,7 +27,7 @@
                                     <a href="#" class="link-to-post"><img src="~/@blog.Image" width="370" height="270" alt=""></a>
                                 </div>
                                 <div class="post-content">
-                                    <h4 class="post-name"><a href="#" class="linktopost">@blog.Title</a></h4>
+                                    <h4 class="post-name"><a asp-route="client-blog-single" asp-route-id = "@blog.Id" class="linktopost">@blog.Title</a></h4>
                                     <p class="post-archive"><b class="post-cat">ORGANIC / </b><span class="post-date">@blog.PostedDate.ToString("dd,mm,yy")</span><span class="author">Yerləşdirdi: @blog.From</span></p>
                                     <p class="excerpt">@blog.Description</p>
                                     <div class="group-buttons">

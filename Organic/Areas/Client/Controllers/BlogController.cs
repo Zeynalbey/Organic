@@ -10,6 +10,7 @@ using Organic.Areas.Client.ViewModels.Product;
 using Organic.Contracts.File;
 using Organic.Contracts.ProductImage;
 using Organic.Database;
+using Organic.Database.Models;
 using Organic.Services.Abstracts;
 
 namespace Organic.Areas.Client.Controllers
@@ -50,36 +51,37 @@ namespace Organic.Areas.Client.Controllers
         [HttpGet("blog/{id}", Name = "client-blog-single")]
         public async Task<IActionResult> Detail(int id)
         {
-            var blog = await _dbContext.Blogs
-                .Include(p => p.Likes)
-                .Include(p => p.Comments)
-                .Include(p=> p.From)
-                .Include(p=> p.BlogAndCategories)
-     .FirstOrDefaultAsync(p => p.Id == id);
+            var blog = await _dbContext.Blogs.Include(b => b.Comments)
+                .Include(b=>b.From)
+                .Include(b => b.Likes).FirstOrDefaultAsync(b => b.Id == id);
 
-            if (blog is null)
+            if (blog == null) return NotFound();
+            var user = await _dbContext.Users.FirstOrDefaultAsync(u => u.Id == blog.From.Id);
+            if (user == null) return NotFound();
+
+            var blogViewModel = new BlogItemViewModel
             {
-                return NotFound();
-            }
-            //var category = _dbContext.BlogCategories!.Select(bc => bc.BlogCategory)
-            //   .FirstOrDefault(b=>b.Id)
+                Id = blog.Id,
+                Title = blog.Title!,
+                Content = blog.Description!,
+                From = user.FirstName,
+                PostedDate = blog.PostedDate,
+                Image = blog.ImageNameInSystem.FirstOrDefault() != null
+                ? _fileService.GetFileUrl(blog.ImageNameInSystem, UploadDirectory.Blog)
+                : Image.DEFAULTIMAGE,
+                Comments = blog.Comments!.Select(c => new BlogCommentItemViewModel
+                {
+                    Id = c.Id,
+                    Content = c.Text!
+                }).ToList(),
 
-            //var imageNameİnSystem = _fileService.GetFileUrl(blog.ImageNameInSystem, UploadDirectory.Blog);
+                Likes = blog.Likes!.Select(l => new BlogLikeItemViewModel
+                {
+                    Id = l.Id
+                }).ToList()
+            };
 
-            //var viewModel = new BlogDetailViewModel(
-            //   blog.Id,
-            //   blog.Title!,
-            //   blog.Description!,
-            //   blog.PostedDate,
-            //   imageNameİnSystem,
-            //   blog.From!.FirstName!,
-            //   category
-              
-            //   );
-
-            
-
-            return View(blog);
+            return View(blogViewModel);
         }
     }
 }

@@ -1,5 +1,5 @@
 ﻿@using Organic.Areas.Client.ViewModels.Blog
-@model BlogDetailViewModel
+@model BlogItemViewModel
 
 
 <div class="hero-section hero-background style-02">
@@ -28,13 +28,16 @@
                             <figure><img src="~/@Model.Image" width="870" height="635" alt=""></figure>
                         </div>
                         <h2 class="post-name">@Model.Title</h2>
-                        <p class="post-archive"><b class="post-cat">ORGANIC: </b><span class="post-date">@Model.PostedDate.ToString("dd,mm,yyyy")
-                        </span><span class="author">Yerləşdirdi: @Model.From</span></p>
+                        <p class="post-archive">
+                            <b class="post-cat">ORGANIC: </b><span class="post-date">
+                                @Model.PostedDate.ToString("dd,mm,yyyy")
+                            </span><span class="author">Yerləşdirdi: @Model.From</span>
+                        </p>
                     </div>
 
                     <div class="post-content">
-                        <p>@Model.Description</p>
-                       
+                        <p>@Model.Content</p>
+
                     </div>
 
                     <div class="post-foot">
