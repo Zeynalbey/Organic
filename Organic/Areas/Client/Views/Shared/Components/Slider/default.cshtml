@@ -2,25 +2,25 @@
 @using Organic.Areas.Admin.ViewModels.Slider
 @model List<IndexViewModel>
 
-@foreach (var item in Model)
+@foreach (var product in Model)
 {
     <li>
         <div class="slide-contain slider-opt03__layout01">
             <div class="media">
                 <div class="child-elememt">
-                    <a href="#" class="link-to">
-                        <img src="~/@item.Image" width="604" height="580" alt="">
+                    <a asp-route="client-product-detail" asp-route-id="@product.ProductId">
+                        <img src="~/@product.Image" width="604" height="580" alt="">
                     </a>
                 </div>
             </div>
             <div class="text-content">
-                <i class="first-line">@item.ProductName</i>
-                <h3 class="second-line">@item.Title</h3>
-                <p class="third-line">@item.Description</p>
+                <i class="first-line">@product.ProductName</i>
+                <h3 class="second-line">@product.Title</h3>
+                <p class="third-line">@product.Description</p>
                 <p class="buttons">
-                    <a asp-route="client-basket-add" asp-route-id="@item.ProductId" class="btn btn-bold add-basket-btn">Səbətə əlavə et</a>
+                    <a asp-route="client-basket-add" asp-route-id="@product.ProductId" class="btn btn-bold add-basket-btn">Səbətə əlavə et</a>
 
-                    <a asp-route="client-product-detail" asp-route-id="@item.ProductId" class="btn btn-thin">Detallara bax</a>
+                    <a asp-route="client-product-detail" asp-route-id="@product.ProductId" class="btn btn-thin">Detallara bax</a>
                 </p>
             </div>
         </div>

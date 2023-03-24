@@ -1,0 +1,22 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using Organic.Areas.Client.ViewComponents
+@using Organic.Areas.Client.ViewModels.Product
+@model List<ProductSaleViewModel>
+
+
+<!-- Example single danger button -->
+
+<div class="btn-group">
+    <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Məzələr
+    </button>
+    <div class="dropdown-menu">
+        @foreach (var item in Model)
+        {
+            <a asp-route="client-basket-add" asp-route-id="@item.Id" class="dropdown-item add-basket-meze">@item.Name</a>
+            <br />
+        }
+    </div>
+</div>
+
+

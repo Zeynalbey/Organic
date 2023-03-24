@@ -11,21 +11,20 @@ using Organic.Services.Abstracts;
 namespace Organic.Areas.Client.ViewComponents
 {
     [Area("Client")]
-    [ViewComponent(Name = "ComboMenu")]
-    public class ComboMenu : ViewComponent
+    [ViewComponent(Name = "ComboMenuExtras")]
+    public class ComboMenuExtras : ViewComponent
     {
         public readonly DataContext _dataContext;
         public readonly IFileService _fileService;
-        public ComboMenu(DataContext dataContext, IFileService fileService)
+        public ComboMenuExtras(DataContext dataContext, IFileService fileService)
         {
             _dataContext = dataContext;
             _fileService = fileService;
         }
 
         public async Task<IViewComponentResult> InvokeAsync()
-        
         {
-            var model = await _dataContext.Products.Where(p => p.Category!.Name == SelectedCategoryName.Kabab)
+            var model = await _dataContext.Products.Where(p => p.Category!.Name == "Məzələr")
                 .Select(p => new ProductSaleViewModel(
                         p.Id,
                         p.Name!,
