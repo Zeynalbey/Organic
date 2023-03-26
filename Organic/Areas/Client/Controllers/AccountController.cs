@@ -1,4 +1,4 @@
-﻿using Organic.Areas.Client.ViewModels.Authentication;
+﻿
 using Organic.Areas.Client.ViewModels.OrderProducts;
 using Organic.Database;
 using Organic.Database.Models;
@@ -7,6 +7,7 @@ using Organic.Services.Concretes;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Organic.Contracts.File;
 
 namespace Backend_Final.Areas.Client.Controllers
 {
@@ -18,15 +19,18 @@ namespace Backend_Final.Areas.Client.Controllers
         private readonly DataContext _dataContext;
         private readonly IUserService _userService;
         private readonly IOrderService _orderService;
+        private readonly IFileService _fileService;
 
         public AccountController(
             DataContext dataContext,
             IUserService userService,
-            IOrderService orderService)
+            IOrderService orderService,
+            IFileService fileService)
         {
             _dataContext = dataContext;
             _userService = userService;
             _orderService = orderService;
+            _fileService = fileService;
         }
 
         //[HttpGet("dashboard", Name = "client-account-dashboard")]

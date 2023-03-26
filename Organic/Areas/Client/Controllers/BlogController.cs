@@ -1,12 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Organic.Areas.Admin.ViewModels.Blog;
-using Organic.Areas.Admin.ViewModels.Product.Count;
-using Organic.Areas.Admin.ViewModels.Product.Discount;
-using Organic.Areas.Admin.ViewModels.Product.Image;
-using Organic.Areas.Admin.ViewModels.Product.Tag;
+using Organic.Areas.Client.ViewModels.Blog.Comment;
 using Organic.Areas.Client.ViewModels.Blog;
-using Organic.Areas.Client.ViewModels.Product;
 using Organic.Contracts.File;
 using Organic.Contracts.ProductImage;
 using Organic.Database;
@@ -21,10 +17,12 @@ namespace Organic.Areas.Client.Controllers
     {
         private readonly DataContext _dbContext;
         private readonly IFileService _fileService;
-        public BlogController(DataContext dbContext, IFileService fileService)
+        private readonly IUserService _userService;
+        public BlogController(DataContext dbContext, IFileService fileService, IUserService userService)
         {
             _dbContext = dbContext;
             _fileService = fileService;
+            _userService = userService;
         }
 
         [HttpGet("list", Name = "client-blog-list")]
@@ -48,7 +46,7 @@ namespace Organic.Areas.Client.Controllers
             return View(model);
         }
 
-        [HttpGet("blog/{id}", Name = "client-blog-single")]
+        [HttpGet("{id}", Name = "client-blog-single")]
         public async Task<IActionResult> Detail(int id)
         {
             var blog = await _dbContext.Blogs.Include(b => b.Comments)
@@ -83,5 +81,42 @@ namespace Organic.Areas.Client.Controllers
 
             return View(blogViewModel);
         }
+
+        #region Add
+
+        [HttpPost("{id}", Name = "client-blog-single")]
+        public async Task<IActionResult> AddComment(BlogItemViewModel model, int blogId)
+        {
+            var blog = await _dbContext.Blogs.FirstOrDefaultAsync(b => b.Id == blogId);
+            if (blog is null)
+            {
+                return NotFound();
+            }
+
+            foreach (var item in model.Comments)
+            {
+                var comment = new BlogComment
+                {
+                    Text = item.Content,
+                    Blog = blog,
+                    From = _userService.CurrentUser,
+                    CommentDate = model.PostedDate
+                };
+                await _dbContext.AddAsync(comment);
+            }
+            
+
+            
+ 
+            await _dbContext.SaveChangesAsync();
+
+            return RedirectToRoute("client-blog-list");
+
+               
+            }
+
+        
+
+        #endregion
     }
 }

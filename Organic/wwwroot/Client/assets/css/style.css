@@ -7814,10 +7814,12 @@ body.open-overlay #overlay {
 
         .post-comments .wrap-post-comment .cmt-content p {
             font-size: 15px;
-            line-height: 24px;
+            line-height: 35px;
             color: #666666;
             display: block;
             margin: 0;
+            border-bottom: 1px solid;
+            margin-bottom: 31px;
         }
 
     .post-comments .wrap-post-comment .cmt-fooot {

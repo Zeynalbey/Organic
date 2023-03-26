@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Organic.Areas.Admin.ViewModels.Product.Count;
 using Organic.Areas.Admin.ViewModels.Product.Discount;
 using Organic.Areas.Admin.ViewModels.Product.Tag;
+using Organic.Areas.Client.ViewComponents;
 using Organic.Areas.Client.ViewModels.Product;
 using Organic.Contracts.File;
 using Organic.Database;
@@ -22,11 +23,35 @@ namespace Organic.Areas.Client.Controllers
             _fileService = fileService;
         }
 
-        [HttpGet("list", Name = "client-product-list")]
-        public async Task<IActionResult> ListAsync([FromServices] IFileService fileService)
-        {
-            return View();
-        }
+        //[HttpGet("list", Name = "client-product-list")]
+        //public async Task<IActionResult> ListAsync([FromServices] IFileService fileService)
+        //{
+        //    return View();
+        //}
+
+        //[HttpGet("Filter", Name = "client-shoppage-filter")]
+        //public async Task<IActionResult> Filter(string? searchBy = null,
+        //  string? search = null, int? MinPrice = null,
+        //  int? MaxPrice = null, [FromQuery] int? categoryId = null,
+        //  [FromQuery] int? colorId = null, [FromQuery] int? tagId = null)
+        //{
+
+        //    return ViewComponent(nameof(ProductPage), new
+        //    {
+        //        searchBy = searchBy,
+        //        search = search,
+        //        MinPrice = MinPrice,
+        //        MaxPrice = MaxPrice,
+        //        categoryId = categoryId,
+        //        colorId = colorId,
+        //        tagId = tagId
+        //    });
+
+        //}
+
+
+
+
 
         [HttpGet("detail/{id}", Name = "client-product-detail")]
         public async Task<IActionResult> Detail(int id)

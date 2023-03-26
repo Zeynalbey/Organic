@@ -24,7 +24,10 @@ namespace Organic.Areas.Client.ViewComponents
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            var model = await _dataContext.Products.OrderByDescending(p => p.CreatedAt)
+            
+            var model = await _dataContext.Products
+                .Where(p => p.ProductCounts!.Any(pc => pc.Count > 0))
+                .OrderByDescending(p => p.CreatedAt)
                 .Select(p => new ProductSaleViewModel(
                         p.Id,
                         p.Name!,

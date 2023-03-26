@@ -55,9 +55,9 @@ namespace Organic.Areas.Client.Controllers
                    : Image.DEFAULTIMAGE,
                       Price = p.Product.Price,
                       Quantity = p.Quantity,
-                      Total = p.Product.ProductDiscountPercents.FirstOrDefault() != null
+                      Total = p.Product.ProductDiscountPercents!.FirstOrDefault() != null
                       ? p.Product.Price * p.Quantity
-                      : p.Product.ProductDiscountPercents.FirstOrDefault(p => p.Percent != null).Percent
+                      : p.Product.ProductDiscountPercents!.FirstOrDefault(p => p.Percent != null)!.Percent
 
                       * p.Quantity,
                   }).ToListAsync(),
@@ -91,36 +91,14 @@ namespace Organic.Areas.Client.Controllers
             var order = await CreateOrder();
 
             await CreateFullOrderProductAync(order, basketProducts);
-            order.Total = order.OrderProducts.Sum(p => p.Total);
-            
-
+            order.Total = order.OrderProducts!.Sum(p => p.Total);
 
             await ResetBasketAsync(basketProducts);
-
-            //decimal count = 4;
-
-            //foreach (var item in basketProducts)
-            //{
-            //    var productCount = await _dataContext.ProductCounts
-            //    .FirstOrDefaultAsync(pc => pc.Id == item.Product.Id);
-
-            //    //if (productCount != null)
-            //    //{
-            //    //     productCount.Count - 5;
-            //    //}
-            //}
-
-
-
-
-
 
             await _dataContext.SaveChangesAsync();
 
             return RedirectToRoute("client-account-orders");
 
-
-            //*************************************************************
 
             async Task ResetBasketAsync(List<BasketProduct> basketProducts)
             {
@@ -140,8 +118,25 @@ namespace Organic.Areas.Client.Controllers
                         Total = item.Product.Price * item.Quantity,
                     };
                     await _dataContext.OrderProducts.AddAsync(orderProduct);
-                }
+                    await _dataContext.SaveChangesAsync();
+                    var product = await _dataContext.Products.FirstOrDefaultAsync(p => p.Id == orderProduct.ProductId);
+                    var productCount = await _dataContext.ProductCounts.FirstAsync(p => p.Id == product!.Id);
 
+
+                    var newCount = productCount.Count - orderProduct.Quantity;
+                    if (newCount>=0)
+                    {
+                        productCount.Count = newCount;
+                    }
+                    else
+                    {
+                        orderProduct.Quantity = Convert.ToInt32(productCount.Count);
+                        productCount.Count = 0;
+                    }
+
+                    await _dataContext.SaveChangesAsync();
+                }             
+                
 
             }
 

@@ -3,10 +3,13 @@ using Microsoft.EntityFrameworkCore;
 using Organic.Areas.Admin.ViewModels.Product.Count;
 using Organic.Areas.Admin.ViewModels.Product.Discount;
 using Organic.Areas.Admin.ViewModels.Product.Tag;
+using Organic.Areas.Client.ViewComponents;
 using Organic.Areas.Client.ViewModels.Product;
 using Organic.Contracts.File;
 using Organic.Database;
+using Organic.Database.Models;
 using Organic.Services.Abstracts;
+using Product = Organic.Database.Models.Product;
 
 namespace Organic.Areas.Client.Controllers
 {
@@ -33,6 +36,8 @@ namespace Organic.Areas.Client.Controllers
                 _dbContext.SaveChanges();
             }
             return RedirectToRoute("client-home-index");
-        }       
+        }
+
+        
     }
 }

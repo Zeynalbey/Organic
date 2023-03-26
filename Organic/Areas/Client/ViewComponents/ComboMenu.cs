@@ -25,7 +25,9 @@ namespace Organic.Areas.Client.ViewComponents
         public async Task<IViewComponentResult> InvokeAsync()
         
         {
-            var model = await _dataContext.Products.Where(p => p.Category!.Name == SelectedCategoryName.Kabab)
+            var model = await _dataContext.Products
+                .Where(p => p.Category!.Name == SelectedCategoryName.Kabab)
+                .Where(p => p.ProductCounts!.Any(pc => pc.Count > 0))
                 .Select(p => new ProductSaleViewModel(
                         p.Id,
                         p.Name!,

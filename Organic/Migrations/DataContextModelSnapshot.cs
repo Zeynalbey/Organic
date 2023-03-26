@@ -43,7 +43,7 @@ namespace Organic.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Baskets");
+                    b.ToTable("Baskets", (string)null);
                 });
 
             modelBuilder.Entity("Organic.Database.Models.BasketProduct", b =>
@@ -75,7 +75,7 @@ namespace Organic.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("BasketProducts");
+                    b.ToTable("BasketProducts", (string)null);
                 });
 
             modelBuilder.Entity("Organic.Database.Models.Blog", b =>
@@ -188,7 +188,7 @@ namespace Organic.Migrations
 
                     b.HasIndex("FromId");
 
-                    b.ToTable("BlogComments");
+                    b.ToTable("BlogComments", (string)null);
                 });
 
             modelBuilder.Entity("Organic.Database.Models.BlogLike", b =>
@@ -209,7 +209,7 @@ namespace Organic.Migrations
 
                     b.HasIndex("BlogId");
 
-                    b.ToTable("BlogLikes");
+                    b.ToTable("BlogLikes", (string)null);
                 });
 
             modelBuilder.Entity("Organic.Database.Models.Category", b =>
@@ -262,7 +262,7 @@ namespace Organic.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Contacts");
+                    b.ToTable("Contacts", (string)null);
                 });
 
             modelBuilder.Entity("Organic.Database.Models.Order", b =>
@@ -522,7 +522,7 @@ namespace Organic.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("Sliders");
+                    b.ToTable("Sliders", (string)null);
                 });
 
             modelBuilder.Entity("Organic.Database.Models.Tag", b =>

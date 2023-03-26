@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Organic.Areas.Admin.ViewModels.Product.Discount;
+using Organic.Areas.Client.ViewModels.Basket;
 using Organic.Areas.Client.ViewModels.Product;
 using Organic.Contracts.File;
 using Organic.Contracts.ProductImage;
@@ -23,7 +24,9 @@ namespace Organic.Areas.Client.ViewComponents
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            var model = await _dataContext.Products.OrderByDescending(p => p.CreatedAt)
+            var model = await _dataContext.Products
+                .Where(p => p.ProductCounts!.Any(pc => pc.Count > 0))
+                .OrderByDescending(p => p.CreatedAt)
                 .Select(p => new ProductSaleViewModel(
                         p.Id,
                         p.Name!,

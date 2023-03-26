@@ -29,7 +29,10 @@
                         <p class="post-archive">
                             <b class="post-cat">ORGANIC: </b><span class="post-date">
                                 @Model.PostedDate.ToString("dd,mm,yyyy")
-                            </span><span class="author">Yerləşdirdi: @Model.From</span>
+                                <span class="author">Yerləşdirdi: @Model.From</span>
+                                <span class="author"><i class="fa-regular fa-comment"></i> @Model.Comments.Count</span>
+                                <span class="author"><i class="fa-regular fa-thumbs-up"></i> @Model.Likes.Count</span>
+                                
                         </p>
                     </div>
 
@@ -43,18 +46,35 @@
                     <h3 class="cmt-title">Comments<sup>(@Model.Comments.Count)</sup></h3>
 
                     <div class="comment-form">
-                        <form action="#" method="post" name="frm-post-comment">
-                            <p class="form-row">
-                                <textarea name="txt-comment" id="txt-comment-ath-3364" cols="30" rows="10" placeholder="Write your comment"></textarea>
-                                <a href="#" class="current-author"><img src="~/Client/assets/images/blogpost/viewer-avt.png" width="41" height="41" alt=""></a>
-                            </p>
-                            <p class="form-row last-btns">
-                                <button type="submit" class="btn btn-sumit">post a comment</button>
-                                <a href="#" class="btn btn-fn-1"><i class="fa fa-smile-o" aria-hidden="true"></i></a>
-                                <a href="#" class="btn btn-fn-1"><i class="fa fa-paperclip" aria-hidden="true"></i></a>
-                                <a href="#" class="btn btn-fn-1"><i class="fa fa-file-image-o" aria-hidden="true"></i></a>
-                            </p>
+                                                <form action="#" method="post" name="frm-post-comment">
+                        <p class="form-row">
+                        <textarea name="txt-comment" id="txt-comment-ath-3364" cols="30" rows="10" placeholder="Write your comment"></textarea>
+                        <a href="#" class="current-author"><img src="~/Client/assets/images/blogpost/viewer-avt.png" width="41" height="41" alt=""></a>
+                        </p>
+                        <p class="form-row last-btns">
+                        <button type="submit" class="btn btn-sumit">post a comment</button>
+                        <a href="#" class="btn btn-fn-1"><i class="fa fa-smile-o" aria-hidden="true"></i></a>
+                        <a href="#" class="btn btn-fn-1"><i class="fa fa-paperclip" aria-hidden="true"></i></a>
+                        <a href="#" class="btn btn-fn-1"><i class="fa fa-file-image-o" aria-hidden="true"></i></a>
+                        </p>
                         </form>
+
+
+                       
+@*
+                        <form method="POST" asp-route="client-blog-single" asp-route-id = "@Model.Id"  enctype="multipart/form-data">
+
+                               <div class="form-group">
+                                <label>text</label>
+                                <input asp-for="@item.Content" class="form-control">
+                            </div>
+
+                            
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </form>*@
+
+
+
                     </div>
 
 
@@ -67,6 +87,7 @@
                                         @foreach (var item in Model.Comments)
                                         {
                                             <div class="auth-info">
+
                                                 <a href="#" class="author-contact"><img src="assets/images/blogpost/author-02.png" alt="" width="29" height="28">@Model.From</a>
                                                 <span class="cmt-time">4 days ago</span>
                                             </div>
@@ -81,8 +102,8 @@
                                             </div>
 
                                         }
-                                       
-                                        
+
+
                                     </div>
                                 </div>
                             </li>
