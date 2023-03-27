@@ -1,22 +1,21 @@
 ﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-@using Organic.Areas.Client.ViewModels.Product
-@model List<ProductSaleViewModel>
+@*@using Organic.Areas.Client.ViewModels.Product
+@model List<ListItemViewModel>*@
 
-
-@foreach (var product in Model)
+@*@foreach (var product in Model)
 {
     <li class="product-item col-lg-2 col-md-3 col-sm-4 col-xs-6">
         <div class="contain-product layout-default">
             <div class="product-thumb">
                 <a asp-route="client-product-detail" asp-route-id = "@product.Id">
-                    <img src="~/@product.MainImgUrl" alt="dd" width="270" height="270" class="product-thumnail">
+                    <img src="~/@product.ImgUrl" alt="dd" width="270" height="270" class="product-thumnail">
                 </a>
             </div>
             <div class="info">
                 <b class="categories">@product.Name</b>
                 <h4 class="product-title"><a href="#" class="pr-name">@product.Info</a></h4>
                 <div class="price">
-                    @foreach (var price in product.DiscountPrices)
+                    @foreach (var price in product.DiscountPercents)
                     {
                         @if (price.Percent != 0)
                         {
@@ -40,4 +39,4 @@
             </div>
         </div>
     </li>
-}
+}*@

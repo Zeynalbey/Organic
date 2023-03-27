@@ -57,7 +57,13 @@ namespace Organic.Areas.Client.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-       
+        [HttpGet("indexsearch", Name = "client-homesearch-index")]
+        public async Task<IActionResult> Search(string searchBy, string search)
+        {
+
+            return RedirectToRoute("client-product-list", new { searchBy = searchBy, search = search });
+
+        }
     }
 
 

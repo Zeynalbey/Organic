@@ -7,6 +7,7 @@ using Organic.Contracts.File;
 using Organic.Contracts.ProductImage;
 using Organic.Database;
 using Organic.Services.Abstracts;
+using static Organic.Areas.Client.ViewModels.Product.ListItemViewModel;
 
 namespace Organic.Areas.Client.ViewComponents
 {
@@ -22,23 +23,27 @@ namespace Organic.Areas.Client.ViewComponents
             _fileService = fileService;
         }
 
-        public async Task<IViewComponentResult> InvokeAsync()
+        public async Task<IViewComponentResult> InvokeAsync(List<ListItemViewModel> searchingProduct = null)
         {
+            //if (searchingProduct is not null)
+            //{
+            //    return View(searchingProduct);
+            //}
             var model = await _dataContext.Products
                 .Where(p => p.ProductCounts!.Any(pc => pc.Count > 0))
                 .OrderByDescending(p => p.CreatedAt)
-                .Select(p => new ProductSaleViewModel(
+                .Select(p => new ListItemViewModel(
                         p.Id,
                         p.Name!,
                         p.Info,
-                        p.Category!.Name!,
-                        p.Rating,
-                        p.RatingCount,
-                        p.Price!,
-                        p.ProductDiscountPercents!.Select(pdp=> new DiscountViewModel(pdp.Id, pdp.Percent)).ToList(),
+                        p.Price,
                         p.ProductImages!.Take(1).FirstOrDefault() != null
                    ? _fileService.GetFileUrl(p.ProductImages!.Take(1).FirstOrDefault()!.ImageNameInFileSystem, UploadDirectory.Product)
-                   : Image.DEFAULTIMAGE))
+                   : Image.DEFAULTIMAGE,
+                        p.Category.Name,
+                        p.ProductDiscountPercents!.Select(pdp=> new DiscountPercentViewModel(pdp.Percent)).ToList(),
+                        p.ProductTags.Select(p => p.Tag).Select(p => new TagViewModel(p.Name)).ToList()))
+                        
                 .ToListAsync();
 
             return View(model);

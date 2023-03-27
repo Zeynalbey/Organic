@@ -40,11 +40,15 @@
         padding: 6px 40px 6px 40px;
     }
 
-.text-content .btn-group2 a {
-    color: green;
-    font-weight: bold;
-}
+    .text-content .btn-group2 a {
+        color: #688E26;
+        font-weight: bold;
+    }
 
 .single-post-contain{
 
+}
+
+.dnone{
+    display:none;
 }
