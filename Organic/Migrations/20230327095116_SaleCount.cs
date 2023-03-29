@@ -5,24 +5,24 @@
 namespace Organic.Migrations
 {
     /// <inheritdoc />
-    public partial class IsCooked : Migration
+    public partial class SaleCount : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<bool>(
-                name: "IsCooked",
+            migrationBuilder.AddColumn<int>(
+                name: "SaleCount",
                 table: "Products",
-                type: "bit",
+                type: "int",
                 nullable: false,
-                defaultValue: false);
+                defaultValue: 0);
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "IsCooked",
+                name: "SaleCount",
                 table: "Products");
         }
     }

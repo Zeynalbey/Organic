@@ -1,12 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Organic.Areas.Admin.ViewModels.Product.Discount;
-using Organic.Areas.Client.ViewComponents;
 using Organic.Areas.Client.ViewModels.Product;
 using Organic.Contracts.File;
+using Organic.Contracts.Product;
+using Organic.Contracts.ProductCategory;
 using Organic.Contracts.ProductImage;
 using Organic.Database;
-using Organic.Migrations;
 using Organic.Services.Abstracts;
 using static Organic.Areas.Client.ViewModels.Product.ListItemViewModel;
 
@@ -25,43 +25,59 @@ namespace Organic.Areas.Client.Controllers
         }
 
         [HttpGet("list", Name = "client-product-list")]
-        public async Task<IActionResult> Index(string searchBy, string search, [FromQuery] int? discountId, [FromQuery] int? imageId, [FromQuery] int? tagId)
+        public async Task<IActionResult> Index(string searchBy, string search, 
+        [FromQuery] int? discountId, 
+        [FromQuery] int? imageId, 
+        [FromQuery] int? tagId, 
+        [FromQuery] int? categoryId,
+        [FromQuery] int? startPrice)
         {
             var productsQuery = _dbContext.Products.AsQueryable();
 
             if (searchBy == "Name")
             {
-                productsQuery = productsQuery.Where(p => p.Name.StartsWith(search) || Convert.ToString(p.Price).StartsWith(search) || search == null);
+                productsQuery = productsQuery.Where(p => p.Name!.StartsWith(search)
+                || Convert.ToString(p.Price).StartsWith(search)
+                //|| Convert.ToString(p.SaleCount).StartsWith(search) 
+                || search == null);
             }
-            else if (discountId is not null || imageId is not null || tagId is not null)
+            else if (discountId is not null || imageId is not null || tagId is not null || categoryId is not null)
             {
                 productsQuery = productsQuery.Include(p => p.ProductDiscountPercents)
                     .Include(p => p.ProductImages)
                     .Include(p => p.ProductTags)
                     .Where(p => discountId == null || p.ProductDiscountPercents!.Any(pc => pc.Id == discountId))
                     .Where(p => imageId == null || p.ProductImages!.Any(pc => pc.Id == imageId))
-                    .Where(p => tagId == null || p.ProductTags!.Any(pt => pt.TagId == tagId));
-
+                    .Where(p => tagId == null || p.ProductTags!.Any(pt => pt.TagId == tagId))
+                    .Where(p => categoryId == null || p.Category!.Id == categoryId);
             }
-            else
+            else if(startPrice == Price.LOW)
             {
-                productsQuery = productsQuery.OrderBy(p => p.Price);
+                productsQuery = productsQuery.Where(p =>p.Price < 20);
+            }
+            else if (startPrice == Price.MEDIUM)
+            {
+                productsQuery = productsQuery.Where(p => p.Price >= 20 && p.Price < 35);
+            }
+            else if (startPrice == Price.HİGH)
+            {
+                productsQuery = productsQuery.Where(p => p.Price >= 35);
             }
 
-            var newProduct = await productsQuery.Select(p => new ListItemViewModel(p.Id, p.Name, p.Info, p.Price,
-                               p.ProductImages.Take(1).FirstOrDefault() != null
-                               ? _fileService.GetFileUrl(p.ProductImages.Take(1).FirstOrDefault()!.ImageNameInFileSystem, UploadDirectory.Product)
+            var newProduct = await productsQuery
+                .Where(p => p.ProductCounts!.Any(pc => pc.Count > 0))
+                .Where(p => p.Category!.Name != SelectedCategoryName.Kabab)
+                .Select(p => new ListItemViewModel(p.Id, p.Name!, p.Info!, p.Price,
+                               p.ProductImages!.Take(1).FirstOrDefault() != null
+                               ? _fileService.GetFileUrl(p.ProductImages!.Take(1).FirstOrDefault()!.ImageNameInFileSystem, UploadDirectory.Product)
                                : Image.DEFAULTIMAGE,
-                                p.Category.Name,
-                                p.ProductDiscountPercents.Select(p => new DiscountPercentViewModel(p.Percent)).ToList(),
-                                p.ProductTags.Select(p => p.Tag).Select(p => new TagViewModel(p.Name)).ToList()
+                                p.Category!.Name!,
+                                p.ProductDiscountPercents!.Select(p => new DiscountPercentViewModel(p.Percent)).ToList(),
+                                p.ProductTags!.Select(p => p.Tag).Select(p => new TagViewModel(p!.Name!)).ToList()
                                 )).ToListAsync();
 
             return View(newProduct);
-
         }
-
-
 
         [HttpGet("detail/{id}", Name = "client-product-detail")]
         public async Task<IActionResult> Detail(int id)

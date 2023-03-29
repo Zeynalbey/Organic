@@ -43,7 +43,7 @@ namespace Organic.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Baskets", (string)null);
+                    b.ToTable("Baskets");
                 });
 
             modelBuilder.Entity("Organic.Database.Models.BasketProduct", b =>
@@ -75,7 +75,7 @@ namespace Organic.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("BasketProducts", (string)null);
+                    b.ToTable("BasketProducts");
                 });
 
             modelBuilder.Entity("Organic.Database.Models.Blog", b =>
@@ -188,7 +188,7 @@ namespace Organic.Migrations
 
                     b.HasIndex("FromId");
 
-                    b.ToTable("BlogComments", (string)null);
+                    b.ToTable("BlogComments");
                 });
 
             modelBuilder.Entity("Organic.Database.Models.BlogLike", b =>
@@ -209,7 +209,7 @@ namespace Organic.Migrations
 
                     b.HasIndex("BlogId");
 
-                    b.ToTable("BlogLikes", (string)null);
+                    b.ToTable("BlogLikes");
                 });
 
             modelBuilder.Entity("Organic.Database.Models.Category", b =>
@@ -262,7 +262,7 @@ namespace Organic.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Contacts", (string)null);
+                    b.ToTable("Contacts");
                 });
 
             modelBuilder.Entity("Organic.Database.Models.Order", b =>
@@ -347,9 +347,6 @@ namespace Organic.Migrations
                     b.Property<string>("Info")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsCooked")
-                        .HasColumnType("bit");
-
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
@@ -360,6 +357,9 @@ namespace Organic.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("RatingCount")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SaleCount")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("UpdatedAt")
@@ -522,7 +522,7 @@ namespace Organic.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("Sliders", (string)null);
+                    b.ToTable("Sliders");
                 });
 
             modelBuilder.Entity("Organic.Database.Models.Tag", b =>

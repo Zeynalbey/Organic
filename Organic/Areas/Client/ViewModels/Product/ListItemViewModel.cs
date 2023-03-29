@@ -8,7 +8,7 @@
         public decimal Price { get; set; }
         public DateTime CreatedAt { get; set; }
         public string ImgUrl { get; set; }
-        //public List<CategoryViewModeL> Categories { get; set; }
+        //public List<CategoryListViewModel> Categories { get; set; }
         public string Category { get; set; }
         public List<DiscountPercentViewModel> DiscountPercents { get; set; }
         public List<TagViewModel> Tags { get; set; }
@@ -36,7 +36,7 @@
         //    Price = price;
         //    CreatedAt = createdAt;
         //    ImgUrl = imgUrl;
-            
+
         //}
 
         //public class CategoryViewModeL
@@ -49,7 +49,16 @@
         //    public string Title { get; set; }
 
         //}
-       
+
+        //public class CategoryListViewModel
+        //{
+        //    public CategoryListViewModel(string? name)
+        //    {
+        //        Name = name;
+        //    }
+        //    public string? Name { get; set; }
+        //}
+
         public class DiscountPercentViewModel
         {
             public DiscountPercentViewModel(decimal percent)

@@ -127,12 +127,15 @@ namespace Organic.Areas.Client.Controllers
                     if (newCount>=0)
                     {
                         productCount.Count = newCount;
+                        
                     }
                     else
                     {
                         orderProduct.Quantity = Convert.ToInt32(productCount.Count);
                         productCount.Count = 0;
                     }
+
+                    product!.SaleCount = orderProduct.Quantity;
 
                     await _dataContext.SaveChangesAsync();
                 }             

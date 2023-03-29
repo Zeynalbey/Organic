@@ -1,5 +1,12 @@
 ﻿@using Organic.Areas.Client.ViewModels.Blog
+@using Organic.Services.Abstracts
+@inject IUserService _userService
 @model BlogItemViewModel
+
+<script src="https://cdn.tiny.cloud/1/vqv7mwh3rcamb2b666r81iwwlw6lmemw609fqi8ze5fjwz1r/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+<script type="text/javascript">
+    tinymce.init({ forced_root_block: "", selector: 'textarea', plugins: 'emoticons', toolbar: 'emoticons', width: 600 });
+</script>
 
 <div class="hero-section hero-background style-02">
     <h1 class="page-title">Bloq</h1>
@@ -32,7 +39,7 @@
                                 <span class="author">Yerləşdirdi: @Model.From</span>
                                 <span class="author"><i class="fa-regular fa-comment"></i> @Model.Comments.Count</span>
                                 <span class="author"><i class="fa-regular fa-thumbs-up"></i> @Model.Likes.Count</span>
-                                
+
                         </p>
                     </div>
 
@@ -43,67 +50,39 @@
 
                 <!--Comment Block-->
                 <div class="post-comments">
-                    <h3 class="cmt-title">Comments<sup>(@Model.Comments.Count)</sup></h3>
-
                     <div class="comment-form">
-                                                <form action="#" method="post" name="frm-post-comment">
-                        <p class="form-row">
-                        <textarea name="txt-comment" id="txt-comment-ath-3364" cols="30" rows="10" placeholder="Write your comment"></textarea>
-                        <a href="#" class="current-author"><img src="~/Client/assets/images/blogpost/viewer-avt.png" width="41" height="41" alt=""></a>
-                        </p>
-                        <p class="form-row last-btns">
-                        <button type="submit" class="btn btn-sumit">post a comment</button>
-                        <a href="#" class="btn btn-fn-1"><i class="fa fa-smile-o" aria-hidden="true"></i></a>
-                        <a href="#" class="btn btn-fn-1"><i class="fa fa-paperclip" aria-hidden="true"></i></a>
-                        <a href="#" class="btn btn-fn-1"><i class="fa fa-file-image-o" aria-hidden="true"></i></a>
-                        </p>
-                        </form>
-
-
-                       
-@*
-                        <form method="POST" asp-route="client-blog-single" asp-route-id = "@Model.Id"  enctype="multipart/form-data">
-
-                               <div class="form-group">
-                                <label>text</label>
-                                <input asp-for="@item.Content" class="form-control">
-                            </div>
-
-                            
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                        </form>*@
-
-
+                        @if (_userService.IsAuthenticated)
+                        {
+                            <form asp-route="client-blog-single" asp-route-id="@Model.Id" method="post" name="frm-post-comment">
+                                <textarea asp-for="CommentText" class="form-control"></textarea>
+                                <button type="submit" class="btn btn-sumit">Daxil et</button>
+                            </form>
+                        }
+                        else
+                        {
+                            <a class="CommentLogin" asp-route="client-auth-login"> Comment yazmaq ucun login olun.</a>
+                        }
 
                     </div>
-
-
 
                     <div class="comment-list">
                         <ol class="post-comments lever-0">
                             <li class="comment-elem">
                                 <div class="wrap-post-comment">
                                     <div class="cmt-inner">
+
                                         @foreach (var item in Model.Comments)
                                         {
                                             <div class="auth-info">
-
-                                                <a href="#" class="author-contact"><img src="assets/images/blogpost/author-02.png" alt="" width="29" height="28">@Model.From</a>
-                                                <span class="cmt-time">4 days ago</span>
+                                               <a href="#" class="author-contact"><img src="assets/images/blogpost/author-02.png" alt="" width="29" height="28">@Model.From</a>
+                                                <span class="cmt-time">@item.PostedDate</span>
                                             </div>
                                             <div class="cmt-content">
-
-
                                                 <p>
                                                     @item.Content
                                                 </p>
-
-
                                             </div>
-
                                         }
-
-
                                     </div>
                                 </div>
                             </li>
@@ -120,9 +99,7 @@
                             </ul>
                         </div>
                     </div>
-
                 </div>
-
             </div>
 
             <!-- Sidebar -->

@@ -233,3 +233,12 @@ $(document).ready(function () {
 
     })
 })
+
+
+function removePTagsFromText(text) {
+    var regex = /<p[^>]*>|<\/p>/g;
+    return text.replace(regex, '');
+}
+
+var text = tinyMCE.get('myTextarea').getContent();
+var cleanedText = removePTagsFromText(text);

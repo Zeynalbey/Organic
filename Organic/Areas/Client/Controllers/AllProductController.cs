@@ -25,17 +25,17 @@ namespace Organic.Areas.Client.Controllers
             _fileService = fileService;
         }
 
-        [HttpGet("Rate/{id}/{rate}")]
-        public ActionResult Rate(int id, int rate)
+        [HttpGet("Rate/{id}",Name ="product-rate")]
+        public ActionResult Rate(int id)
         {
             var product = _dbContext.Products.Find(id);
             if (product != null)
             {
-                product.Rating += rate;
+                //product.Rating += rate;
                 product.RatingCount++;
                 _dbContext.SaveChanges();
             }
-            return RedirectToRoute("client-home-index");
+            return RedirectToRoute("client-product-detail", new { id = product!.Id });
         }
 
         

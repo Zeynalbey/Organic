@@ -12,8 +12,8 @@ using Organic.Database;
 namespace Organic.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230320065209_IsCooked")]
-    partial class IsCooked
+    [Migration("20230327095116_SaleCount")]
+    partial class SaleCount
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -350,9 +350,6 @@ namespace Organic.Migrations
                     b.Property<string>("Info")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsCooked")
-                        .HasColumnType("bit");
-
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
@@ -363,6 +360,9 @@ namespace Organic.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("RatingCount")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SaleCount")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("UpdatedAt")

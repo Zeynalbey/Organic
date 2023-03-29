@@ -1,0 +1,21 @@
+﻿@using Organic.Areas.Client.ViewModels.Category
+@model List<CategoryItemViewModel>
+
+<div class="btn-group btn-group3 ">
+    <button type="button" class="btn buton-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Kateqoriyalar <i class="fa-sharp fa-solid fa-caret-down"></i>
+    </button>
+    <div class="dropdown-menu categoriesdropdown">
+
+        <a asp-route="client-product-list" class="dropdown-item">
+            Bütün Kateqoriyalar
+        </a>
+        @foreach (var item in Model)
+        {
+            <a asp-route="client-product-list" asp-route-categoryId="@item.Id" class="dropdown-item">
+                @item.Title 
+            </a>
+            <br />
+        }
+    </div>
+</div>

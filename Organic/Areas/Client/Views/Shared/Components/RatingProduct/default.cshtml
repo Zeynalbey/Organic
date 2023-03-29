@@ -46,7 +46,6 @@
                                                 <a asp-route="client-basket-add" asp-route-id="@ratingProduct.Id" class="add-basket-btn btn btn-bold" id="basketbutton">
                                                     Səbətə at
                                                 </a>
-                                                <a href="#" class="btn compare-btn"><i class="fa fa-random" aria-hidden="true"></i></a>
                                             </div>
                                         </div>
                                     </div>
@@ -69,18 +68,21 @@
             {
                 @foreach (var price in ratingProduct.DiscountPrices)
                 {
-                    @if (ratingProduct.CategoryName != SelectedCategoryName.Kabab && price.Percent>0)
+                    @if (ratingProduct.CategoryName != SelectedCategoryName.Kabab && price.Percent > 0)
                     {
-                        <li class="product-item">
+                        <li class="product-item rate">
                             <div class="contain-product right-info-layout contain-product__right-info-layout">
                                 <div class="product-thumb">
-                                    <a asp-route="client-product-detail" asp-route-id="@ratingProduct.Id" class="link-to-product">
+                                    <a asp-route="product-rate" asp-route-id="@ratingProduct.Id" class="link-to-product">
                                         <img src="~/@ratingProduct.MainImgUrl" alt="dd" width="270" height="270" class="product-thumnail">
                                     </a>
                                 </div>
                                 <div class="info">
-                                    <b class="categories">@ratingProduct.Name</b>
-                                    <h4 class="product-title"><a href="#" class="pr-name">@ratingProduct.Info</a></h4>
+                                    <a asp-route="product-rate" asp-route-id="@ratingProduct.Id" class="link-to-product">
+                                        <b class="categories">@ratingProduct.Name</b>
+                                        <h4 class="product-title">@ratingProduct.Info</h4>
+                                    </a>
+
                                     <div class="price ">
 
                                         @if (price.Percent != 0)
@@ -94,16 +96,8 @@
                                         }
 
                                     </div>
-                                    <div>
-                                        <p class="star-rating-stars">
-                                            <button class="rate-button" onclick="location.href='@Url.Action("Rate", "AllProduct", new { id = ratingProduct.Id })'"><span class="rate-icon"></span></button>
-                                            <button class="rate-button" onclick="location.href='@Url.Action("Rate", "AllProduct", new { id = ratingProduct.Id , rate = 2 })'"><span class="rate-icon"></span></button>
-                                            <button class="rate-button" onclick="location.href='@Url.Action("Rate", "AllProduct", new { id = ratingProduct.Id , rate = 3 })'"><span class="rate-icon"></span></button>
-                                            <button class="rate-button" onclick="location.href='@Url.Action("Rate", "AllProduct", new { id = ratingProduct.Id , rate = 4 })'"><span class="rate-icon"></span></button>
-                                            <button class="rate-button" onclick="location.href='@Url.Action("Rate", "AllProduct", new { id = ratingProduct.Id , rate = 5 })'"><span class="rate-icon"></span></button>
-                                        </p>
-                                        <span class="review-count">(@ratingProduct.RatingCount baxış)</span>
-                                    </div>
+                                    <br>
+                                    <span class="review-count">(@ratingProduct.RatingCount baxış)</span>
                                 </div>
                             </div>
                         </li>
@@ -113,7 +107,7 @@
         </ul>
         <div class="biolife-banner style-01 biolife-banner__style-01 xs-margin-top-80px-im sm-margin-top-30px-im">
             <div class="banner-contain">
-                <a asp-route="client-product-detail" asp-route-id = "33" class="bn-link">
+                <a asp-route="client-product-detail" asp-route-id="33" class="bn-link">
                     <div class="text-content">
                         <span class="first-line">Gündəlik</span>
                         <b class="second-line">TƏBİİ</b>

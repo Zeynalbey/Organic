@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Organic.Areas.Admin.ViewModels.Blog;
-using Organic.Areas.Client.ViewModels.Blog.Comment;
 using Organic.Areas.Client.ViewModels.Blog;
 using Organic.Contracts.File;
 using Organic.Contracts.ProductImage;
@@ -25,6 +24,7 @@ namespace Organic.Areas.Client.Controllers
             _userService = userService;
         }
 
+        #region Blogs
         [HttpGet("list", Name = "client-blog-list")]
         public async Task<IActionResult> ListAsync([FromServices] IFileService fileService)
         {
@@ -45,12 +45,14 @@ namespace Organic.Areas.Client.Controllers
 
             return View(model);
         }
+        #endregion
 
+        #region Single Blog
         [HttpGet("{id}", Name = "client-blog-single")]
         public async Task<IActionResult> Detail(int id)
         {
             var blog = await _dbContext.Blogs.Include(b => b.Comments)
-                .Include(b=>b.From)
+                .Include(b => b.From)
                 .Include(b => b.Likes).FirstOrDefaultAsync(b => b.Id == id);
 
             if (blog == null) return NotFound();
@@ -70,7 +72,9 @@ namespace Organic.Areas.Client.Controllers
                 Comments = blog.Comments!.Select(c => new BlogCommentItemViewModel
                 {
                     Id = c.Id,
-                    Content = c.Text!
+                    Content = c.Text!,
+                    PostedDate = c.CommentDate.ToString()
+
                 }).ToList(),
 
                 Likes = blog.Likes!.Select(l => new BlogLikeItemViewModel
@@ -81,41 +85,31 @@ namespace Organic.Areas.Client.Controllers
 
             return View(blogViewModel);
         }
+        #endregion
 
-        #region Add
+        #region CommentAdd
 
         [HttpPost("{id}", Name = "client-blog-single")]
-        public async Task<IActionResult> AddComment(BlogItemViewModel model, int blogId)
+        public async Task<IActionResult> Detail(BlogItemViewModel model, int id)
         {
-            var blog = await _dbContext.Blogs.FirstOrDefaultAsync(b => b.Id == blogId);
+            var blog = await _dbContext.Blogs.FirstOrDefaultAsync(b => b.Id == id);
             if (blog is null)
             {
                 return NotFound();
             }
 
-            foreach (var item in model.Comments)
+            var comment = new BlogComment
             {
-                var comment = new BlogComment
-                {
-                    Text = item.Content,
-                    Blog = blog,
-                    From = _userService.CurrentUser,
-                    CommentDate = model.PostedDate
-                };
-                await _dbContext.AddAsync(comment);
-            }
-            
+                Text = model.CommentText,
+                BlogId = model.Id,
+                From = _userService.CurrentUser,
+                CommentDate = DateTime.Now
+            };
 
-            
- 
+            await _dbContext.AddAsync(comment);
             await _dbContext.SaveChangesAsync();
-
             return RedirectToRoute("client-blog-list");
-
-               
-            }
-
-        
+        }
 
         #endregion
     }

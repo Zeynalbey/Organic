@@ -74,6 +74,8 @@ body {
     word-wrap: break-word;
 }
 
+
+
 .Sifarisler a {
     color: #ff2727;
     text-align: right;
@@ -987,9 +989,11 @@ body {
 
 .login-link {
     margin-left: 139px;
-    color: black;
+    color: #688E26;
     font-weight: bold;
 }
+
+
 
 .login-out {
     padding-left: 4px;
@@ -7723,6 +7727,7 @@ body.open-overlay #overlay {
                 font-size: 14px;
                 padding: 11px 13px;
                 line-height: 24px;
+                height: 100px;
             }
 
             .post-comments .comment-form .form-row textarea {
