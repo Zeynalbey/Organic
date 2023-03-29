@@ -34,11 +34,11 @@
                         </div>
                         <h2 class="post-name">@Model.Title</h2>
                         <p class="post-archive">
-                            <b class="post-cat">ORGANIC: </b><span class="post-date">
+                            <b class="post-cat">ORGANIC: </b>
                                 @Model.PostedDate.ToString("dd,mm,yyyy")
                                 <span class="author">Yerləşdirdi: @Model.From</span>
-                                <span class="author"><i class="fa-regular fa-comment"></i> @Model.Comments.Count</span>
-                                <span class="author"><i class="fa-regular fa-thumbs-up"></i> @Model.Likes.Count</span>
+                                <span class="author"><i class="fa-regular fa-comment"></i> @Model.Comments!.Count</span>
+                                <span class="author"><i class="fa-regular fa-thumbs-up"></i> @Model.Likes!.Count</span>
 
                         </p>
                     </div>
@@ -53,6 +53,10 @@
                     <div class="comment-form">
                         @if (_userService.IsAuthenticated)
                         {
+@*                            <div class="buttons">
+                                <a asp-route="client-basket-add" asp-route-id="@product.Id" class="btn add-basket-btn btn-bold" id="basketbutton"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i>Səbətə at</a>
+                            </div*@
+
                             <form asp-route="client-blog-single" asp-route-id="@Model.Id" method="post" name="frm-post-comment">
                                 <textarea asp-for="CommentText" class="form-control"></textarea>
                                 <button type="submit" class="btn btn-sumit">Daxil et</button>

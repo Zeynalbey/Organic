@@ -42,6 +42,26 @@ $(document).ready(function () {
             })
     }))
 
+
+
+
+    let btns4 = document.querySelectorAll(".add-blogComment")
+    btns4.forEach(x => x.addEventListener("click", function (e) {
+        e.preventDefault()
+        console.log(e.target.href)
+        fetch(e.target.href)
+            .then(response => response.text())
+            .then(data => {
+                $('.comment-list').html(data);
+            })
+    }))
+
+
+
+
+
+
+
 /*    let counts = document.querySelector(".sub-total")*/
 
     $(document).on("click", ".remove-basket-btn", function (e) {

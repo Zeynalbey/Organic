@@ -138,7 +138,11 @@ tox-statusbar__path {
     color: red;
 }
 
-/*.no-sidebar .products-list {
-    justify-content:start;
-}*/
+.post-comments .btn {
+    background-color: #688E26;
+    color: white;
+    margin-top: 10px;
+    align-items: rig;
+    padding: 5px 25px 5px 25px;
+}
 

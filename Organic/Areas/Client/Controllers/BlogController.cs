@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Organic.Areas.Admin.ViewModels.Blog;
+using Organic.Areas.Client.ViewComponents;
 using Organic.Areas.Client.ViewModels.Blog;
 using Organic.Contracts.File;
 using Organic.Contracts.ProductImage;
@@ -108,7 +109,7 @@ namespace Organic.Areas.Client.Controllers
 
             await _dbContext.AddAsync(comment);
             await _dbContext.SaveChangesAsync();
-            return RedirectToRoute("client-blog-list");
+            return RedirectToRoute("client-blog-single", new { id = blog!.Id });
         }
 
         #endregion
