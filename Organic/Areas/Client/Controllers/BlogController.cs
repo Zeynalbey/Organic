@@ -113,5 +113,21 @@ namespace Organic.Areas.Client.Controllers
         }
 
         #endregion
+
+        //[HttpGet("like/{id}", Name = "blog-like")]
+        //public async Task<IActionResult> RateAsync(int id)
+        //{
+        //    var blog = _dbContext.Blogs.Find(id); 
+        //    if (blog is null) return NotFound();
+
+        //    var like = _dbContext.BlogLikes.FirstOrDefault(l => l.BlogId == id);
+        //    if (like is null) return NotFound();
+
+        //    like!.LikeCount++;
+        //    await _dbContext.SaveChangesAsync();
+
+        //    return RedirectToRoute("client-blog-single", new { id = blog!.Id });
+        //}
+
     }
 }
