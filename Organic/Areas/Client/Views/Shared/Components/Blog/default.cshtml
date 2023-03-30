@@ -2,28 +2,28 @@
 @using Organic.Areas.Client.ViewModels.Blog
 @model List<BlogViewModel>
 
-@foreach (var item in Model)
+@foreach (var blog in Model)
 {
     <li>
         <div class="post-item effect-01 style-bottom-info layout-02 ">
             <div class="thumbnail">
-                <a asp-route="client-blog-single" asp-route-id = "@item.Id" class="link-to-post"><img src="~/@item.Image" width="370" height="270" alt=""></a>
+                <a asp-route="client-blog-single" asp-route-id = "@blog.Id" class="link-to-post"><img src="~/@blog.Image" width="370" height="270" alt=""></a>
                 <div class="post-date">
-                    <span class="date">@item.PostedDate.ToString("dd")</span>
-                    <span class="month">@item.PostedDate.ToString("MMM")</span>
+                    <span class="date">@blog.PostedDate.ToString("dd")</span>
+                    <span class="month">@blog.PostedDate.ToString("MMM")</span>
                 </div>
             </div>
             <div class="post-content">
-                <h4 class="post-name"><a href="#" class="linktopost">@item.Title</a></h4>
+                <a asp-route ="client-blog-single" asp-route-id="@blog.Id" class="post-name">@blog.Title</a>
                 <div class="post-meta">
 
-                    <a href="#" class="post-meta__item author"><img src="~/Client/assets/images/home-03/post-author.png" width="28" height="28" alt=""><span>@item.From</span></a>
-                    <a href="#" class="post-meta__item btn liked-count">@item.Comments<span class="biolife-icon icon-comment"></span></a>
-                    <a href="#" class="post-meta__item btn comment-count">@item.Likes<span class="biolife-icon icon-like"></span></a>
+                    <a asp-route="client-blog-single" asp-route-id="@blog.Id" class="post-meta__item author"><img src="~/Client/assets/images/home-03/post-author.png" width="28" height="28" alt=""><span>@blog.From</span></a>
+                    <a asp-route="client-blog-single" asp-route-id="@blog.Id" class="post-meta__item btn liked-count">@blog.Comments<span class="biolife-icon icon-comment"></span></a>
+                    <a asp-route="client-blog-single" asp-route-id="@blog.Id" class="post-meta__item btn comment-count">@blog.Likes<span class="biolife-icon icon-like"></span></a>
                 </div>
-                <p class="excerpt">@item.Description...</p>
+                <p class="excerpt">@blog.Description...</p>
                 <div class="group-buttons">
-                    <a href="#" class="btn readmore">continue reading</a>
+                    <a asp-route="client-blog-single" asp-route-id="@blog.Id" class="btn readmore">davamı...</a>
                 </div>
             </div>
         </div>

@@ -1,5 +1,6 @@
 ﻿@using Organic.Areas.Client.ViewModels.Blog
 @using Organic.Services.Abstracts
+@using Organic.Areas.Client.ViewComponents
 @inject IUserService _userService
 @model BlogItemViewModel
 
@@ -35,10 +36,15 @@
                         <h2 class="post-name">@Model.Title</h2>
                         <p class="post-archive">
                             <b class="post-cat">ORGANIC: </b>
-                                @Model.PostedDate.ToString("dd,mm,yyyy")
-                                <span class="author">Yerləşdirdi: @Model.From</span>
-                                <span class="author"><i class="fa-regular fa-comment"></i> @Model.Comments!.Count</span>
-                                <span class="author"><i class="fa-regular fa-thumbs-up"></i> @Model.Likes!.Count</span>
+                            @Model.PostedDate.ToString("dd,mm,yyyy")
+                            <span class="author">Yerləşdirdi: @Model.From</span>
+                            <span class="author"><i class="fa-regular fa-comment"></i> @Model.Comments!.Count</span>
+                            <span class="blog-like">
+                                <a asp-route="blog-like" asp-route-Likeid="@Model.Id" class="blogelike">
+                                    <i class="fa-regular fa-thumbs-up"></i>@Model.Likes
+                                </a>
+                                
+                            </span>
 
                         </p>
                     </div>
@@ -53,9 +59,9 @@
                     <div class="comment-form">
                         @if (_userService.IsAuthenticated)
                         {
-@*                            <div class="buttons">
-                                <a asp-route="client-basket-add" asp-route-id="@product.Id" class="btn add-basket-btn btn-bold" id="basketbutton"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i>Səbətə at</a>
-                            </div*@
+                            @*                            <div class="buttons">
+                        <a asp-route="client-basket-add" asp-route-id="@product.Id" class="btn add-basket-btn btn-bold" id="basketbutton"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i>Səbətə at</a>
+                        </div*@
 
                             <form asp-route="client-blog-single" asp-route-id="@Model.Id" method="post" name="frm-post-comment">
                                 <textarea asp-for="CommentText" class="form-control"></textarea>
@@ -78,7 +84,7 @@
                                         @foreach (var item in Model.Comments)
                                         {
                                             <div class="auth-info">
-                                               <a href="#" class="author-contact"><img src="assets/images/blogpost/author-02.png" alt="" width="29" height="28">@Model.From</a>
+                                                <a href="#" class="author-contact"><img src="assets/images/blogpost/author-02.png" alt="" width="29" height="28">@Model.From</a>
                                                 <span class="cmt-time">@item.PostedDate</span>
                                             </div>
                                             <div class="cmt-content">

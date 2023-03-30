@@ -35,7 +35,7 @@ namespace Organic.Areas.Client.ViewComponents
                 : Image.DEFAULTIMAGE,
                 b.BlogAndCategories!.Select(b => b.BlogCategory)
                 .Select(b => new BlogCategoryViewModel(b!.Id, b.Name!)).ToList(),
-                 b.Likes!.Count,
+                 b.LikeCount,
                  b.Comments!.Count))
                 .ToListAsync();
 

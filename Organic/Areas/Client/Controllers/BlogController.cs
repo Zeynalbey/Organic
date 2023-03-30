@@ -40,7 +40,7 @@ namespace Organic.Areas.Client.Controllers
                 : Image.DEFAULTIMAGE,
                 b.BlogAndCategories!.Select(b => b.BlogCategory)
                 .Select(b => new BlogCategoryViewModel(b!.Id, b.Name!)).ToList(),
-                 b.Likes!.Count,
+                 b.LikeCount,
                  b.Comments!.Count))
                 .ToListAsync();
 
@@ -53,8 +53,7 @@ namespace Organic.Areas.Client.Controllers
         public async Task<IActionResult> Detail(int id)
         {
             var blog = await _dbContext.Blogs.Include(b => b.Comments)
-                .Include(b => b.From)
-                .Include(b => b.Likes).FirstOrDefaultAsync(b => b.Id == id);
+                .Include(b => b.From).FirstOrDefaultAsync(b => b.Id == id);
 
             if (blog == null) return NotFound();
             var user = await _dbContext.Users.FirstOrDefaultAsync(u => u.Id == blog.From.Id);
@@ -65,6 +64,7 @@ namespace Organic.Areas.Client.Controllers
                 Id = blog.Id,
                 Title = blog.Title!,
                 Content = blog.Description!,
+                Likes = blog.LikeCount,
                 From = user.FirstName,
                 PostedDate = blog.PostedDate,
                 Image = blog.ImageNameInSystem.FirstOrDefault() != null
@@ -76,11 +76,6 @@ namespace Organic.Areas.Client.Controllers
                     Content = c.Text!,
                     PostedDate = c.CommentDate.ToString()
 
-                }).ToList(),
-
-                Likes = blog.Likes!.Select(l => new BlogLikeItemViewModel
-                {
-                    Id = l.Id
                 }).ToList()
             };
 
@@ -114,20 +109,17 @@ namespace Organic.Areas.Client.Controllers
 
         #endregion
 
-        //[HttpGet("like/{id}", Name = "blog-like")]
-        //public async Task<IActionResult> RateAsync(int id)
-        //{
-        //    var blog = _dbContext.Blogs.Find(id); 
-        //    if (blog is null) return NotFound();
+        [HttpGet("Like/{Likeid}", Name = "blog-like")]
+        public async Task<IActionResult> LikeAsync(int Likeid)
+        {
+            var blog = await _dbContext.Blogs.FindAsync(Likeid);
+            if (blog is null) return NotFound();
 
-        //    var like = _dbContext.BlogLikes.FirstOrDefault(l => l.BlogId == id);
-        //    if (like is null) return NotFound();
+            blog.LikeCount++;
+            await _dbContext.SaveChangesAsync();
 
-        //    like!.LikeCount++;
-        //    await _dbContext.SaveChangesAsync();
-
-        //    return RedirectToRoute("client-blog-single", new { id = blog!.Id });
-        //}
+            return RedirectToRoute("client-blog-single", new { id = blog!.Id });
+        }
 
     }
 }

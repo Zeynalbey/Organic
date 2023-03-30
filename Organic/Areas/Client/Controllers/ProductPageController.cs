@@ -25,12 +25,13 @@ namespace Organic.Areas.Client.Controllers
         }
 
         [HttpGet("list", Name = "client-product-list")]
-        public async Task<IActionResult> Index(string searchBy, string search, 
+        public async Task<IActionResult> Index(string searchBy, string search,
         [FromQuery] int? discountId, 
         [FromQuery] int? imageId, 
         [FromQuery] int? tagId, 
         [FromQuery] int? categoryId,
-        [FromQuery] int? startPrice)
+        [FromQuery] int? startPrice,
+        int page = 1)
         {
             var productsQuery = _dbContext.Products.AsQueryable();
 
@@ -64,9 +65,13 @@ namespace Organic.Areas.Client.Controllers
                 productsQuery = productsQuery.Where(p => p.Price >= 35);
             }
 
+            var product = await productsQuery.Where(p => p.ProductCounts!.Any(pc => pc.Count > 0))
+                .Where(p => p.Category!.Name != SelectedCategoryName.Kabab).ToListAsync();
+
             var newProduct = await productsQuery
                 .Where(p => p.ProductCounts!.Any(pc => pc.Count > 0))
                 .Where(p => p.Category!.Name != SelectedCategoryName.Kabab)
+                .Skip((page-1) * 4).Take(4)
                 .Select(p => new ListItemViewModel(p.Id, p.Name!, p.Info!, p.Price,
                                p.ProductImages!.Take(1).FirstOrDefault() != null
                                ? _fileService.GetFileUrl(p.ProductImages!.Take(1).FirstOrDefault()!.ImageNameInFileSystem, UploadDirectory.Product)
@@ -76,8 +81,17 @@ namespace Organic.Areas.Client.Controllers
                                 p.ProductTags!.Select(p => p.Tag).Select(p => new TagViewModel(p!.Name!)).ToList()
                                 )).ToListAsync();
 
+
+            ViewBag.CurrentPage = page;
+            ViewBag.TotalPage = Math.Ceiling((decimal)product.Count() / 4);
+            var vv = productsQuery.Count();
+
             return View(newProduct);
         }
+
+
+
+
 
         [HttpGet("detail/{id}", Name = "client-product-detail")]
         public async Task<IActionResult> Detail(int id)

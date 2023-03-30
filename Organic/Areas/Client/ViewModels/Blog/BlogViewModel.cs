@@ -5,7 +5,7 @@ namespace Organic.Areas.Client.ViewModels.Blog
     public class BlogViewModel
     {
         public BlogViewModel(int id, string? title, string? description,
-            string? from, DateTime postedDate, string image, List<BlogCategoryViewModel> categories,int likes,int comments)
+            string? from, DateTime postedDate, string image, List<BlogCategoryViewModel> categories, int likes, int comments)
         {
             Id = id;
             Title = title;

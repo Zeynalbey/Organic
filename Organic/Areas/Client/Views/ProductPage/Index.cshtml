@@ -107,3 +107,31 @@
         </div>
     </div>
 </div>
+
+
+<div class="biolife-panigations-block">
+    <ul class="panigation-contain">
+        @if (ViewBag.CurrentPage > 1)
+        {
+            <li><a asp-route="client-product-list" asp-route-page="@(ViewBag.CurrentPage-1)" class="link-page next"><i class="fa fa-angle-left" aria-hidden="true"></i></a></li>
+
+        }
+
+        @for (int i = 1; i <= ViewBag.TotalPage; i++)
+        {
+            <li>
+                <a asp-route="client-product-list" asp-route-page="@i">
+                    <span class=@(ViewBag.CurrentPage == i ? "current-page" : "link-page" )>@i</span>
+                </a>
+
+            </li>
+        }
+
+
+        @if (ViewBag.CurrentPage < ViewBag.TotalPage)
+        {
+            <li><a asp-route="client-product-list" asp-route-page="@(ViewBag.CurrentPage+1)" class="link-page next"><i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+
+        }
+    </ul>
+</div>

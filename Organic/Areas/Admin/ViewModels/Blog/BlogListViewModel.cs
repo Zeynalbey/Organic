@@ -6,7 +6,7 @@ namespace Organic.Areas.Admin.ViewModels.Blog
     {
         public BlogListViewModel(int id, string? title, string? description,
             string? from, DateTime postedDate, string image, List<BlogCategoryViewModel> categories, 
-            List<BlogLikeListViewModel>? likes,
+            int likes,
             List<BlogCommentListViewModel>? comments)
         {
             Id = id;
@@ -27,7 +27,7 @@ namespace Organic.Areas.Admin.ViewModels.Blog
         public DateTime PostedDate { get; set; }
         public string Image { get; set; }
         public List<BlogCategoryViewModel> Categories { get; set; }
-        public List<BlogLikeListViewModel>? Likes { get; set; }
+        public int Likes { get; set; }
         public List<BlogCommentListViewModel>? Comments { get; set; }
 
     }
@@ -49,19 +49,5 @@ namespace Organic.Areas.Admin.ViewModels.Blog
         public string? Text { get; set; }
         public string? From { get; set; }
         public string? Blog { get; set; }
-    }
-
-    public class BlogLikeListViewModel
-    {
-        public BlogLikeListViewModel(int id, string blog, int likeCount)
-        {
-            Id = id;
-            Blog = blog;
-            LikeCount = likeCount;
-        }
-
-        public int Id { get; set; }
-        public string Blog { get; set; }
-        public int LikeCount { get; set; }
     }
 }

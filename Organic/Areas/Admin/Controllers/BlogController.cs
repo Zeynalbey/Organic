@@ -43,9 +43,9 @@ namespace Organic.Areas.Admin.Controllers
              $"{b.From!.FirstName} {b.From.LastName}",
              b.PostedDate,
              _fileService.GetFileUrl(b.ImageNameInSystem, UploadDirectory.Blog),
-                b.BlogAndCategories!.Select(bac => bac.BlogCategory)
-                .Select(bc => new BlogCategoryViewModel(bc.Id, bc.Name!)).ToList(),
-             b.Likes!.Select(l => new BlogLikeListViewModel(l.Id, l.Blog!.Title!, l.LikeCount)).ToList(),
+             b.BlogAndCategories!.Select(bac => bac.BlogCategory)
+             .Select(bc => new BlogCategoryViewModel(bc.Id, bc.Name!)).ToList(),
+             b.LikeCount,
              b.Comments!.Select(c => new BlogCommentListViewModel(c.Id, c.CommentDate, c.Text,
              $"{b.From.FirstName} {b.From.LastName}", c.Blog!.Title
              )).ToList())).ToListAsync();
