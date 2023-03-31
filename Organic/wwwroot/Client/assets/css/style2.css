@@ -157,3 +157,32 @@ tox-statusbar__path {
     font-weight: bold;
     padding: 9px 12px 9px 12px;
 }
+
+.mobileSearch{
+    display:none !important;
+}
+
+@media (max-width: 600px) {
+    .mobileSearch {
+        display: block !important;
+    }
+        .mobileSearch button {
+            color: white;
+            background-color: #688E26;
+            border: none;
+            border-radius: 5px;
+            padding: 3px 20px 3px 20px;
+            margin-left: 7px;
+        }
+}
+
+.mobileSearch .mobilInput {
+    border: 1px solid #e6e6e6;
+    border-radius: 0;
+    padding: 8px 72px 4px 10px;
+    margin-left: 97px;
+    margin-top: 6px;
+    max-width: 100%;
+    outline: none;
+    border-radius: 10px 10px 0 0;
+}

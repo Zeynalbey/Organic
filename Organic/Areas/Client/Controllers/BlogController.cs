@@ -8,6 +8,7 @@ using Organic.Contracts.ProductImage;
 using Organic.Database;
 using Organic.Database.Models;
 using Organic.Services.Abstracts;
+using System.Xml.Linq;
 
 namespace Organic.Areas.Client.Controllers
 {
@@ -54,15 +55,16 @@ namespace Organic.Areas.Client.Controllers
 
         #region Single Blog
         [HttpGet("{id}", Name = "client-blog-single")]
-        public async Task<IActionResult> Detail(int id)
+        public async Task<IActionResult> Detail(int id, int page = 1)
         {
             var blog = await _dbContext.Blogs.Include(b => b.From).Include(b => b.Comments!).ThenInclude(c => c.From)
                 .FirstOrDefaultAsync(b => b.Id == id);
+            blog.Comments.Count();
 
             if (blog == null) return NotFound();
             var user = await _dbContext.Users.FirstOrDefaultAsync(u => u.Id == blog.From.Id);
             if (user == null) return NotFound();
-            var comment1 = await _dbContext.BlogComments.Include(bc=> bc.From).FirstOrDefaultAsync(bc => bc.Id == id);
+            var comment = await _dbContext.BlogComments.Include(bc=> bc.From).FirstOrDefaultAsync(bc => bc.Id == id);
 
             var blogViewModel = new BlogItemViewModel
             {
@@ -75,7 +77,7 @@ namespace Organic.Areas.Client.Controllers
                 Image = blog.ImageNameInSystem.FirstOrDefault() != null
                 ? _fileService.GetFileUrl(blog.ImageNameInSystem, UploadDirectory.Blog)
                 : Image.DEFAULTIMAGE,
-                Comments = blog.Comments!.Select(c => new BlogCommentItemViewModel
+                Comments = blog.Comments!.Skip((page - 1) * 8).Take(8).Select(c => new BlogCommentItemViewModel
                 {
                     Id = c.Id,
                     Content = c.Text!,
@@ -84,6 +86,9 @@ namespace Organic.Areas.Client.Controllers
                     Image = _fileService.GetFileUrl(c.From.ImageNameInSystem, UploadDirectory.User)
                 }).ToList()
             };
+
+            ViewBag.CurrentPage = page;
+            ViewBag.TotalPage = Math.Ceiling((decimal)blog.Comments.Count() / 8);
 
             return View(blogViewModel);
         }

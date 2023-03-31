@@ -3603,7 +3603,7 @@ body.open-mobile-search .header-area.layout-02 {
                 margin-left: 30px;
             }
 
-            .biolife-social ul li a {
+            .biolife-social ul li span {
                 font-size: 18px;
                 color: #666666;
             }
@@ -3612,7 +3612,7 @@ body.open-mobile-search .header-area.layout-02 {
         margin-top: 24px;
     }
 
-        .biolife-social.circle-hover ul li a {
+        .biolife-social.circle-hover ul li span {
             color: #555555;
             display: block;
             padding: 0 5px;
@@ -3623,9 +3623,7 @@ body.open-mobile-search .header-area.layout-02 {
             background-color: transparent;
         }
 
-            .biolife-social.circle-hover ul li a:hover {
-                color: #ffffff;
-            }
+
 
         .biolife-social.circle-hover ul li + li {
             margin-left: 10px;

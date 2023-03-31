@@ -7,6 +7,7 @@ using System.Text.Json;
 using System.Xml.Linq;
 using Organic.Database.Models;
 using System.Linq;
+using Organic.Contracts.ProductImage;
 
 namespace Organic.Areas.Client.ViewComponents
 {
@@ -37,9 +38,9 @@ namespace Organic.Areas.Client.ViewComponents
                    new ProductCookieViewModel(p.ProductId, p.Product!.Name,
                    p.Product.ProductImages!.Take(1).FirstOrDefault()! != null
                    ? _fileService.GetFileUrl(p.Product.ProductImages!.Take(1).FirstOrDefault()!.ImageNameInFileSystem, Contracts.File.UploadDirectory.Product)
-                   : String.Empty,
-                   p.Quantity, p.Product.Price, (100 - p.Product.ProductDiscountPercents.FirstOrDefault().Percent) / 100 * p.Product.Price,
-                   (100 - p.Product.ProductDiscountPercents.Take(1).FirstOrDefault().Percent) / 100 * p.Product.Price * p.Quantity)
+                   : Image.DEFAULTIMAGE,
+                   p.Quantity, p.Product.Price, (100 - p.Product.ProductDiscountPercents!.FirstOrDefault()!.Percent) / 100 * p.Product.Price,
+                   (100 - p.Product.ProductDiscountPercents!.Take(1).FirstOrDefault()!.Percent) / 100 * p.Product.Price * p.Quantity)
                    ).ToListAsync();
 
                 return View(model);
