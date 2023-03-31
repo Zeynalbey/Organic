@@ -142,7 +142,18 @@ tox-statusbar__path {
     background-color: #688E26;
     color: white;
     margin-top: 10px;
-    align-items: rig;
     padding: 5px 25px 5px 25px;
 }
 
+.product-category grid-style {
+    padding-bottom: 50px;
+}
+
+.Sifarisler button {
+    background-color: #688E26;
+    border-radius: 10px;
+    border: none;
+    color: white;
+    font-weight: bold;
+    padding: 9px 12px 9px 12px;
+}

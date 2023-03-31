@@ -62,13 +62,18 @@
                         <li class="product-item col-lg-2 col-md-3 col-sm-4 col-xs-6">
                             <div class="contain-product layout-default">
                                 <div class="product-thumb">
-                                    <a href="#" class="link-to-product">
+                                    <a asp-route="client-product-detail" asp-route-id="@product.Id" class="link-to-product">
                                         <img src="~/@product.ImgUrl" alt="dd" width="270" height="270" class="product-thumnail">
                                     </a>
                                 </div>
                                 <div class="info">
-                                    <b class="categories">@product.Name</b>
-                                    <h4 class="product-title"><a href="#" class="pr-name">@product.Info</a></h4>
+
+
+                                    <h4 class="product-title"><a asp-route="client-product-detail" asp-route-id="@product.Id" class="pr-name">@product.Name</a></h4>
+                                    <a asp-route="client-product-detail" asp-route-id="@product.Id">
+                                        <b class="categories">@product.Info</b>
+                                    </a>
+                                    
 
                                     @foreach (var price in product.DiscountPercents)
                                     {
@@ -84,13 +89,8 @@
                                             }
                                         </div>
                                     }
-
-                                    <div class="shipping-info">
-                                        <p class="shipping-day">3-Day Shipping</p>
-                                        <p class="for-today">Pree Pickup Today</p>
-                                    </div>
                                     <div class="slide-down-box">
-                                        <p class="message">All products are carefully selected to ensure food safety.</p>
+                                       
                                         <div class="buttons">
                                             <p class="message">Məhsullarımızın keyfiyyəti zəmanətimizdir.</p>
                                             <div class="buttons">

@@ -71,7 +71,7 @@ namespace Organic.Areas.Client.Controllers
             var newProduct = await productsQuery
                 .Where(p => p.ProductCounts!.Any(pc => pc.Count > 0))
                 .Where(p => p.Category!.Name != SelectedCategoryName.Kabab)
-                .Skip((page-1) * 4).Take(4)
+                .Skip((page-1) * 12).Take(12)
                 .Select(p => new ListItemViewModel(p.Id, p.Name!, p.Info!, p.Price,
                                p.ProductImages!.Take(1).FirstOrDefault() != null
                                ? _fileService.GetFileUrl(p.ProductImages!.Take(1).FirstOrDefault()!.ImageNameInFileSystem, UploadDirectory.Product)
@@ -83,8 +83,7 @@ namespace Organic.Areas.Client.Controllers
 
 
             ViewBag.CurrentPage = page;
-            ViewBag.TotalPage = Math.Ceiling((decimal)product.Count() / 4);
-            var vv = productsQuery.Count();
+            ViewBag.TotalPage = Math.Ceiling((decimal)product.Count() / 12);
 
             return View(newProduct);
         }
@@ -110,7 +109,8 @@ namespace Organic.Areas.Client.Controllers
             var imageUrls = product.ProductImages!.Select(pi => new ProductImageViewModel
             {
                 Id = pi.Id,
-                ImageUrl = _fileService.GetFileUrl(pi.ImageNameInFileSystem, UploadDirectory.Product)
+                ImageUrl =  _fileService.GetFileUrl(pi.ImageNameInFileSystem, UploadDirectory.Product)
+                
             });
 
             var viewModel = new ProductDetailViewModel(

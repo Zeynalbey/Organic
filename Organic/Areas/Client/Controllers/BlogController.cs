@@ -27,9 +27,10 @@ namespace Organic.Areas.Client.Controllers
 
         #region Blogs
         [HttpGet("list", Name = "client-blog-list")]
-        public async Task<IActionResult> ListAsync([FromServices] IFileService fileService)
+        public async Task<IActionResult> ListAsync([FromServices] IFileService fileService, int page = 1)
         {
             var model = await _dbContext.Blogs
+                .Skip((page - 1) * 6).Take(6)
                 .Select(b => new BlogViewModel(b.Id,
                 b.Title,
                 b.Description!.Substring(0, 50),
@@ -44,6 +45,9 @@ namespace Organic.Areas.Client.Controllers
                  b.Comments!.Count))
                 .ToListAsync();
 
+            ViewBag.CurrentPage = page;
+            ViewBag.TotalPage = Math.Ceiling((decimal)model.Count() / 6);
+
             return View(model);
         }
         #endregion
@@ -52,12 +56,13 @@ namespace Organic.Areas.Client.Controllers
         [HttpGet("{id}", Name = "client-blog-single")]
         public async Task<IActionResult> Detail(int id)
         {
-            var blog = await _dbContext.Blogs.Include(b => b.Comments)
-                .Include(b => b.From).FirstOrDefaultAsync(b => b.Id == id);
+            var blog = await _dbContext.Blogs.Include(b => b.From).Include(b => b.Comments!).ThenInclude(c => c.From)
+                .FirstOrDefaultAsync(b => b.Id == id);
 
             if (blog == null) return NotFound();
             var user = await _dbContext.Users.FirstOrDefaultAsync(u => u.Id == blog.From.Id);
             if (user == null) return NotFound();
+            var comment1 = await _dbContext.BlogComments.Include(bc=> bc.From).FirstOrDefaultAsync(bc => bc.Id == id);
 
             var blogViewModel = new BlogItemViewModel
             {
@@ -74,8 +79,9 @@ namespace Organic.Areas.Client.Controllers
                 {
                     Id = c.Id,
                     Content = c.Text!,
-                    PostedDate = c.CommentDate.ToString()
-
+                    PostedDate = c.CommentDate.ToString(),
+                    From = c.From!.FirstName,
+                    Image = _fileService.GetFileUrl(c.From.ImageNameInSystem, UploadDirectory.User)
                 }).ToList()
             };
 

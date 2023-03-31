@@ -15,6 +15,7 @@ using System;
 using Microsoft.AspNetCore.Mvc;
 using Org.BouncyCastle.Security;
 using Organic.Contracts.File;
+using Organic.Contracts.ProductImage;
 
 namespace Organic.Services.Concretes
 {
@@ -80,7 +81,10 @@ namespace Organic.Services.Concretes
 
         public string GetCurrentUserImage()
         {
-            return _fileService.GetFileUrl(_currentUser.ImageNameInSystem, UploadDirectory.User);
+            var image = _fileService.GetFileUrl(_currentUser.ImageNameInSystem, UploadDirectory.User) != null
+                ? _fileService.GetFileUrl(_currentUser.ImageNameInSystem, UploadDirectory.User)
+                : Image.DEFAULTIMAGE;
+                 return image;
         }
 
         public async Task<bool> CheckPasswordAsync(string? email, string? password)

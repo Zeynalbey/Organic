@@ -84,7 +84,7 @@
                                         @foreach (var item in Model.Comments)
                                         {
                                             <div class="auth-info">
-                                                <a href="#" class="author-contact"><img src="assets/images/blogpost/author-02.png" alt="" width="29" height="28">@Model.From</a>
+                                                <a href="#" class="author-contact"><img src="~/@item.Image" alt="" width="29" height="28">@item.From</a>
                                                 <span class="cmt-time">@item.PostedDate</span>
                                             </div>
                                             <div class="cmt-content">
@@ -158,25 +158,21 @@
 
 
                     <!--Comments Widget-->
-                    <div class="widget comment-widget">
+                    @*<div class="widget comment-widget">
                         <h4 class="wgt-title">Recent Comments</h4>
                         <div class="wgt-content">
                             <ul class="comment-list">
-                                <li>
-                                    <p class="cmt-item"><a href="#" class="auth-name"><i class="biolife-icon icon-conversation"></i>Jessica Alba</a><a href="#" class="link-post">on Healthy Organics</a></p>
-                                </li>
-                                <li>
-                                    <p class="cmt-item"><a href="#" class="auth-name"><i class="biolife-icon icon-conversation"></i>Jessica Alba</a><a href="#" class="link-post">on Best Organics</a></p>
-                                </li>
-                                <li>
-                                    <p class="cmt-item"><a href="#" class="auth-name"><i class="biolife-icon icon-conversation"></i>Jessica Alba</a><a href="#" class="link-post">on Healthy Organics</a></p>
-                                </li>
-                                <li>
-                                    <p class="cmt-item"><a href="#" class="auth-name"><i class="biolife-icon icon-conversation"></i>Jessica Alba</a><a href="#" class="link-post">on Healthy Organics</a></p>
-                                </li>
+                                @foreach (var item in Model.Comments)
+                                {
+                                    <li>
+                                        <p class="cmt-item"><a href="#" class="auth-name"><i class="biolife-icon icon-conversation"></i>Jessica Alba</a><a href="#" class="link-post">on Healthy Organics</a></p>
+                                    </li>
+                                }
+                               
+                               
                             </ul>
                         </div>
-                    </div>
+                    </div>*@
 
                 </div>
             </aside>

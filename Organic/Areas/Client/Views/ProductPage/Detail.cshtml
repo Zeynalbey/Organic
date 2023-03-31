@@ -1,5 +1,6 @@
 ﻿@using Organic.Areas.Client.ViewModels.Product
 @using Organic.Areas.Client.ViewComponents
+@using Organic.Contracts.ProductImage
 @model ProductDetailViewModel
 <!--Navigation section-->
 <div class="container">
@@ -27,14 +28,21 @@
                             <li><img src="~/@image.ImageUrl" alt="" width="500" height="500"></li>
 
                         }
+                        @if (Model.ImageUrls.Count() == 0)
+                        {
+                            <li><img src="~/@Image.DEFAULTIMAGE" alt="" width="500" height="500"></li>
+                        }
 
                     </ul>
                     <ul class="biolife-carousel slider-nav" data-slick='{"arrows":false,"dots":false,"centerMode":false,"focusOnSelect":true,"slidesMargin":10,"slidesToShow":4,"slidesToScroll":1,"asNavFor":".slider-for"}'>
                         @foreach (var image in Model.ImageUrls)
                         {
-                            <li><img src="~/@image.ImageUrl" alt="" width="88" height="88"></li>
+                            @if (Model.ImageUrls.Count() > 0)
+                            {
+                                <li><img src="~/@image.ImageUrl" alt="" width="88" height="88"></li>
+                            }
                         }
-
+                        
                     </ul>
                 </div>
                 <div class="product-attribute">

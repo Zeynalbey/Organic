@@ -988,18 +988,33 @@ body {
 }
 
 .login-link {
-    margin-left: 139px;
+    margin-left: 112px;
     color: #688E26;
     font-weight: bold;
 }
 
-
-
-.login-out {
-    padding-left: 4px;
-    color: #e73918;
-    font-weight: bold;
+@media (max-width: 580px) {
+    .login-link {
+        margin-left: 0px;
+        color: #688E26;
+        font-weight: bold;
+    }
 }
+
+
+    .login-link img {
+        max-width: 100%;
+        height: auto;
+        outline: none;
+        border-radius: 100%;
+    }
+
+
+    .login-out {
+        padding-left: 4px;
+        color: #e73918;
+        font-weight: bold;
+    }
 
 .login-link:hover {
     color: #688E26;

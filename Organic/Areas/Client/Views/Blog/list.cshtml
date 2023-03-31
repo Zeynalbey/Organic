@@ -5,7 +5,7 @@
     <nav class="biolife-nav">
         <ul>
             <li class="nav-item"><a asp-route="client-home-index" class="permal-link">Ana Səhifə</a></li>
-            <li class="nav-item"><span class="current-page">Our Blog</span></li>
+            <li class="nav-item"><span class="current-page">Bloqlar</span></li>
         </ul>
     </nav>
 </div>
@@ -43,12 +43,28 @@
             <!--Panigation Block-->
             <div class="biolife-panigations-block ">
                 <ul class="panigation-contain">
-                    <li><span class="current-page">1</span></li>
-                    <li><a href="#" class="link-page">2</a></li>
-                    <li><a href="#" class="link-page">3</a></li>
-                    <li><span class="sep">....</span></li>
-                    <li><a href="#" class="link-page">20</a></li>
-                    <li><a href="#" class="link-page next"><i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+                    @if (ViewBag.CurrentPage > 1)
+                    {
+                        <li><a asp-route="client-blog-list" asp-route-page="@(ViewBag.CurrentPage-1)" class="link-page next"><i class="fa fa-angle-left" aria-hidden="true"></i></a></li>
+
+                    }
+
+                    @for (int i = 1; i <= ViewBag.TotalPage; i++)
+                    {
+                        <li>
+                            <a asp-route="client-blog-list" asp-route-page="@i">
+                                <span class=@(ViewBag.CurrentPage == i ? "current-page" : "link-page" )>@i</span>
+                            </a>
+
+                        </li>
+                    }
+
+
+                    @if (ViewBag.CurrentPage < ViewBag.TotalPage)
+                    {
+                        <li><a asp-route="client-blog-list" asp-route-page="@(ViewBag.CurrentPage+1)" class="link-page next"><i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+
+                    }
                 </ul>
             </div>
 

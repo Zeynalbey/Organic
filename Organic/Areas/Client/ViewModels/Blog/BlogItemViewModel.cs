@@ -20,6 +20,9 @@
         public int Id { get; set; }
         public string? Content { get; set; }
         public string? PostedDate { get; set; }
+        public string? From { get; set; }
+        public string Image { get; set; }
+
     }
 
 }

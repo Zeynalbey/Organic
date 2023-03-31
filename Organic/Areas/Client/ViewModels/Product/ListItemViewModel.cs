@@ -28,37 +28,6 @@
         }
 
         public ListItemViewModel() { }
-
-        //public ListItemViewModel(int id, string name, decimal price, DateTime createdAt, string imgUrl)
-        //{
-        //    Id = id;
-        //    Name = name;
-        //    Price = price;
-        //    CreatedAt = createdAt;
-        //    ImgUrl = imgUrl;
-
-        //}
-
-        //public class CategoryViewModeL
-        //{
-        //    public CategoryViewModeL(string title)
-        //    {
-        //        Title = title;
-        //    }
-
-        //    public string Title { get; set; }
-
-        //}
-
-        //public class CategoryListViewModel
-        //{
-        //    public CategoryListViewModel(string? name)
-        //    {
-        //        Name = name;
-        //    }
-        //    public string? Name { get; set; }
-        //}
-
         public class DiscountPercentViewModel
         {
             public DiscountPercentViewModel(decimal percent)
