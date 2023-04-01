@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Text.Json;
 using System.Xml.Linq;
 using Organic.Contracts.File;
+using Organic.Contracts.ProductImage;
 
 namespace Backend_Final.Areas.Client.ViewComponents
 {
@@ -35,7 +36,7 @@ namespace Backend_Final.Areas.Client.ViewComponents
                     .Select(p => new ProductCookieViewModel(p.ProductId, p.Product!.Name,
                     p.Product!.ProductImages!.Take(1).FirstOrDefault()! != null
                     ? _fileService.GetFileUrl(p.Product!.ProductImages!.Take(1).FirstOrDefault()!.ImageNameInFileSystem, UploadDirectory.Product)
-                    : String.Empty,
+                    : Image.DEFAULTIMAGE,
                     p.Quantity, p.Product.Price,
                     Math.Round((100 - p.Product.ProductDiscountPercents.FirstOrDefault().Percent) / 100 * p.Product.Price, 2),
                     Math.Round((100 - p.Product.ProductDiscountPercents.FirstOrDefault().Percent) / 100 * p.Product.Price, 2) * p.Quantity))

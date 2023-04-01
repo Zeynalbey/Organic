@@ -7,7 +7,6 @@ using Organic.Services.Abstracts;
 using Organic.Areas.Admin.ViewModels.Blog;
 using Organic.Database.Models;
 using System.Linq;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace Organic.Areas.Admin.Controllers
 {

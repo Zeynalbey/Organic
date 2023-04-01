@@ -30,6 +30,11 @@ namespace Organic.Areas.Admin.ViewModels.Blog
         public int Likes { get; set; }
         public List<BlogCommentListViewModel>? Comments { get; set; }
 
+        public BlogListViewModel()
+        {
+
+        }
+
     }
 
     public class BlogCommentListViewModel
