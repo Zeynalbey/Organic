@@ -63,6 +63,4 @@ namespace Organic.Areas.Client.Controllers
             return RedirectToRoute("client-product-list", new { searchBy = searchBy, search = search });
         }
     }
-
-
 }

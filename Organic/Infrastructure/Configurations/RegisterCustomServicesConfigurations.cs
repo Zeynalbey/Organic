@@ -15,7 +15,6 @@ namespace Organic.Infrastructure.Configurations
             services.AddSingleton<IFileService, FileService>();
             services.AddScoped<IUserActivationService, UserActivationService>();
             services.AddScoped<IOrderService, OrderService>();
-            //services.AddScoped<INotificationService, NotificationService>();
         }
     }
 }

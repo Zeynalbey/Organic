@@ -9,7 +9,8 @@ namespace Organic.Infrastructure.Configurations
         {
             services.AddDbContext<DataContext>(o =>
             {
-                o.UseSqlServer(configuration.GetConnectionString("Zeynal"));
+                o.UseSqlServer(configuration.GetConnectionString("Zeynal"),
+                    options => options.EnableRetryOnFailure());
             });
         }
     }

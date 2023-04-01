@@ -14,19 +14,19 @@
                     @for (int i = 0; i < 1; i++)
                     {
                             <div class="img-moving position-4">
-                                <a asp-route="client-basket-add" asp-route-id="@Model[i].Id" class="add-basket-kabab">
+                                <a asp-route="client-basket-add" asp-route-id="@Model[i+1].Id" class="add-basket-kabab">
                                     <img src="~/Client/assets/images/downloaded-images/img-moving-pst-4.png" width="198" height="269" alt="img msv">
                                 </a>
                             </div>
 
                             <div class="img-moving position-2">
-                                <a asp-route="client-basket-add" asp-route-id="@Model[i+1].Id" class="add-basket-kabab">
+                                <a asp-route="client-basket-add" asp-route-id="@Model[i+2].Id" class="add-basket-kabab">
                                     <img src="~/Client/assets/images/downloaded-images/img-moving-pst-2.png" width="185" height="265" alt="img msv">
                                 </a>
                             </div>
 
                             <div class="img-moving position-3">
-                                <a asp-route="client-basket-add" asp-route-id="@Model[i+2].Id" class="add-basket-kabab">
+                                <a asp-route="client-basket-add" asp-route-id="@Model[i].Id" class="add-basket-kabab">
                                     <img src="~/Client/assets/images/downloaded-images/img-moving-pst-3-cut.png" width="384" height="151" alt="img msv">
                                 </a>
                             </div>

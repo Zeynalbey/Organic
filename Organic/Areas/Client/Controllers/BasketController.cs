@@ -27,25 +27,25 @@ namespace Backend_Final.Areas.Client.Controllers
             _userService = userService;
         }
 
+        #region Add
+
         [HttpGet("add/{id}", Name = "client-basket-add")]
         public async Task<IActionResult> AddProductAsync([FromRoute] int id)
         {
             var product = await _dataContext.Products
                 .Include(p => p.ProductImages)
                 .FirstOrDefaultAsync(b => b.Id == id);
-            if (product is null)
-            {
-                return NotFound();
-            }
+            if (product is null) return NotFound();
 
             var productsCookieViewModel = await _basketService.AddBasketProductAsync(product);
-            if (productsCookieViewModel.Any())
-            {
-                return ViewComponent(nameof(BasketMini), productsCookieViewModel);
-            }
+            if (productsCookieViewModel.Any()) return ViewComponent(nameof(BasketMini), productsCookieViewModel);
 
             return ViewComponent(nameof(BasketMini));
         }
+
+        #endregion
+
+        #region Delete
 
         [HttpGet("delete/{id}", Name = "client-basket-delete")]
         public async Task<IActionResult> DeleteProductAsync([FromRoute] int id)
@@ -57,26 +57,17 @@ namespace Backend_Final.Areas.Client.Controllers
                 var basketProduct = await _dataContext.BasketProducts
                    .Include(b => b.Basket).FirstOrDefaultAsync(bp => bp.Basket!.UserId == _userService.CurrentUser.Id && bp.ProductId == id);
 
-                if (basketProduct is not null)
-                {
-                    _dataContext.BasketProducts.Remove(basketProduct);
-                }
-                
+                if (basketProduct is not null) _dataContext.BasketProducts.Remove(basketProduct);
+
                 await _dataContext.SaveChangesAsync();
             }
             else
             {
                 var product = await _dataContext.Products.FirstOrDefaultAsync(b => b.Id == id);
-                if (product is null)
-                {
-                    return NotFound();
-                }
+                if (product is null) return NotFound();
 
                 var productCookieValue = HttpContext.Request.Cookies["products"];
-                if (productCookieValue is null)
-                {
-                    return NotFound();
-                }
+                if (productCookieValue is null) NotFound();
 
                 productsCookieViewModel = JsonSerializer.Deserialize<List<ProductCookieViewModel>>(productCookieValue);
                 productsCookieViewModel!.RemoveAll(pcvm => pcvm.Id == id);
@@ -85,5 +76,7 @@ namespace Backend_Final.Areas.Client.Controllers
             }
             return ViewComponent(nameof(BasketMini), productsCookieViewModel);
         }
+
+        #endregion
     }
 }

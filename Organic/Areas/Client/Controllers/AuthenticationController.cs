@@ -25,10 +25,7 @@ namespace Organic.Controllers
         [HttpGet("login", Name = "client-auth-login")]
         public async Task<IActionResult> LoginAsync()
         {
-            if (_userService.IsAuthenticated)
-            {
-                return RedirectToRoute("client-home-index");
-            }
+            if (_userService.IsAuthenticated) return RedirectToRoute("client-home-index");
 
             return View(new LoginViewModel());
         }
@@ -36,10 +33,7 @@ namespace Organic.Controllers
         [HttpPost("login", Name = "client-auth-login")]
         public async Task<IActionResult> LoginAsync(LoginViewModel? model)
         {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
+            if (!ModelState.IsValid) return View(model);
 
             if (!await _userService.CheckPasswordAsync(model!.Email, model!.Password))
             {
@@ -54,7 +48,6 @@ namespace Organic.Controllers
             }
 
             await _userService.SignInAsync(model!.Email, model!.Password);
-
             return RedirectToRoute("client-home-index");
         }
 
@@ -62,7 +55,6 @@ namespace Organic.Controllers
         public async Task<IActionResult> LogoutAsync()
         {
             await _userService.SignOutAsync();
-
             return RedirectToRoute("client-home-index");
         }
 
@@ -80,10 +72,8 @@ namespace Organic.Controllers
         [HttpPost("register", Name = "client-auth-register")]
         public async Task<IActionResult> RegisterAsync(RegisterViewModel model)
         {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
+            if (!ModelState.IsValid) return View(model);
+
             if (await _userService.CheckEmail(model.Email!))
             {
                 ModelState.AddModelError("", "Bu email qeydiyyatdan keçib. Başqa email seçin.");
@@ -91,7 +81,6 @@ namespace Organic.Controllers
             }
 
             await _userService.CreateAsync(model);
-
             return RedirectToRoute("client-auth-login");
         }
 
@@ -132,19 +121,14 @@ namespace Organic.Controllers
         [HttpPost("password/{token}", Name = "client-auth-password")]
         public async Task<IActionResult> PasswordActivate([FromRoute] string token, NewPasswordViewModel model)
         {
+            if (!ModelState.IsValid) return View(model);
             var userActivation = await _dbContext.UserActivations
                 .Include(ua => ua.User)
                 .FirstOrDefaultAsync(ua => ua.ActivationToken == token);
 
-            if (userActivation is null)
-            {
-                return NotFound();
-            }
+            if (userActivation is null) return NotFound();
 
-            if (DateTime.Now > userActivation!.ExpireDate)
-            {
-                return Ok("Token expired olub teessufler");
-            }
+            if (DateTime.Now > userActivation!.ExpireDate) return Ok("Token expired olub teessufler");
 
             userActivation!.User!.Password = model.Password;
             await _dbContext.SaveChangesAsync();
@@ -160,15 +144,9 @@ namespace Organic.Controllers
                     !ua!.User!.IsEmailConfirmed &&
                     ua.ActivationToken == token);
 
-            if (userActivation is null)
-            {
-                return NotFound();
-            }
+            if (userActivation is null) NotFound();
 
-            if (DateTime.Now > userActivation!.ExpireDate)
-            {
-                return Ok("Token expired olub teessufler");
-            }
+            if (DateTime.Now > userActivation!.ExpireDate) return Ok("Token expired olub teessufler");
 
             userActivation!.User!.IsEmailConfirmed = true;
             await _dbContext.SaveChangesAsync();
@@ -177,5 +155,4 @@ namespace Organic.Controllers
 
         #endregion
     }
-
 }

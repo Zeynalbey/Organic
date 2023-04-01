@@ -6,9 +6,9 @@ namespace Organic.Infrastructure.Extensions
         public static void ConfigureMiddlewarePipeline(this WebApplication app)
         {
             app.UseStaticFiles();
-
             app.UseAuthentication();
             app.UseAuthorization();
+            app.UseStatusCodePagesWithRedirects("/Error/Index");
 
             app.MapControllerRoute(
                 name: "default",

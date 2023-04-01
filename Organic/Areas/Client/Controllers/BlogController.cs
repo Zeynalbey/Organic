@@ -27,6 +27,7 @@ namespace Organic.Areas.Client.Controllers
         }
 
         #region Blogs
+
         [HttpGet("list", Name = "client-blog-list")]
         public async Task<IActionResult> ListAsync([FromServices] IFileService fileService, int page = 1)
         {
@@ -51,18 +52,30 @@ namespace Organic.Areas.Client.Controllers
 
             return View(model);
         }
+
         #endregion
 
         #region Single Blog
+
         [HttpGet("{id}", Name = "client-blog-single")]
         public async Task<IActionResult> Detail(int id, int page = 1)
         {
-            var blog = await _dbContext.Blogs.Include(b => b.From).Include(b => b.Comments!).ThenInclude(c => c.From)
-                .FirstOrDefaultAsync(b => b.Id == id);
-            blog.Comments.Count();
 
-            if (blog == null) return NotFound();
-            var user = await _dbContext.Users.FirstOrDefaultAsync(u => u.Id == blog.From.Id);
+
+
+            var blog = await _dbContext.Blogs.Include(b => b.From).Include(b => b.Comments!).ThenInclude(c => c.From)
+                .FirstOrDefaultAsync(b => b.Id == 20); // error vermeyini yoxlamaq ucun 20 yazmisam.
+            if (blog == null) return NotFound();                            //status code nece gonderim?
+
+            //StatusCode(404, "Error/{StatusCode}");
+
+
+
+
+
+            blog.Comments!.Count();
+
+            var user = await _dbContext.Users.FirstOrDefaultAsync(u => u.Id == blog.From!.Id);
             if (user == null) return NotFound();
             var comment = await _dbContext.BlogComments.Include(bc=> bc.From).FirstOrDefaultAsync(bc => bc.Id == id);
 
@@ -92,6 +105,7 @@ namespace Organic.Areas.Client.Controllers
 
             return View(blogViewModel);
         }
+
         #endregion
 
         #region CommentAdd
@@ -100,10 +114,7 @@ namespace Organic.Areas.Client.Controllers
         public async Task<IActionResult> Detail(BlogItemViewModel model, int id)
         {
             var blog = await _dbContext.Blogs.FirstOrDefaultAsync(b => b.Id == id);
-            if (blog is null)
-            {
-                return NotFound();
-            }
+            if (blog is null) return NotFound();
 
             var comment = new BlogComment
             {
@@ -120,6 +131,8 @@ namespace Organic.Areas.Client.Controllers
 
         #endregion
 
+        #region Like
+
         [HttpGet("Like/{Likeid}", Name = "blog-like")]
         public async Task<IActionResult> LikeAsync(int Likeid)
         {
@@ -131,6 +144,8 @@ namespace Organic.Areas.Client.Controllers
 
             return RedirectToRoute("client-blog-single", new { id = blog!.Id });
         }
+
+        #endregion
 
     }
 }

@@ -71,6 +71,7 @@ namespace Organic.Areas.Client.Controllers
             var newProduct = await productsQuery
                 .Where(p => p.ProductCounts!.Any(pc => pc.Count > 0))
                 .Where(p => p.Category!.Name != SelectedCategoryName.Kabab)
+                //.OrderBy(p=> p.Price)
                 .Skip((page-1) * 12).Take(12)
                 .Select(p => new ListItemViewModel(p.Id, p.Name!, p.Info!, p.Price,
                                p.ProductImages!.Take(1).FirstOrDefault() != null

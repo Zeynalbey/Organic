@@ -33,13 +33,8 @@ namespace Backend_Final.Areas.Client.Controllers
             _fileService = fileService;
         }
 
-        //[HttpGet("dashboard", Name = "client-account-dashboard")]
-        //public IActionResult Dashboard()
-        //{
-        //    return View();
-        //}
-
-
+        #region Order
+        
         [HttpGet("orders", Name = "client-account-orders")]
         public async Task<IActionResult> Order()
         {
@@ -64,6 +59,8 @@ namespace Backend_Final.Areas.Client.Controllers
 
             return View(model);
         }
+
+        #endregion
 
     }
 }
