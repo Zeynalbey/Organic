@@ -18,8 +18,8 @@ namespace Organic.Areas.Admin.Controllers
             _dbContext = dbContext;
         }
 
-        [HttpGet("Index", Name = "admin-dashboard-index")]
-        public IActionResult Index()
+        [HttpGet("AllLists", Name = "admin-dashboard-alllists")]
+        public IActionResult AllList()
         {
             return View();
         }
@@ -30,10 +30,5 @@ namespace Organic.Areas.Admin.Controllers
             return View();
         }
 
-        [HttpGet("AllLists", Name = "admin-dashboard-alllists")]
-        public IActionResult AllList()
-        {
-            return View();
-        }
     }
 }

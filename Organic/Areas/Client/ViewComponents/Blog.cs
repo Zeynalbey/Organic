@@ -28,7 +28,8 @@ namespace Organic.Areas.Client.ViewComponents
                 .Select(b => new BlogViewModel(b.Id,
                 b.Title,
                 b.Description!.Substring(0,40),
-                b.From!.FirstName, 
+                b.From!.FirstName,
+                _fileService.GetFileUrl(b.From.ImageNameInSystem, UploadDirectory.User),
                 b.PostedDate,
                 b.ImageNameInSystem!.FirstOrDefault() !=null
                 ? _fileService.GetFileUrl(b.ImageNameInSystem, UploadDirectory.Blog)

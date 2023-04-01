@@ -27,6 +27,7 @@ namespace Organic.Areas.Admin.ViewComponents
         public async Task<IViewComponentResult> InvokeAsync()
         {
             var product = await _dbContext.Products
+                .Take(5)
                 .Select(p => new ListItemViewModel(p.Id, p.Name, p.Info, p.Rating, p.RatingCount, p.Price, p.CreatedAt, p.Category!.Id, p.Category.Name!,
                  p.ProductCounts!
                 .Select(pc => new CountViewModel(pc.Id, pc.Count)).ToList(),

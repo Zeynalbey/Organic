@@ -37,6 +37,7 @@ namespace Organic.Areas.Client.Controllers
                 b.Title,
                 b.Description!.Substring(0, 50),
                 b.From!.FirstName,
+                _fileService.GetFileUrl(b.From.ImageNameInSystem, UploadDirectory.User),
                 b.PostedDate,
                 b.ImageNameInSystem.FirstOrDefault() != null
                 ? _fileService.GetFileUrl(b.ImageNameInSystem, UploadDirectory.Blog)
@@ -64,11 +65,8 @@ namespace Organic.Areas.Client.Controllers
 
 
             var blog = await _dbContext.Blogs.Include(b => b.From).Include(b => b.Comments!).ThenInclude(c => c.From)
-                .FirstOrDefaultAsync(b => b.Id == 20); // error vermeyini yoxlamaq ucun 20 yazmisam.
-            if (blog == null) return NotFound();                            //status code nece gonderim?
-
-            //StatusCode(404, "Error/{StatusCode}");
-
+                .FirstOrDefaultAsync(b => b.Id == id);
+            if (blog == null) return NotFound();
 
 
 
@@ -77,7 +75,7 @@ namespace Organic.Areas.Client.Controllers
 
             var user = await _dbContext.Users.FirstOrDefaultAsync(u => u.Id == blog.From!.Id);
             if (user == null) return NotFound();
-            var comment = await _dbContext.BlogComments.Include(bc=> bc.From).FirstOrDefaultAsync(bc => bc.Id == id);
+            var comment = await _dbContext.BlogComments.Include(bc => bc.From).FirstOrDefaultAsync(bc => bc.Id == id);
 
             var blogViewModel = new BlogItemViewModel
             {

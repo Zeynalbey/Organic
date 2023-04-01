@@ -46,26 +46,19 @@ namespace Organic.Services.Concretes
 
             return AddToCookie();
 
-
-
-
-
             //Add product to database if user is authenticated
             async Task AddToDatabaseAsync()
             {
                 var basketProduct = await _dataContext.BasketProducts
                     .FirstOrDefaultAsync(bp => bp.Basket!.UserId == _userService.CurrentUser.Id && bp.ProductId == product.Id);
                 
-            
-
-
                 if (basketProduct is not null)
                 {
                     basketProduct.Quantity++;
                 }
                 else
                 {
-                    var basket = await _dataContext.Baskets.FirstAsync(b => b.UserId == _userService.CurrentUser.Id);
+                    var basket = await _dataContext.Baskets.FirstOrDefaultAsync(b => b.UserId == _userService.CurrentUser.Id);
 
                     basketProduct = new BasketProduct
                     {

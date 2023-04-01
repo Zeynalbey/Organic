@@ -22,7 +22,7 @@
                             <td>@item.Name</td>
                             <td>@item.Quantity</td>
                             <td>@item.Price</td>
-                            <td>@item.Total</td>
+                            <td>@Math.Round(item.Total, 2)</td>
                         </tr>
                     }
                 </tbody>

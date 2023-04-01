@@ -31,7 +31,7 @@
 
                     <div class="post-head">
                         <div class="thumbnail">
-                            <figure><img src="~/@Model.Image" width="870" height="635" alt=""></figure>
+                            <figure><img src="~/@Model.Image" width="500" height="500" alt=""></figure>
                         </div>
                         <h2 class="post-name">@Model.Title</h2>
                         <p class="post-archive">
@@ -43,7 +43,7 @@
                                 <a asp-route="blog-like" asp-route-Likeid="@Model.Id" class="blogelike">
                                     <i class="fa-regular fa-thumbs-up"></i>@Model.Likes
                                 </a>
-                                
+
                             </span>
 
                         </p>
@@ -136,61 +136,32 @@
                     <a class="biolife-close-btn" href="#" data-object="open-mobile-filter">&times;</a>
                 </div>
 
-                <div class="sidebar-contain">
-
+               @* <div class="sidebar-contain">
+*@
                     <!--Posts Widget-->
-                    //bu hisseni viewcomponente cixaracam.//
-                    @*      <div class="widget posts-widget">
-                    <h4 class="wgt-title">Recent post</h4>
-                    <div class="wgt-content">
-                    <ul class="posts">
-                    @foreach (var item in Model.Blogs)
-                    {
-                    <li>
-                    <div class="wgt-post-item">
-                    <div class="thumb">
-                    <a asp-route="client-blog-single" asp-route-id="@item.Id"><img src="~/@item.Image" width="80" height="58" alt=""></a>
-                    </div>
-                    <div class="detail">
-                    <h4 class="post-name"><a asp-route="client-blog-single" asp-route-id="@item.Id">@item.Title</a></h4>
-                    <p class="post-archive">@item.PostedDate.ToString("dd,mm,yy")<span class="comment">@item.Comments.Count Şərh</span></p>
-                    </div>
-                    </div>
-                    </li>
-                    }
-
-
-                    </ul>
-                    </div>
-                    </div>*@
-
-
-
-
-
-
-
-
-
-
-                    <!--Comments Widget-->
-                    @*<div class="widget comment-widget">
-                        <h4 class="wgt-title">Recent Comments</h4>
+@*                    <div class="widget posts-widget">
+                        <h4 class="wgt-title">Recent post</h4>
                         <div class="wgt-content">
-                            <ul class="comment-list">
+                            <ul class="posts">
                                 @foreach (var item in Model.Comments)
                                 {
                                     <li>
-                                        <p class="cmt-item"><a href="#" class="auth-name"><i class="biolife-icon icon-conversation"></i>Jessica Alba</a><a href="#" class="link-post">on Healthy Organics</a></p>
+                                        <div class="wgt-post-item">
+                                            <div class="detail">
+                                                <h4 class="post-name"><a asp-route="client-blog-single" asp-route-id="@item.Id">@item.</a></h4>
+                                                <p class="post-archive">@item.PostedDate.ToString("dd,mm,yy")<span class="comment">@item.Comments.Count Şərh</span></p>
+                                            </div>
+                                        </div>
                                     </li>
                                 }
-                               
-                               
-                            </ul>
-                        </div>
-                    </div>*@
 
-                </div>
+
+                            </ul>
+                        </div>*@
+                 @*   </div>
+
+
+               @* </div>*@
             </aside>
         </div>
     </div>

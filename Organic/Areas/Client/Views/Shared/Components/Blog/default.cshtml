@@ -16,8 +16,15 @@
             <div class="post-content">
                 <a asp-route ="client-blog-single" asp-route-id="@blog.Id" class="post-name">@blog.Title</a>
                 <div class="post-meta">
+                    @if (blog.Fromİmage is null)
+                    {
+                        <a asp-route="client-blog-single" asp-route-id="@blog.Id" class="post-meta__item author"><img src="~/Client/assets/images/home-03/post-author.png" width="28" height="28" alt=""><span>@blog.From</span></a>
+                    }
+                    else
+                    {
+                        <a asp-route="client-blog-single" asp-route-id="@blog.Id" class="post-meta__item author"><img src="~/@blog.Fromİmage" width="28" height="28" alt=""><span>@blog.From</span></a>
 
-                    <a asp-route="client-blog-single" asp-route-id="@blog.Id" class="post-meta__item author"><img src="~/Client/assets/images/home-03/post-author.png" width="28" height="28" alt=""><span>@blog.From</span></a>
+                    }
                     <a asp-route="client-blog-single" asp-route-id="@blog.Id" class="post-meta__item btn liked-count">@blog.Comments<span class="biolife-icon icon-comment"></span></a>
                     <a asp-route="client-blog-single" asp-route-id="@blog.Id" class="post-meta__item btn comment-count">@blog.Likes<span class="biolife-icon icon-like"></span></a>
                 </div>

@@ -27,7 +27,7 @@ namespace Organic.Areas.Admin.Controllers
         {
             if (_userService.IsAuthenticated)
             {
-                return RedirectToRoute("admin-dashboard-index");
+                return RedirectToRoute("admin-dashboard-alllists");
             }
             return View(new LoginViewModel());
         }
@@ -52,7 +52,7 @@ namespace Organic.Areas.Admin.Controllers
 
             await _userService.SignInAsync(model.Email, model.Password, user.Role!.Name);
 
-            return RedirectToRoute("admin-dashboard-index");
+            return RedirectToRoute("admin-dashboard-alllists");
         }
 
         [HttpGet("logout", Name = "admin-auth-logout")]
