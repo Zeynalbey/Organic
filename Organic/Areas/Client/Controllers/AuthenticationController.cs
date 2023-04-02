@@ -124,7 +124,7 @@ namespace Organic.Controllers
             if (!ModelState.IsValid) return View(model);
             var userActivation = await _dbContext.UserActivations
                 .Include(ua => ua.User)
-                .FirstOrDefaultAsync(ua => ua.ActivationToken == token);
+                .FirstOrDefaultAsync(ua => ua.User!.IsEmailConfirmed && ua.ActivationToken == token);
 
             if (userActivation is null) return NotFound();
 
