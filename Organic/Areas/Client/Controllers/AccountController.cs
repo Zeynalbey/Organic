@@ -8,8 +8,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Organic.Contracts.File;
+using Organic.Areas.Client.ViewModels.Blog;
 
-namespace Backend_Final.Areas.Client.Controllers
+namespace Organic.Areas.Client.Controllers
 {
     [Area("client")]
     [Route("account")]
@@ -34,7 +35,7 @@ namespace Backend_Final.Areas.Client.Controllers
         }
 
         #region Order
-        
+
         [HttpGet("orders", Name = "client-account-orders")]
         public async Task<IActionResult> Order()
         {

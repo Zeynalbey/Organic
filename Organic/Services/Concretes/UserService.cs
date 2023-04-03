@@ -83,7 +83,7 @@ namespace Organic.Services.Concretes
         {
             var image = _fileService.GetFileUrl(_currentUser.ImageNameInSystem, UploadDirectory.User) != null
                 ? _fileService.GetFileUrl(_currentUser.ImageNameInSystem, UploadDirectory.User)
-                : Image.DEFAULTIMAGE;
+                : String.Empty;
                  return image;
         }
 
