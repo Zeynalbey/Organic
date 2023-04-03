@@ -57,6 +57,12 @@
             </div>
             <div class="row">
                 <ul class="products-list">
+                    @if (Model.Count() == 0)
+                    {
+                        <div class="container">
+                            <span style="font-weight: bold">Axtardığınız məhsul tapılmadı.</span>
+                        </div>                     
+                    }
                     @foreach (var product in Model)
                     {
                         <li class="product-item col-lg-2 col-md-3 col-sm-4 col-xs-6">
