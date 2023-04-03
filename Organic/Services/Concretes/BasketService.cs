@@ -13,6 +13,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text.Json;
 using Organic.Contracts.File;
 using System.Runtime.Intrinsics.Arm;
+using Organic.Contracts.ProductImage;
 
 namespace Organic.Services.Concretes
 {
@@ -95,7 +96,7 @@ namespace Organic.Services.Concretes
                         product.ProductImages!.Take(1)
                         .FirstOrDefault() != null ? _fileService.GetFileUrl(product.ProductImages!
                         .Take(1).FirstOrDefault()!.ImageNameInFileSystem, UploadDirectory.Product) 
-                        : String.Empty, 1, product.Price, discountPrice!.Percent! ==0 ? product.Price : (100 - discountPrice.Percent) /100 * product.Price, product.Price));
+                        : Image.DEFAULTIMAGE, 1, product.Price, discountPrice!.Percent! ==0 ? product.Price : (100 - discountPrice.Percent) /100 * product.Price, product.Price));
                 }
                 else
                 {
