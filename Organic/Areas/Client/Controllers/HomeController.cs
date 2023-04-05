@@ -40,10 +40,7 @@ namespace Organic.Areas.Client.Controllers
         [HttpPost("contact", Name = "client-home-contact")]
         public async Task <ActionResult> Contact([FromForm] CreateViewModel contactViewModel)
         {
-            if (!ModelState.IsValid)
-            {
-                return View();
-            }
+            if (!ModelState.IsValid) return View();
 
             await _dbContext.Contacts.AddAsync(new Contact
             {
