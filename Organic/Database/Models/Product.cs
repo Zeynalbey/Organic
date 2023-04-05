@@ -20,6 +20,6 @@ namespace Organic.Database.Models
         public List<BasketProduct>? BasketProducts { get; set; }
         public List<ProductCount>? ProductCounts { get; set; }
         public List<ProductDiscountPercent>? ProductDiscountPercents { get; set; }
-
+        public List<PlacedProduct>? PlacedProducts { get; set; }
     }
 }

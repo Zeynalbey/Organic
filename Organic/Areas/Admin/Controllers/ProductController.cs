@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
 using Organic.Areas.Admin.ViewModels.Product;
 using Organic.Areas.Admin.ViewModels.Product.Count;
@@ -61,11 +62,8 @@ namespace Organic.Areas.Admin.Controllers
         [HttpPost("add", Name = "admin-product-add")]
         public async Task<IActionResult> Add(AddProductViewModel model)
         {
-
-            if (!ModelState.IsValid)
-            {
-                return GetView(model);
-            }
+            #region Errors
+            if (!ModelState.IsValid) return GetView(model);
 
             foreach (var tagId in model.TagIds!)
             {
@@ -81,6 +79,7 @@ namespace Organic.Areas.Admin.Controllers
                 ModelState.AddModelError(string.Empty, "Category is not found");
                 return GetView(model);
             }
+            #endregion
 
             AddProduct();
 
@@ -88,6 +87,7 @@ namespace Organic.Areas.Admin.Controllers
 
             return RedirectToRoute("admin-product-list");
 
+            #region GetView
             IActionResult GetView(AddProductViewModel model)
             {
                 model.Categories = _dbContext.Categories
@@ -100,10 +100,11 @@ namespace Organic.Areas.Admin.Controllers
 
                 return View(model);
             }
-
+            #endregion
 
             Product AddProduct()
             {
+                #region Product
                 var product = new Product
                 {
                     Name = model.Name,
@@ -114,7 +115,18 @@ namespace Organic.Areas.Admin.Controllers
 
                 _dbContext.Products.Add(product);
                 _dbContext.SaveChanges();
+                #endregion
 
+                #region PlacedProduct
+                var placedProduct = new PlacedProduct
+                {
+                    ProductId = product.Id,
+                    Count = model.Count
+                };
+                _dbContext.PlacedProducts.Add(placedProduct);
+                #endregion
+
+                #region ProductCount
 
                 var productCount = new ProductCount
                 {
@@ -123,6 +135,9 @@ namespace Organic.Areas.Admin.Controllers
                 };
 
                 _dbContext.ProductCounts.Add(productCount);
+                #endregion
+
+                #region DiscountPercent
 
                 var discountPercent = new ProductDiscountPercent
                 {
@@ -131,6 +146,9 @@ namespace Organic.Areas.Admin.Controllers
                 };
 
                 _dbContext.ProductDiscountPercents!.Add(discountPercent);
+                #endregion
+
+                #region Tag
 
                 foreach (var tagId in model.TagIds)
                 {
@@ -143,10 +161,10 @@ namespace Organic.Areas.Admin.Controllers
 
                     _dbContext.ProductTags.Add(ProductTag);
                 }
+                #endregion
 
                 return product;
             }
-
         }
 
         #endregion
@@ -162,16 +180,9 @@ namespace Organic.Areas.Admin.Controllers
             var productCount = await _dbContext.ProductCounts.FirstAsync(p => p.Id == product!.Id);
             var productDiscountPercent = await _dbContext.ProductDiscountPercents!.FirstOrDefaultAsync(p => p.Id == product!.Id);
 
-            if (product is null)
-            {
-                return NotFound();
-            }
-
-            if (productDiscountPercent == null)
-            {
-                return NotFound();
-            }
-
+            if (product is null) return NotFound();
+            if (productDiscountPercent == null) return NotFound();
+      
             var model = new UpdateProductViewModel
             {
                 Id = product.Id,
@@ -197,18 +208,12 @@ namespace Organic.Areas.Admin.Controllers
 
             var productCount = await _dbContext.ProductCounts.FirstAsync(p => p.Id == product!.Id);
             var productDiscountPercent = await _dbContext.ProductDiscountPercents!.FirstAsync(p => p.Id == product!.Id);
-
+            var oldCount = productCount.Count;
             #region Errors
 
-            if (product is null)
-            {
-                return NotFound();
-            }
+            if (product is null) return NotFound();
 
-            if (!ModelState.IsValid)
-            {
-                return GetView(model);
-            }
+            if (!ModelState.IsValid) return GetView(model);
 
             foreach (var id in model.TagIds!)
             {
@@ -246,6 +251,7 @@ namespace Organic.Areas.Admin.Controllers
             productCount.Count = model.Count;
             productDiscountPercent.Percent = model.Percent;
 
+            #region Tag
             var DbTag = product.ProductTags!.Select(bc => bc.TagId).ToList();
             var RemoveTag = DbTag.Except(model.TagIds).ToList();
             var AddTag = model.TagIds.Except(DbTag).ToList();
@@ -262,9 +268,35 @@ namespace Organic.Areas.Admin.Controllers
 
                 await _dbContext.ProductTags.AddAsync(productTag);
             }
+            #endregion
+
+            #region PlacedProduct
+            
+            var newCount = productCount.Count;
+
+            if (newCount > oldCount)
+            {
+                var different = newCount - oldCount;
+                productCount.Count = newCount;
+                _dbContext.PlacedProducts.Add(new PlacedProduct
+                {
+                    ProductId = model.Id,
+                    Count = different
+                });
+            }
+            else
+            {
+                var different = oldCount - newCount;
+                productCount.Count = newCount;
+                _dbContext.PlacedProducts.Add(new PlacedProduct
+                {
+                    ProductId = model.Id,
+                    Count = -different
+                });
+            }
+            #endregion
 
             await _dbContext.SaveChangesAsync();
-
             return RedirectToRoute("admin-product-list");
         }
 
@@ -276,18 +308,13 @@ namespace Organic.Areas.Admin.Controllers
         public async Task<IActionResult> DeleteAsync([FromRoute] int id)
         {
             var product = await _dbContext.Products.FirstOrDefaultAsync(b => b.Id == id);
-            if (product is null)
-            {
-                return NotFound();
-            }
+            if (product is null) return NotFound();
 
             _dbContext.Products.Remove(product);
             await _dbContext.SaveChangesAsync();
 
             return RedirectToRoute("admin-product-list");
         }
-
         #endregion
-
     }
 }

@@ -11,6 +11,7 @@ namespace Organic.Database
         public DataContext(DbContextOptions options)
             : base(options) { }
 
+        public DbSet<PlacedProduct> PlacedProducts { get; set; }
         public DbSet<Blog> Blogs { get; set; }
         public DbSet<BlogCategory> BlogCategories { get; set; }
         public DbSet<BlogAndCategory> BlogAndCategories { get; set; }
