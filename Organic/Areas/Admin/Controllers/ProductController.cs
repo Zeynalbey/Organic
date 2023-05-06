@@ -117,14 +117,14 @@ namespace Organic.Areas.Admin.Controllers
                 _dbContext.SaveChanges();
                 #endregion
 
-                #region PlacedProduct
-                var placedProduct = new PlacedProduct
-                {
-                    ProductId = product.Id,
-                    Count = model.Count
-                };
-                _dbContext.PlacedProducts.Add(placedProduct);
-                #endregion
+                //#region PlacedProduct
+                //var placedProduct = new PlacedProduct
+                //{
+                //    ProductId = product.Id,
+                //    Count = model.Count
+                //};
+                //_dbContext.PlacedProducts.Add(placedProduct);
+                //#endregion
 
                 #region ProductCount
 
@@ -272,28 +272,28 @@ namespace Organic.Areas.Admin.Controllers
 
             #region PlacedProduct
             
-            var newCount = productCount.Count;
+            //var newCount = productCount.Count;
 
-            if (newCount > oldCount)
-            {
-                var different = newCount - oldCount;
-                productCount.Count = newCount;
-                _dbContext.PlacedProducts.Add(new PlacedProduct
-                {
-                    ProductId = model.Id,
-                    Count = different
-                });
-            }
-            else
-            {
-                var different = oldCount - newCount;
-                productCount.Count = newCount;
-                _dbContext.PlacedProducts.Add(new PlacedProduct
-                {
-                    ProductId = model.Id,
-                    Count = -different
-                });
-            }
+            //if (newCount > oldCount)
+            //{
+            //    var different = newCount - oldCount;
+            //    productCount.Count = newCount;
+            //    _dbContext.PlacedProducts.Add(new PlacedProduct
+            //    {
+            //        ProductId = model.Id,
+            //        Count = different
+            //    });
+            //}
+            //else
+            //{
+            //    var different = oldCount - newCount;
+            //    productCount.Count = newCount;
+            //    _dbContext.PlacedProducts.Add(new PlacedProduct
+            //    {
+            //        ProductId = model.Id,
+            //        Count = -different
+            //    });
+            //}
             #endregion
 
             await _dbContext.SaveChangesAsync();

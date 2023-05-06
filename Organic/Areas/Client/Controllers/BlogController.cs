@@ -35,7 +35,7 @@ namespace Organic.Areas.Client.Controllers
                 .Skip((page - 1) * 6).Take(6)
                 .Select(b => new BlogViewModel(b.Id,
                 b.Title,
-                b.Description!.Substring(0, 50),
+                b.Description!.Substring(0, 20),
                 b.From!.FirstName,
                 _fileService.GetFileUrl(b.From.ImageNameInSystem, UploadDirectory.User),
                 b.PostedDate,

@@ -57,6 +57,18 @@ $(document).ready(function () {
     }))
 
 
+    let btns5 = document.querySelectorAll(".dropp")
+    btns5.forEach(x => x.addEventListener("click", function (e) {
+        e.preventDefault()
+        console.log(e.target.href)
+        fetch(e.target.href)
+            .then(response => response.text())
+            .then(data => {
+                $('.prod-grid').html(data);
+            })
+    }))
+
+
 
 
 

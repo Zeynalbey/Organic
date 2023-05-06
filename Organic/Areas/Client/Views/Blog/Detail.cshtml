@@ -9,7 +9,7 @@
     tinymce.init({ forced_root_block: "", selector: 'textarea', plugins: 'emoticons', toolbar: 'emoticons', width: 600 });
 </script>
 
-<div class="hero-section hero-background style-02">
+@*<div class="hero-section hero-background style-02">
     <h1 class="page-title">Bloq</h1>
     <nav class="biolife-nav">
         <ul>
@@ -17,7 +17,7 @@
             <li class="nav-item"><span class="current-page">Bloq</span></li>
         </ul>
     </nav>
-</div>
+</div>*@
 
 <!-- Page Contain -->
 <div class="page-contain blog-page left-sidebar">
@@ -36,7 +36,7 @@
                         <h2 class="post-name">@Model.Title</h2>
                         <p class="post-archive">
                             <b class="post-cat">Krtsgn.az : </b>
-                            @Model.PostedDate.ToString("dd,mm,yyyy")
+                            @Model.PostedDate.ToString("dd/MM/yyyy")
                             <span class="author">Yerləşdirdi: @Model.From</span>
                             <span class="author"><i class="fa-regular fa-comment"></i> @Model.Comments!.Count</span>
                             <span class="blog-like">

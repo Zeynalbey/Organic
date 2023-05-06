@@ -1,14 +1,11 @@
 ﻿
 using Organic.Areas.Client.ViewModels.OrderProducts;
 using Organic.Database;
-using Organic.Database.Models;
 using Organic.Services.Abstracts;
 using Organic.Services.Concretes;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Organic.Contracts.File;
-using Organic.Areas.Client.ViewModels.Blog;
 
 namespace Organic.Areas.Client.Controllers
 {
@@ -57,6 +54,17 @@ namespace Organic.Areas.Client.Controllers
                     .SumAsync(bp => bp.Product!.Price * bp.Quantity)
                 }
             };
+
+            //string joinedString = "";
+            //foreach (var str in model.Products)
+            //{
+            //    joinedString = string.Join(",", joinedString, $"{str.Name}: {str.Quantity} x {str.Price} ");
+            //}
+
+            //QrCodeGenerator qrCode = new QrCodeGenerator();
+
+            //var image = qrCode.GenerateQrCode(joinedString);
+
 
             return View(model);
         }

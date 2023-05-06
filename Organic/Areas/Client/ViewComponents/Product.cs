@@ -26,6 +26,7 @@ namespace Organic.Areas.Client.ViewComponents
         {           
             var model = await _dataContext.Products
                 .Where(p => p.ProductCounts!.Any(pc => pc.Count > 0))
+                .Where(p => p.Category!.Name != SelectedCategoryName.Kabab)
                 .OrderByDescending(p => p.CreatedAt)
                 .Select(p => new ProductSaleViewModel(
                         p.Id,

@@ -9,6 +9,7 @@ using Organic.Contracts.ProductImage;
 using Organic.Database;
 using Organic.Services.Abstracts;
 using static Organic.Areas.Client.ViewModels.Product.ListItemViewModel;
+using Image = Organic.Contracts.ProductImage.Image;
 
 namespace Organic.Areas.Client.Controllers
 {

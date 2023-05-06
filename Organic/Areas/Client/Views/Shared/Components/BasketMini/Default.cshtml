@@ -26,10 +26,10 @@
                     <li>
                         <div class="minicart-item">
                             <div class="thumb">
-                                <a href="#"><img src="~/@item.ImageUrl" width="90" height="90" alt="National Fresh"></a> 
-                            </div>
+                            <a asp-route="client-product-detail" asp-route-id = "@item.Id"><img src="~/@item.ImageUrl" width="90" height="90" alt="National Fresh"></a>
+                        </div>
                             <div class="left-info">
-                                <div class="product-title"><a href="#" class="product-name">@item.Title</a></div>
+                                <div class="product-title"><a asp-route="client-product-detail" asp-route-id="@item.Id" class="product-name">@item.Title</a></div>
                                 <div class="price">
                                     <span class="price-amount"><span class="currencySymbol">₼</span> @Math.Round(item.DiscountPrice, 2) x @item.Quantity</span>
                                 </div>

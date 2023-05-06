@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Organic.Areas.Admin.ViewModels.Product.Discount;
 using Organic.Areas.Client.ViewModels.Product;
 using Organic.Contracts.File;
+using Organic.Contracts.ProductCategory;
 using Organic.Contracts.ProductImage;
 using Organic.Database;
 using Organic.Services.Abstracts;
@@ -26,6 +27,7 @@ namespace Organic.Areas.Client.ViewComponents
             
             var model = await _dataContext.Products
                 .Where(p => p.ProductCounts!.Any(pc => pc.Count > 0))
+                .Where(p => p.Category!.Name != SelectedCategoryName.Kabab)
                 .OrderByDescending(p => p.SaleCount)
                 .Select(p => new ProductSaleViewModel(
                         p.Id,
